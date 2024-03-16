@@ -29,7 +29,6 @@ export default function Sidebar() {
       ]
     },
   ]
-
   const menuStudant = [
     {
       items: [
@@ -44,6 +43,48 @@ export default function Sidebar() {
       ]
     },
   ]
+  const menuClass = [
+    {
+      items: [
+        {
+          link: "/",
+          text: "Cadastrar turma"
+        },
+        {
+          link: "/",
+          text: "Buscar turma"
+        }
+      ]
+    },
+  ]
+  const menuCurse = [
+    {
+      items: [
+        {
+          link: "/",
+          text: "Cadastrar curso"
+        },
+        {
+          link: "/",
+          text: "Buscar curso"
+        }
+      ]
+    },
+  ]
+  const menuDisciplina = [
+    {
+      items: [
+        {
+          link: "/",
+          text: "Cadastrar disciplina"
+        },
+        {
+          link: "/",
+          text: "Buscar disciplina"
+        }
+      ]
+    },
+  ]
 
   return (
     <div className="fixed flex flex-col gap-4 w-[300px] min-w-[300px] border-r min-h-screen p-4">
@@ -51,8 +92,6 @@ export default function Sidebar() {
         <UserItem />
       </div>
       <div className="grow">
-
-
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
             <AccordionTrigger className="text-sm">Professor</AccordionTrigger>
@@ -81,6 +120,69 @@ export default function Sidebar() {
               <Command style={{ overflow: 'visible' }}>
                 <CommandList style={{ overflow: 'visible' }}>
                   {menuStudant.map((menu: any, key: number) => (
+                    <CommandGroup key={key} heading={menu.group}>
+                      {menu.items.map((option: any, optionKey: number) =>
+                        <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
+                          {option.text}
+                        </CommandItem>
+                      )}
+                    </CommandGroup>
+                  ))}
+                </CommandList>
+              </Command>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-sm">Curso</AccordionTrigger>
+            <AccordionContent>
+              <Command style={{ overflow: 'visible' }}>
+                <CommandList style={{ overflow: 'visible' }}>
+                  {menuCurse.map((menu: any, key: number) => (
+                    <CommandGroup key={key} heading={menu.group}>
+                      {menu.items.map((option: any, optionKey: number) =>
+                        <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
+                          {option.text}
+                        </CommandItem>
+                      )}
+                    </CommandGroup>
+                  ))}
+                </CommandList>
+              </Command>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-sm">Turma</AccordionTrigger>
+            <AccordionContent>
+              <Command style={{ overflow: 'visible' }}>
+                <CommandList style={{ overflow: 'visible' }}>
+                  {menuClass.map((menu: any, key: number) => (
+                    <CommandGroup key={key} heading={menu.group}>
+                      {menu.items.map((option: any, optionKey: number) =>
+                        <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
+                          {option.text}
+                        </CommandItem>
+                      )}
+                    </CommandGroup>
+                  ))}
+                </CommandList>
+              </Command>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="text-sm">Disciplina</AccordionTrigger>
+            <AccordionContent>
+              <Command style={{ overflow: 'visible' }}>
+                <CommandList style={{ overflow: 'visible' }}>
+                  {menuDisciplina.map((menu: any, key: number) => (
                     <CommandGroup key={key} heading={menu.group}>
                       {menu.items.map((option: any, optionKey: number) =>
                         <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
