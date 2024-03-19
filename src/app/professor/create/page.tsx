@@ -1,3 +1,4 @@
+
 import LayoutCreateTeacher from "./layout";
 
 export default function CreateTeacher() {

@@ -21,7 +21,8 @@ export default function SearchTeacher() {
                     <TableRow>
                         <TableHead className="w-[150px]">Ações</TableHead>
                         <TableHead className="w-[200px]">Código</TableHead>
-                        <TableHead>Nome</TableHead>
+                        <TableHead className="w-[400px]">Nome</TableHead>
+                        <TableHead>Telefone</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

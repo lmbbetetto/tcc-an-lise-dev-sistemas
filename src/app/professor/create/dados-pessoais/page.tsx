@@ -70,7 +70,7 @@ export default function FormDadosPessoais() {
                         <FormItem>
                             <FormLabel>Telefone:</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} type="tel" pattern="[0-9]{2}-[0-9]{5}-[0-9]{4}" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -83,7 +83,7 @@ export default function FormDadosPessoais() {
                         <FormItem>
                             <FormLabel>E-mail:</FormLabel>
                             <FormControl>
-                                <Input {...field} />
+                                <Input {...field} type="email" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
