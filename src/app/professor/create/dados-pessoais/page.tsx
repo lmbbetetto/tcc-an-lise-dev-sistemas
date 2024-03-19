@@ -24,6 +24,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import Link from "next/link"
 
 const formSchema = z.object({
     teacherName: z.string().min(2).max(100),
@@ -109,7 +110,7 @@ export default function FormDadosPessoais() {
                         </FormItem>
                     )}
                 />
-                <Button type="submit">Próximo</Button>
+                <Button type="submit"><Link href="/professor/create/endereco">Próximo</Link></Button>
             </form>
         </Form>
     )

@@ -1,9 +1,11 @@
 import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import FormDadosPessoais from "./dados-pessoais";
-import FormEndereco from "./endereco";
-import FormFormacao from "./formacao";
+import Link from "next/link";
 
-export default function CreateTeacher() {
+export default function LayoutCreateTeacher({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) {
     return (
         <div>
             <div className="flex flex-col gap-2 border-b w-full pb-5">
@@ -15,17 +17,15 @@ export default function CreateTeacher() {
                 <Command>
                     <CommandList>
                         <CommandGroup>
-                            <CommandItem>Dados pessoais</CommandItem>
-                            <CommandItem>Endereço</CommandItem>
-                            <CommandItem>Formação</CommandItem>
+                            <Link href="/professor/create/dados-pessoais"><CommandItem>Dados pessoais</CommandItem></Link>
+                            <Link href="/professor/create/endereco"><CommandItem>Endereço</CommandItem></Link>
+                            <Link href="/professor/create/formacao"><CommandItem>Formação</CommandItem></Link>
                         </CommandGroup>
                     </CommandList>
                 </Command>
             </div>
             <div className="grid w-[55rem] h-full pl-[320px] p-4">
-                {/* <FormDadosPessoais /> */}
-                {/* <FormEndereco /> */}
-                <FormFormacao />
+                {children}
             </div>
         </div>
     )

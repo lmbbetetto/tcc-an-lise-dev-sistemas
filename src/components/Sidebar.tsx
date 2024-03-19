@@ -1,6 +1,6 @@
 'use client';
 
-import { BellIcon, ChevronRight, Cookie, CreditCard, Inbox, LogOut, MessageSquare, Settings, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import UserItem from "./UserItem";
 import { Command, CommandGroup, CommandItem, CommandList } from "./ui/command";
 import { Button } from "./ui/button";
@@ -13,17 +13,18 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import Link from "next/link";
 
 export default function Sidebar() {
   const menuTeacher = [
     {
       items: [
         {
-          link: "/",
+          link: "/professor/create/dados-pessoais",
           text: "Cadastrar professor"
         },
         {
-          link: "/",
+          link: "/professor/search",
           text: "Buscar professor"
         }
       ]
@@ -102,7 +103,7 @@ export default function Sidebar() {
                     <CommandGroup key={key} heading={menu.group}>
                       {menu.items.map((option: any, optionKey: number) =>
                         <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
-                          {option.text}
+                          <Link href={option.link}>{option.text}</Link>
                         </CommandItem>
                       )}
                     </CommandGroup>
