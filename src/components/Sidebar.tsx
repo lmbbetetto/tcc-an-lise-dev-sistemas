@@ -21,7 +21,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/professor/create/dados-pessoais",
+          link: "/professor/create",
           text: "Cadastrar professor"
         },
         {
