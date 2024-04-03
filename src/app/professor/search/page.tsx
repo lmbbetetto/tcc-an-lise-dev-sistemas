@@ -26,11 +26,7 @@ export default function SearchTeacher() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {Array.from({ length: 10 }).map((_, i) => {
-                        return (
-                            <TeacherRows key={1} />
-                        )
-                    })}
+                    <TeacherRows />
                 </TableBody>
             </Table>
         </>

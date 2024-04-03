@@ -14,14 +14,23 @@ datasource db {
 }
 
 model Professor {
-  id         Int           @id @default(autoincrement())
-  name       String
-  nascimento DateTime
-  formacao   String
-  telefone   String
-  cpf        String
-  email      String
-  disciplina Disciplinas[]
+  id Int @id @default(autoincrement())
+  name          String
+  telefone      String
+  email         String
+  genero        String
+  nascimento    DateTime
+  rua           String
+  numero        String
+  complemento   String
+  bairro        String
+  cidade        String
+  estado        String
+  curso         String
+  instituicao   String
+  anoConclusao  String
+  nivelFormacao String
+  disciplina    Disciplinas[]
 }
 
 model Disciplinas {

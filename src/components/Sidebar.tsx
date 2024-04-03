@@ -35,7 +35,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/",
+          link: "/aluno/create",
           text: "Cadastrar aluno"
         },
         {
@@ -142,7 +142,7 @@ export default function Sidebar() {
                       <CommandGroup key={key} heading={menu.group}>
                         {menu.items.map((option: any, optionKey: number) =>
                           <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
-                            {option.text}
+                            <Link href={option.link}>{option.text}</Link>
                           </CommandItem>
                         )}
                       </CommandGroup>

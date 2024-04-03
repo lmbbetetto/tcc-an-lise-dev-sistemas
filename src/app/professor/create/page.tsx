@@ -1,38 +1,23 @@
 "use client"
-
-import LayoutCreateTeacher from "./layout";
-import { zodResolver } from "@hookform/resolvers/zod"
+import { useState } from "react"
+import axios from 'axios'
 import { useForm } from "react-hook-form"
-
+import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 
+import { toast, useToast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormDescription,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import Link from "next/link"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
     teacherName: z.string().min(2).max(100),
     phone: z.string(),
     email: z.string().email(),
-    gender: z.string(),
+    gender: z.string().optional(),
+    nascimento: z.string(),
     rua: z.string(),
     numero: z.string(),
     complemento: z.string(),
@@ -42,21 +27,49 @@ const formSchema = z.object({
     course: z.string(),
     instituicao: z.string(),
     conclusion: z.string(),
-    nivelFormacao: z.string(),
+    nivelFormacao: z.string().optional(),
 })
+
 export default function CreateTeacher() {
+    const [submitting, setSubmitting] = useState(false)
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             teacherName: "",
+            phone: "",
+            email: "",
+            gender: "Masculino",
+            nascimento: "",
+            rua: "",
+            numero: "",
+            complemento: "",
+            bairro: "",
+            cidade: "",
+            uf: "",
+            course: "",
+            instituicao: "",
+            conclusion: "",
+            nivelFormacao: "Superior",
         },
     })
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            const response = await axios.post('/api/professor', values);
+            toast({
+                title: "Sucesso",
+                description: "Professor cadastrado com sucesso.",
+            })
+            form.reset()
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Erro ao cadastrar professor.",
+            })
+        } finally {
+            setSubmitting(false);
+        }
     }
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
@@ -109,13 +122,15 @@ export default function CreateTeacher() {
                             <FormItem>
                                 <FormLabel>Selecione seu gênero:</FormLabel>
                                 <FormControl>
-                                    <Select {...field}>
+                                    <Select {...form}>
                                         <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder="Gênero" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="light">Masculino</SelectItem>
-                                            <SelectItem value="dark">Feminino</SelectItem>
+                                            <SelectGroup>
+                                                <SelectItem value="apple">Masculino</SelectItem>
+                                                <SelectItem value="banana">Feminino</SelectItem>
+                                            </SelectGroup>
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -123,6 +138,21 @@ export default function CreateTeacher() {
                             </FormItem>
                         )}
                     />
+
+                    <FormField
+                        control={form.control}
+                        name="nascimento"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Data de nascimento:</FormLabel>
+                                <FormControl>
+                                    <Input className="w-[50%]" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
                     <h1 className="pt-10 text-m text-muted-foreground">Endereço</h1>
                     <div className="flex gap-4">
                         <div className="w-[85%]">
@@ -252,32 +282,9 @@ export default function CreateTeacher() {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="nivelFormacao"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nível de formação:</FormLabel>
-                                    <FormControl>
-                                        <Select {...field}>
-                                            <SelectTrigger className="w-[180px]">
-                                                <SelectValue placeholder="Formação" />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                <SelectItem value="light">Superior cursando</SelectItem>
-                                                <SelectItem value="dark">Superior completo</SelectItem>
-                                                <SelectItem value="dark">Mestrado</SelectItem>
-                                                <SelectItem value="dark">Doutorado</SelectItem>
-                                            </SelectContent>
-                                        </Select>
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
                     </div>
 
-                    <Button type="submit"><Link href="/professor/create/endereco">Próximo</Link></Button>
+                    <Button type="submit">Confirmar</Button>
                 </form>
             </Form>
         </ScrollArea>

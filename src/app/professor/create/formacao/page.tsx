@@ -1,4 +1,5 @@
-'use client'
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
@@ -23,7 +24,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import Link from "next/link"
 
 const formSchema = z.object({
     teacherName: z.string().min(2).max(100),
@@ -32,7 +32,7 @@ const formSchema = z.object({
     gender: z.string(),
 })
 
-export default function CreateAluno() {
+export default function FormFormacao() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -47,42 +47,43 @@ export default function CreateAluno() {
         console.log(values)
     }
     return (
-            <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                    <FormField
-                        control={form.control}
-                        name="teacherName"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Nome completo:</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="phone"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Telefone:</FormLabel>
-                                <FormControl>
-                                    <Input {...field} type="tel" pattern="[0-9]{2}-[0-9]{5}-[0-9]{4}" />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                    control={form.control}
+                    name="teacherName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Curso:</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Instituição:</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <div className="grid grid-cols-2 gap-4">
                     <FormField
                         control={form.control}
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>E-mail:</FormLabel>
+                                <FormLabel>Ano de conclusão:</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="email" />
+                                    <Input {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -93,15 +94,17 @@ export default function CreateAluno() {
                         name="gender"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Selecione seu gênero:</FormLabel>
+                                <FormLabel>Nível de formação:</FormLabel>
                                 <FormControl>
                                     <Select {...field}>
                                         <SelectTrigger className="w-[180px]">
-                                            <SelectValue placeholder="Gênero" />
+                                            <SelectValue placeholder="Formação" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="light">Masculino</SelectItem>
-                                            <SelectItem value="dark">Feminino</SelectItem>
+                                            <SelectItem value="light">Superior cursando</SelectItem>
+                                            <SelectItem value="dark">Superior completo</SelectItem>
+                                            <SelectItem value="dark">Mestrado</SelectItem>
+                                            <SelectItem value="dark">Doutorado</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -109,8 +112,9 @@ export default function CreateAluno() {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit"><Link href="/professor/create/endereco">Próximo</Link></Button>
-                </form>
-            </Form>
+                </div>
+                <Button type="submit">Salvar cadastro</Button>
+            </form>
+        </Form>
     )
 }
