@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Professor {
+  id            Int           @id @default(autoincrement())
+  codeProfessor String
+  name          String
+  telefone      String
+  email         String
+  genero        String
+  nascimento    String
+  rua           String
+  numero        String
+  complemento   String
+  bairro        String
+  cidade        String
+  estado        String
+  curso         String
+  instituicao   String
+  anoConclusao  String
+  nivelFormacao String
+  disciplina    Disciplinas[]
+}
+
+model Disciplinas {
+  id             Int       @id @default(autoincrement())
+  idProfessor    Int
+  professor      Professor @relation(fields: [idProfessor], references: [id])
+  nomeDisciplina String
+  Turma          Turma[]
+}
+
+model Cursos {
+  id        Int     @id @default(autoincrement())
+  nomeCurso String
+  Turma     Turma[]
+}
+
+model Aluno {
+  id               Int                   @id @default(autoincrement())
+  nome             String
+  nascimento       DateTime
+  cpf              String
+  rg               String
+  escola           String
+  periodo          String
+  serie            String
+  telefone         String
+  rendaFamilia     Decimal               @db.Decimal(9, 2)
+  faltaDisciplinar FaltasDisciplinares[]
+  Matricula        Matricula[]
+}
+
+model FaltasDisciplinares {
+  id        Int      @id @default(autoincrement())
+  idAluno   Int
+  aluno     Aluno    @relation(fields: [idAluno], references: [id])
+  descricao String
+  dataFalta DateTime
+}
+
+model Matricula {
+  id         Int      @id @default(autoincrement())
+  idAluno    Int
+  aluno      Aluno    @relation(fields: [idAluno], references: [id])
+  dataInicio DateTime
+  situacao   String
+  Turma      Turma[]
+}
+
+model Turma {
+  id           Int         @id @default(autoincrement())
+  idMatricula  Int
+  matricula    Matricula   @relation(fields: [idMatricula], references: [id])
+  idDisciplina Int
+  disciplina   Disciplinas @relation(fields: [idDisciplina], references: [id])
+  idCurso      Int
+  curso        Cursos      @relation(fields: [idCurso], references: [id])
+  nomeTurma    String
+  Chamada      Chamada[]
+}
+
+model Chamada {
+  id              Int           @id @default(autoincrement())
+  idTurma         Int
+  turma           Turma         @relation(fields: [idTurma], references: [id])
+  idAtividadeSala Int
+  atividadeSala   AtividadeSala @relation(fields: [idAtividadeSala], references: [id])
+  presenca        String
+}
+
+model AtividadeSala {
+  id        Int       @id @default(autoincrement())
+  descricao String
+  Chamada   Chamada[]
+}
+
+model AtividadeExtraSala {
+  id            Int      @id @default(autoincrement())
+  descricao     String
+  dataAtividade DateTime
+}

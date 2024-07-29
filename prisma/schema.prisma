@@ -15,12 +15,13 @@ datasource db {
 }
 
 model Professor {
-  id Int @id @default(autoincrement())
+  id            Int           @id @default(autoincrement())
+  codeProfessor String
   name          String
   telefone      String
   email         String
   genero        String
-  nascimento    DateTime
+  nascimento    String
   rua           String
   numero        String
   complemento   String

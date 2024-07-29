@@ -9,6 +9,7 @@ export async function GET(request: Request) {
         return new Response(JSON.stringify({ message: "Erro ao buscar professores", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 }
+
 export async function POST(request: Request) {
     try {
         const {
@@ -26,8 +27,13 @@ export async function POST(request: Request) {
             course,
             instituicao,
             conclusion,
-            nivelFormacao
+            nivelFormacao,
         } = await request.json();
+
+        const generateProfessorCode = () => {
+            const idProfessor = Math.floor(10000000 + Math.random() * 90000000)
+            return idProfessor.toString()
+        }
 
         const dobPattern = /^\d{2}\/\d{2}\/\d{4}$/;
         if (!dobPattern.test(nascimento)) {
@@ -35,13 +41,15 @@ export async function POST(request: Request) {
         }
 
         const nascimentoDate = new Date(nascimento.split('/').reverse().join('-'))
+
         const professor = await prisma.professor.create({
             data: {
+                codeProfessor: generateProfessorCode(),
                 name: teacherName,
                 telefone: phone,
                 email,
                 genero: gender,
-                nascimento: nascimentoDate,
+                nascimento,
                 rua,
                 numero,
                 complemento,
@@ -51,7 +59,7 @@ export async function POST(request: Request) {
                 curso: course,
                 instituicao,
                 anoConclusao: conclusion,
-                nivelFormacao
+                nivelFormacao,
             }
         });
 

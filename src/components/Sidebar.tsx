@@ -1,6 +1,6 @@
 'use client';
 
-import { LogOut, User } from "lucide-react";
+import { House, LogOut, Table, User } from "lucide-react";
 import UserItem from "./UserItem";
 import { Command, CommandGroup, CommandItem, CommandList } from "./ui/command";
 import { Button } from "./ui/button";
@@ -21,11 +21,11 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/professor/create",
+          link: "/cadastros/professor/create",
           text: "Cadastrar professor"
         },
         {
-          link: "/professor/search",
+          link: "/cadastros/professor/search",
           text: "Buscar professor"
         }
       ]
@@ -35,11 +35,11 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/aluno/create",
+          link: "/cadastros/aluno/create",
           text: "Cadastrar aluno"
         },
         {
-          link: "/",
+          link: "/cadastros/aluno/search",
           text: "Buscar aluno"
         }
       ]
@@ -49,7 +49,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/",
+          link: "/cadastros/turma/create",
           text: "Cadastrar turma"
         },
         {
@@ -63,7 +63,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/",
+          link: "/cadastros/curso/create",
           text: "Cadastrar curso"
         },
         {
@@ -110,6 +110,10 @@ export default function Sidebar() {
       </div>
       <ScrollArea className="h-[35rem] w-[282px] pr-4">
         <div className="grow">
+          <section className="flex flex-col gap-4 mb-6">
+            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer"><House size={18} />Início</p></Link>
+            <Link href="#chamada"><p className="flex gap-2 items-center text-sm hover:cursor-pointer"><Table size={18} />Chamada</p></Link>
+          </section>
           <h1 className="text-sm text-muted-foreground">Cadastros</h1>
           <Accordion type="single" collapsible>
             <AccordionItem value="item-1">
