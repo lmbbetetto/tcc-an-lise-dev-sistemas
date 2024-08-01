@@ -1,6 +1,5 @@
 'use client';
-
-import { House, LogOut, Table, User } from "lucide-react";
+import { LogOut, Table, User, House } from "lucide-react";
 import UserItem from "./UserItem";
 import { Command, CommandGroup, CommandItem, CommandList } from "./ui/command";
 import { Button } from "./ui/button";
@@ -21,11 +20,11 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/cadastros/professor/create",
+          link: "/professor/create",
           text: "Cadastrar professor"
         },
         {
-          link: "/cadastros/professor/search",
+          link: "/professor/search",
           text: "Buscar professor"
         }
       ]
@@ -35,11 +34,11 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/cadastros/aluno/create",
+          link: "/aluno/create",
           text: "Cadastrar aluno"
         },
         {
-          link: "/cadastros/aluno/search",
+          link: "/aluno/search",
           text: "Buscar aluno"
         }
       ]
@@ -49,7 +48,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/cadastros/turma/create",
+          link: "/turma/create",
           text: "Cadastrar turma"
         },
         {
@@ -63,7 +62,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/cadastros/curso/create",
+          link: "/curso/create",
           text: "Cadastrar curso"
         },
         {
@@ -77,7 +76,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: "/",
+          link: "/disciplina/create",
           text: "Cadastrar disciplina"
         },
         {
@@ -88,21 +87,6 @@ export default function Sidebar() {
     },
   ]
 
-  const menuRelatorio = [
-    {
-      items: [
-        {
-          link: "/",
-          text: "Relatório por aluno"
-        },
-        {
-          link: "/",
-          text: "Relatório por turma"
-        },
-      ]
-    }
-  ]
-
   return (
     <div className="fixed flex flex-col gap-4 w-[300px] min-w-[300px] border-r min-h-screen p-4">
       <div>
@@ -110,9 +94,9 @@ export default function Sidebar() {
       </div>
       <ScrollArea className="h-[35rem] w-[282px] pr-4">
         <div className="grow">
-          <section className="flex flex-col gap-4 mb-6">
-            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer"><House size={18} />Início</p></Link>
-            <Link href="#chamada"><p className="flex gap-2 items-center text-sm hover:cursor-pointer"><Table size={18} />Chamada</p></Link>
+          <section className="flex flex-col gap-2  mt-2 mb-6">
+            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><House size={18} />Início</p></Link>
+            <Link href="#chamada"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
           </section>
           <h1 className="text-sm text-muted-foreground">Cadastros</h1>
           <Accordion type="single" collapsible>
@@ -167,7 +151,7 @@ export default function Sidebar() {
                       <CommandGroup key={key} heading={menu.group}>
                         {menu.items.map((option: any, optionKey: number) =>
                           <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
-                            {option.text}
+                            <Link href={option.link}>{option.text}</Link>
                           </CommandItem>
                         )}
                       </CommandGroup>
@@ -188,7 +172,7 @@ export default function Sidebar() {
                       <CommandGroup key={key} heading={menu.group}>
                         {menu.items.map((option: any, optionKey: number) =>
                           <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
-                            {option.text}
+                            <Link href={option.link}>{option.text}</Link>
                           </CommandItem>
                         )}
                       </CommandGroup>
@@ -209,7 +193,7 @@ export default function Sidebar() {
                       <CommandGroup key={key} heading={menu.group}>
                         {menu.items.map((option: any, optionKey: number) =>
                           <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
-                            {option.text}
+                            <Link href={option.link}>{option.text}</Link>
                           </CommandItem>
                         )}
                       </CommandGroup>
@@ -220,20 +204,9 @@ export default function Sidebar() {
             </AccordionItem>
           </Accordion>
           <div className="mt-4">
-            <h1 className="text-sm text-muted-foreground">Relatórios</h1>
-            <Command style={{ overflow: 'visible' }}>
-              <CommandList style={{ overflow: 'visible' }}>
-                {menuRelatorio.map((menu: any, key: number) => (
-                  <CommandGroup key={key} heading={menu.group}>
-                    {menu.items.map((option: any, optionKey: number) =>
-                      <CommandItem key={optionKey} className="flex justify-between cursor-pointer">
-                        <Link href={option.link}>{option.text}</Link>
-                      </CommandItem>
-                    )}
-                  </CommandGroup>
-                ))}
-              </CommandList>
-            </Command>
+            <h1 className="text-sm text-muted-foreground mb-3">Relatórios</h1>
+            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted ml-2 p-1 rounded-sm">Relatório por aluno</p></Link>
+            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted ml-2 p-1 rounded-sm">Relatório por turma</p></Link>
           </div>
         </div>
       </ScrollArea>
@@ -251,7 +224,7 @@ export default function Sidebar() {
               <LogOut className="w-4 h-4" />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Perfil</DropdownMenuItem>
+            <Link href="/user/HeCZ"><DropdownMenuItem>Perfil</DropdownMenuItem></Link>
           </DropdownMenuContent>
         </DropdownMenu>
 

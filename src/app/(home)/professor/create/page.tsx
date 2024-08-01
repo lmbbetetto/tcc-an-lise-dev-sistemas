@@ -31,10 +31,16 @@ const formSchema = z.object({
 })
 
 export default function CreateTeacher() {
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            bairro: ''
+        },
+    })
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
+                <form onSubmit={() => {}} className="space-y-8 p-2 pt-0">
                     <h1 className="text-m text-muted-foreground">Dados pessoais</h1>
                     <FormField
                         control={form.control}

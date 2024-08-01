@@ -3,7 +3,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-    title: "Cadastro de aluno"
+    title: "Turma"
 }
 
 export default function LayoutCreateAluno({
@@ -15,7 +15,7 @@ export default function LayoutCreateAluno({
         <div>
             <div className="flex flex-col gap-2 border-b w-full pb-5">
                 <h1 className="text-2xl font-bold">Cadastro</h1>
-                <p className="text-sm">Cadastre um novo curso</p>
+                <p className="text-sm">Cadastre uma nova turma</p>
             </div>
 
             <div className="fixed flex flex-col gap-4 w-[300px] min-w-[300px] min-h-screen pt-4 ml-[-12px]">

@@ -11,6 +11,7 @@ import LoginLayout from './layout'
 
 const singInForm = z.object({
   email: z.string().email(),
+  password: z.string(),
 })
 
 type SingInForm = z.infer<typeof singInForm>
@@ -36,7 +37,6 @@ export default function SingIn() {
   }
 
   return (
-    <LoginLayout>
       <div className="p-8">
         <Button variant="ghost" asChild className="absolute right-8 top-8">
           Novo estabelecimento
@@ -51,14 +51,18 @@ export default function SingIn() {
 
           <form onSubmit={handleSubmit(handleSingIn)} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Seu e-mail</Label>
+              <Label htmlFor="email">E-mail</Label>
               <Input id="email" type="email" {...register('email')} />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="email">Senha</Label>
+              <Input id="password" type="password" {...register('email')} />
             </div>
 
             <Button disabled={isSubmitting} className="w-full">Acessar Sistema</Button>
           </form>
         </div>
       </div >
-    </LoginLayout>
   )
 }

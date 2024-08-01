@@ -5,10 +5,10 @@ import Link from "next/link";
 export default function CardAddStudent() {
     return (
         <Link href={'/cadastros/aluno/create'} className="w-[50%]">
-            <Card className="hover:bg-muted-foreground hover:text-black">
+            <Card className="bg-green-600">
                 <CardHeader className="flex-row space-y-0 items-center justify-between pb-2">
                     <CardTitle className="text-base font-semibold">Matrícula</CardTitle>
-                    <Plus className="w-6 h-6 text-black dark:text-white hover:text-black" />
+                    <Plus className="w-6 h-6 text-white" />
                 </CardHeader>
 
                 <CardContent className="space-y-1">
