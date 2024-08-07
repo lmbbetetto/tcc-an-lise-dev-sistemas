@@ -1899,7 +1899,6 @@ export namespace Prisma {
 
   export type ProfessorMinAggregateOutputType = {
     id: number | null
-    codeProfessor: string | null
     name: string | null
     telefone: string | null
     email: string | null
@@ -1919,7 +1918,6 @@ export namespace Prisma {
 
   export type ProfessorMaxAggregateOutputType = {
     id: number | null
-    codeProfessor: string | null
     name: string | null
     telefone: string | null
     email: string | null
@@ -1939,7 +1937,6 @@ export namespace Prisma {
 
   export type ProfessorCountAggregateOutputType = {
     id: number
-    codeProfessor: number
     name: number
     telefone: number
     email: number
@@ -1969,7 +1966,6 @@ export namespace Prisma {
 
   export type ProfessorMinAggregateInputType = {
     id?: true
-    codeProfessor?: true
     name?: true
     telefone?: true
     email?: true
@@ -1989,7 +1985,6 @@ export namespace Prisma {
 
   export type ProfessorMaxAggregateInputType = {
     id?: true
-    codeProfessor?: true
     name?: true
     telefone?: true
     email?: true
@@ -2009,7 +2004,6 @@ export namespace Prisma {
 
   export type ProfessorCountAggregateInputType = {
     id?: true
-    codeProfessor?: true
     name?: true
     telefone?: true
     email?: true
@@ -2116,7 +2110,6 @@ export namespace Prisma {
 
   export type ProfessorGroupByOutputType = {
     id: number
-    codeProfessor: string
     name: string
     telefone: string
     email: string
@@ -2155,7 +2148,6 @@ export namespace Prisma {
 
   export type ProfessorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    codeProfessor?: boolean
     name?: boolean
     telefone?: boolean
     email?: boolean
@@ -2177,7 +2169,6 @@ export namespace Prisma {
 
   export type ProfessorSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    codeProfessor?: boolean
     name?: boolean
     telefone?: boolean
     email?: boolean
@@ -2197,7 +2188,6 @@ export namespace Prisma {
 
   export type ProfessorSelectScalar = {
     id?: boolean
-    codeProfessor?: boolean
     name?: boolean
     telefone?: boolean
     email?: boolean
@@ -2228,7 +2218,6 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      codeProfessor: string
       name: string
       telefone: string
       email: string
@@ -2639,7 +2628,6 @@ export namespace Prisma {
    */ 
   interface ProfessorFieldRefs {
     readonly id: FieldRef<"Professor", 'Int'>
-    readonly codeProfessor: FieldRef<"Professor", 'String'>
     readonly name: FieldRef<"Professor", 'String'>
     readonly telefone: FieldRef<"Professor", 'String'>
     readonly email: FieldRef<"Professor", 'String'>
@@ -11772,7 +11760,6 @@ export namespace Prisma {
 
   export const ProfessorScalarFieldEnum: {
     id: 'id',
-    codeProfessor: 'codeProfessor',
     name: 'name',
     telefone: 'telefone',
     email: 'email',
@@ -11983,7 +11970,6 @@ export namespace Prisma {
     OR?: ProfessorWhereInput[]
     NOT?: ProfessorWhereInput | ProfessorWhereInput[]
     id?: IntFilter<"Professor"> | number
-    codeProfessor?: StringFilter<"Professor"> | string
     name?: StringFilter<"Professor"> | string
     telefone?: StringFilter<"Professor"> | string
     email?: StringFilter<"Professor"> | string
@@ -12004,7 +11990,6 @@ export namespace Prisma {
 
   export type ProfessorOrderByWithRelationInput = {
     id?: SortOrder
-    codeProfessor?: SortOrder
     name?: SortOrder
     telefone?: SortOrder
     email?: SortOrder
@@ -12028,7 +12013,6 @@ export namespace Prisma {
     AND?: ProfessorWhereInput | ProfessorWhereInput[]
     OR?: ProfessorWhereInput[]
     NOT?: ProfessorWhereInput | ProfessorWhereInput[]
-    codeProfessor?: StringFilter<"Professor"> | string
     name?: StringFilter<"Professor"> | string
     telefone?: StringFilter<"Professor"> | string
     email?: StringFilter<"Professor"> | string
@@ -12049,7 +12033,6 @@ export namespace Prisma {
 
   export type ProfessorOrderByWithAggregationInput = {
     id?: SortOrder
-    codeProfessor?: SortOrder
     name?: SortOrder
     telefone?: SortOrder
     email?: SortOrder
@@ -12077,7 +12060,6 @@ export namespace Prisma {
     OR?: ProfessorScalarWhereWithAggregatesInput[]
     NOT?: ProfessorScalarWhereWithAggregatesInput | ProfessorScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Professor"> | number
-    codeProfessor?: StringWithAggregatesFilter<"Professor"> | string
     name?: StringWithAggregatesFilter<"Professor"> | string
     telefone?: StringWithAggregatesFilter<"Professor"> | string
     email?: StringWithAggregatesFilter<"Professor"> | string
@@ -12587,7 +12569,6 @@ export namespace Prisma {
   }
 
   export type ProfessorCreateInput = {
-    codeProfessor: string
     name: string
     telefone: string
     email: string
@@ -12608,7 +12589,6 @@ export namespace Prisma {
 
   export type ProfessorUncheckedCreateInput = {
     id?: number
-    codeProfessor: string
     name: string
     telefone: string
     email: string
@@ -12628,7 +12608,6 @@ export namespace Prisma {
   }
 
   export type ProfessorUpdateInput = {
-    codeProfessor?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     telefone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -12649,7 +12628,6 @@ export namespace Prisma {
 
   export type ProfessorUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    codeProfessor?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     telefone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -12670,7 +12648,6 @@ export namespace Prisma {
 
   export type ProfessorCreateManyInput = {
     id?: number
-    codeProfessor: string
     name: string
     telefone: string
     email: string
@@ -12689,7 +12666,6 @@ export namespace Prisma {
   }
 
   export type ProfessorUpdateManyMutationInput = {
-    codeProfessor?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     telefone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -12709,7 +12685,6 @@ export namespace Prisma {
 
   export type ProfessorUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    codeProfessor?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     telefone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -13206,7 +13181,6 @@ export namespace Prisma {
 
   export type ProfessorCountOrderByAggregateInput = {
     id?: SortOrder
-    codeProfessor?: SortOrder
     name?: SortOrder
     telefone?: SortOrder
     email?: SortOrder
@@ -13230,7 +13204,6 @@ export namespace Prisma {
 
   export type ProfessorMaxOrderByAggregateInput = {
     id?: SortOrder
-    codeProfessor?: SortOrder
     name?: SortOrder
     telefone?: SortOrder
     email?: SortOrder
@@ -13250,7 +13223,6 @@ export namespace Prisma {
 
   export type ProfessorMinOrderByAggregateInput = {
     id?: SortOrder
-    codeProfessor?: SortOrder
     name?: SortOrder
     telefone?: SortOrder
     email?: SortOrder
@@ -14355,7 +14327,6 @@ export namespace Prisma {
   }
 
   export type ProfessorCreateWithoutDisciplinaInput = {
-    codeProfessor: string
     name: string
     telefone: string
     email: string
@@ -14375,7 +14346,6 @@ export namespace Prisma {
 
   export type ProfessorUncheckedCreateWithoutDisciplinaInput = {
     id?: number
-    codeProfessor: string
     name: string
     telefone: string
     email: string
@@ -14435,7 +14405,6 @@ export namespace Prisma {
   }
 
   export type ProfessorUpdateWithoutDisciplinaInput = {
-    codeProfessor?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     telefone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
@@ -14455,7 +14424,6 @@ export namespace Prisma {
 
   export type ProfessorUncheckedUpdateWithoutDisciplinaInput = {
     id?: IntFieldUpdateOperationsInput | number
-    codeProfessor?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     telefone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string

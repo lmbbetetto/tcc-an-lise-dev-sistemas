@@ -15,6 +15,7 @@ import { TeacherRows } from "./teachers-row"
 export default function SearchTeacher() {
     return (
         <>
+            <Header />
             <Table>
                 <TableCaption>Fim da lista de professores.</TableCaption>
                 <TableHeader>

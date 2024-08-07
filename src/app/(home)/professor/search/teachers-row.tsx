@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { EyeIcon, Pencil, Trash2 } from "lucide-react";
+import { EyeIcon, Trash2 } from "lucide-react";
 
 import {
     AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger
@@ -12,23 +12,8 @@ import {
 } from "@/components/ui/dialog"
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
-
-interface Professor {
-    id: number,
-    codeProfessor: string,
-    name: string,
-    telefone: string,
-    email: string,
-    rua: string,
-    numero: string,
-    complemento: string,
-    bairro: string,
-    cidade: string,
-    estado: string,
-    curso: string,
-    instituicao: string,
-    anoConclusao: string,
-}
+import { routes } from "@/utils/routes";
+import { Professor } from "./type";
 
 export function TeacherRows() {
     const [professors, setProfessors] = useState<Professor[]>([]);
@@ -47,7 +32,7 @@ export function TeacherRows() {
         fetchProfessors();
     }, [])
 
-    const handleDeleteProfessor = async (id: number) => {
+    const handleDeleteProfessor = async (id: string) => {
         try {
             const response = await fetch('/api/professor', {
                 method: 'DELETE',
@@ -100,6 +85,7 @@ export function TeacherRows() {
                                                     <div className="flex flex-col gap-1 ml-2">
                                                         <p>{professor.telefone}</p>
                                                         <p>{professor.email}</p>
+                                                        <p>{professor.nascimento}</p>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
@@ -120,7 +106,7 @@ export function TeacherRows() {
                                                 </div>
                                             </DialogDescription>
                                             <DialogFooter>
-                                                <Link href={`/cadastros/professor/edit/${professor.id}`}>
+                                                <Link href={routes.professor.edit(professor.id)}>
                                                     <Button variant={"outline"}>Editar</Button>
                                                 </Link>
                                             </DialogFooter>

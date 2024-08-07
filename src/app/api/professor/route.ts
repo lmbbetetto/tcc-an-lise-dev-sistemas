@@ -1,12 +1,40 @@
 import prisma from "@/lib/db";
 
 export async function GET(request: Request) {
+    const url = new URL(request.url);
+    const id = url.searchParams.get("id");
+
+    if (id) {
+        return getProfessorById(id);
+    } else {
+        return getAllProfessors();
+    }
+}
+
+async function getAllProfessors() {
     try {
         const professors = await prisma.professor.findMany();
         return new Response(JSON.stringify(professors), { status: 200, headers: { 'Content-Type': 'application/json' } });
     } catch (err) {
         console.error("Erro ao buscar professores:", err);
         return new Response(JSON.stringify({ message: "Erro ao buscar professores", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
+}
+
+async function getProfessorById(id: string) {
+    try {
+        const professor = await prisma.professor.findUnique({
+            where: { id: Number(id) }
+        });
+
+        if (!professor) {
+            return new Response(JSON.stringify({ message: "Professor não encontrado" }), { status: 404 });
+        }
+
+        return new Response(JSON.stringify(professor), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    } catch (err) {
+        console.error("Erro ao buscar professor:", err);
+        return new Response(JSON.stringify({ message: "Erro ao buscar professor", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 }
 
@@ -30,9 +58,8 @@ export async function POST(request: Request) {
             nivelFormacao,
         } = await request.json();
 
-        const generateProfessorCode = () => {
-            const idProfessor = Math.floor(10000000 + Math.random() * 90000000)
-            return idProfessor.toString()
+        if (!teacherName || !phone || !email || !gender || !nascimento || !rua || !numero || !bairro || !cidade || !uf || !course || !instituicao || !conclusion || !nivelFormacao) {
+            return new Response(JSON.stringify({ message: 'Todos os campos são obrigatórios.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
         }
 
         const dobPattern = /^\d{2}\/\d{2}\/\d{4}$/;
@@ -40,11 +67,8 @@ export async function POST(request: Request) {
             return new Response(JSON.stringify({ message: 'Data de nascimento inválida. Use o formato DD/MM/YYYY.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
         }
 
-        const nascimentoDate = new Date(nascimento.split('/').reverse().join('-'))
-
         const professor = await prisma.professor.create({
             data: {
-                codeProfessor: generateProfessorCode(),
                 name: teacherName,
                 telefone: phone,
                 email,
@@ -65,10 +89,11 @@ export async function POST(request: Request) {
 
         const { id } = professor;
 
-        console.log(professor)
+        console.log('Professor Created:', professor);
         return new Response(JSON.stringify({ message: 'Funcionando', id, professor }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     } catch (err) {
-        return new Response(JSON.stringify({ message: "Error", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        console.error('Error creating professor:', err);
+        return new Response(JSON.stringify({ message: "Error", err: String(err) }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 }
 

@@ -1,61 +1,80 @@
-"use client"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
+'use client';
 
-import { toast, useToast } from "@/components/ui/use-toast"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { schema, Schema } from "./schema"
+import { useEffect } from "react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { schema, Schema } from "./schema";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
-export default function CreateTeacher() {
-    const [gender, setGender] = useState<string | undefined>(undefined)
+const fetchUserData = async (id: string) => {
+    try {
+        const response = await fetch(`/api/professor?id=${id}`, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to fetch user data", error);
+        throw error;
+    }
+};
+
+export default function UserPage() {
+    const params = useParams();
+    const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {},
-    })
+    });
 
-    const onSubmit = async (data: Schema) => {
-        try {
-            const response = await fetch('/api/professor', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ ...data, gender }),
-            });
-
-            console.log({ ...data, gender });
-    
-            if (response.ok) {
-                toast({ title: 'Success', description: 'Professor cadastrado com sucesso!' });
-                form.reset();
-                setGender(undefined);
-            } else {
-                const errorData = await response.json();
-                toast({ title: 'Error', description: errorData.message || 'Erro ao cadastrar professor.' });
-            }
-        } catch (error) {
-            toast({ title: 'Error', description: 'Erro ao cadastrar professor.' });
+    useEffect(() => {
+        if (id) {
+            fetchUserData(id as string)
+                .then((data) => {
+                    console.log("Dados do usuário:", data);
+                    form.reset({
+                        teacherName: data.name,
+                        phone: data.telefone,
+                        email: data.email,
+                        genero: data.genero,
+                        nascimento: data.nascimento,
+                        rua: data.rua,
+                        numero: data.numero,
+                        complemento: data.complemento,
+                        bairro: data.bairro,
+                        cidade: data.cidade,
+                        uf: data.estado,
+                        course: data.curso,
+                        instituicao: data.instituicao,
+                        conclusion: data.anoConclusao,
+                    });
+                })
+                .catch((error) => console.error("Error fetching user data:", error));
+        } else {
+            console.error("ID não encontrado na URL");
         }
-    }
+    }, [form, id]);
 
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
+                <form onSubmit={() => {}} className="space-y-8 mb-8">
                     <h1 className="text-m text-muted-foreground">Dados pessoais</h1>
                     <FormField
                         control={form.control}
                         name="teacherName"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Nome completo:</FormLabel>
+                                <FormLabel>Nome completo</FormLabel>
                                 <FormControl>
                                     <Input {...field} />
                                 </FormControl>
@@ -68,9 +87,9 @@ export default function CreateTeacher() {
                         name="phone"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Telefone:</FormLabel>
+                                <FormLabel>Telefone</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="tel" />
+                                    <Input {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -81,45 +100,40 @@ export default function CreateTeacher() {
                         name="email"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>E-mail:</FormLabel>
+                                <FormLabel>E-mail</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="email" />
+                                    <Input {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <FormItem>
-                        <FormLabel>Selecione seu gênero:</FormLabel>
-                        <FormControl>
-                            <Select value={gender} onValueChange={setGender}>
-                                <SelectTrigger className="w-[180px]">
-                                    <SelectValue placeholder="Gênero" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectGroup>
-                                        <SelectItem value="masculino">Masculino</SelectItem>
-                                        <SelectItem value="feminino">Feminino</SelectItem>
-                                    </SelectGroup>
-                                </SelectContent>
-                            </Select>
-                        </FormControl>
-                        <FormMessage />
-                    </FormItem>
+                    <FormField
+                        control={form.control}
+                        name="genero"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Gênero</FormLabel>
+                                <FormControl>
+                                    <Input {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <FormField
                         control={form.control}
                         name="nascimento"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Data de nascimento:</FormLabel>
+                                <FormLabel>Data de nascimento</FormLabel>
                                 <FormControl>
-                                    <Input className="w-[50%]" {...field} />
+                                    <Input {...field} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-
                     <h1 className="pt-10 text-m text-muted-foreground">Endereço</h1>
                     <div className="flex gap-4">
                         <div className="w-[85%]">
@@ -128,7 +142,7 @@ export default function CreateTeacher() {
                                 name="rua"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Rua:</FormLabel>
+                                        <FormLabel>Rua</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -143,7 +157,7 @@ export default function CreateTeacher() {
                                 name="numero"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Número:</FormLabel>
+                                        <FormLabel>Número</FormLabel>
                                         <FormControl>
                                             <Input {...field} />
                                         </FormControl>
@@ -158,7 +172,7 @@ export default function CreateTeacher() {
                         name="complemento"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Complemento:</FormLabel>
+                                <FormLabel>Complemento</FormLabel>
                                 <FormControl>
                                     <Input className="w-[50%]" {...field} />
                                 </FormControl>
@@ -171,7 +185,7 @@ export default function CreateTeacher() {
                         name="bairro"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Bairro:</FormLabel>
+                                <FormLabel>Bairro</FormLabel>
                                 <FormControl>
                                     <Input className="w-[50%]" {...field} />
                                 </FormControl>
@@ -185,7 +199,7 @@ export default function CreateTeacher() {
                             name="cidade"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Cidade:</FormLabel>
+                                    <FormLabel>Cidade</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -198,7 +212,7 @@ export default function CreateTeacher() {
                             name="uf"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Estado:</FormLabel>
+                                    <FormLabel>Estado</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -207,14 +221,13 @@ export default function CreateTeacher() {
                             )}
                         />
                     </div>
-
                     <h1 className="pt-10 text-m text-muted-foreground">Formação</h1>
                     <FormField
                         control={form.control}
                         name="course"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Curso:</FormLabel>
+                                <FormLabel>Curso</FormLabel>
                                 <FormControl>
                                     <Input {...field} />
                                 </FormControl>
@@ -227,7 +240,7 @@ export default function CreateTeacher() {
                         name="instituicao"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Instituição:</FormLabel>
+                                <FormLabel>Instituição</FormLabel>
                                 <FormControl>
                                     <Input {...field} />
                                 </FormControl>
@@ -241,7 +254,7 @@ export default function CreateTeacher() {
                             name="conclusion"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Ano de conclusão:</FormLabel>
+                                    <FormLabel>Ano de conclusão</FormLabel>
                                     <FormControl>
                                         <Input {...field} />
                                     </FormControl>
@@ -250,10 +263,9 @@ export default function CreateTeacher() {
                             )}
                         />
                     </div>
-
-                    <Button type="submit" onClick={form.handleSubmit(onSubmit)}>Confirmar</Button>
                 </form>
+                <Button type="submit">Atualizar cadastro</Button>
             </Form>
         </ScrollArea>
-    )
+    );
 }
