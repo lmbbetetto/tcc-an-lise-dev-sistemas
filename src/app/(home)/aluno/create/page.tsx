@@ -2,8 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { z } from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -24,49 +22,86 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import Link from "next/link"
 import { ScrollArea } from "@/components/ui/scroll-area"
-
-const formSchema = z.object({
-    studentName: z.string().min(2, { message: "Campo obrigatório" }),
-    nascimento: z.string(),
-    cpf: z.string().optional(),
-    rg: z.string().optional(),
-    phone: z.string(),
-    phonePai: z.string().optional(),
-    phoneMae: z.string().optional(),
-    rendaFamilia: z.string(),
-    pai: z.string().optional(),
-    mae: z.string().optional(),
-    profMae: z.string().optional(),
-    profPai: z.string().optional(),
-
-    escola: z.string(),
-    periodo: z.string(),
-    serie: z.string(),
-
-    rua: z.string(),
-    numero: z.string(),
-    complemento: z.string(),
-    bairro: z.string(),
-    cidade: z.string(),
-    uf: z.string(),
-})
+import { AlunoPayload } from "@/service/aluno"
+import { schema, Schema } from "./schema"
+import { createNewAluno } from "./actions"
+import { toast } from "@/components/ui/use-toast"
 
 export default function CreateAluno() {
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
+    const form = useForm<Schema>({
+        resolver: zodResolver(schema),
         defaultValues: {
-            studentName: "",
+            bairro: '',
+            cidade: '',
+            complemento: '',
+            escola: '',
+            nascimento: '',
+            numero: '',
+            periodo: '',
+            phone: '',
+            rendaFamilia: '',
+            rua: '',
+            serie: '',
+            studentName: '',
+            uf: '',
+            cpf: '',
+            mae: '',
+            pai: '',
+            phoneMae: '',
+            phonePai: '',
+            profMae: '',
+            profPai: '',
+            rg: ''
         },
-    })
+    });
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
-    }
+    const { reset } = form;
+
+    const onSubmit = async (data: Schema) => {
+        try {
+            const payload: AlunoPayload = {
+                bairro: data.bairro,
+                cidade: data.cidade,
+                cpf: data.cpf ?? '',
+                escola: data.escola,
+                nascimento: data.nascimento,
+                studentName: data.studentName,
+                numero: data.numero,
+                periodo: data.periodo,
+                rendaFamilia: Number(data.rendaFamilia),
+                rg: data.rg ?? '',
+                rua: data.rua,
+                serie: data.serie,
+                phone: data.phone,
+                uf: data.uf,
+                complemento: data.complemento,
+                mae: data.mae,
+                pai: data.pai,
+                phoneMae: data.phoneMae,
+                phonePai: data.phonePai,
+                profMae: data.profMae,
+                profPai: data.profPai
+            };
+
+            console.log('teste')
+
+            await createNewAluno(payload);
+
+            toast({
+                title: "Sucesso!",
+                description: "Aluno cadastrado com sucesso!",
+            });
+
+            reset();
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Ocorreu um erro ao cadastrar o aluno.",
+                variant: "destructive",
+            });
+        }
+    };
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
@@ -92,7 +127,7 @@ export default function CreateAluno() {
                             <FormItem className="w-[50%]">
                                 <FormLabel>Data de nascimento: *</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="email" />
+                                    <Input {...field} type="text" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -273,9 +308,9 @@ export default function CreateAluno() {
                                     <FormItem>
                                         <FormLabel>Selecione o período: *</FormLabel>
                                         <FormControl>
-                                            <Select {...form}>
-                                                <SelectTrigger>
-                                                    <SelectValue placeholder="Período" />
+                                            <Select {...field} value={field.value} onValueChange={field.onChange}>
+                                                <SelectTrigger className="w-[180px]">
+                                                    <SelectValue placeholder="Selecione" />
                                                 </SelectTrigger>
                                                 <SelectContent>
                                                     <SelectGroup>
@@ -381,7 +416,7 @@ export default function CreateAluno() {
                         />
                     </div>
 
-                    <Button type="submit">Confirmar</Button>
+                    <Button type="submit">Cadastrar</Button>
                 </form>
             </Form>
         </ScrollArea>

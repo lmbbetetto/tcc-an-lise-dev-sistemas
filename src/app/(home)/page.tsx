@@ -1,3 +1,4 @@
+import { ControlledInput } from "@/components/controlled-field";
 import CardChamada from "./components/button-chamada";
 import CourseCountCard from "./components/course-count-card";
 import CardAddStudent from "./components/new-add-student";

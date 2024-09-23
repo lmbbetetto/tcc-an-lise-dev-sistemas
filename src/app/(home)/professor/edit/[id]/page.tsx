@@ -9,6 +9,10 @@ import { useForm } from "react-hook-form";
 import { schema, Schema } from "./schema";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, Select } from "@/components/ui/select";
+import { TeacherPayload, updateProfessor } from "@/service/professor";
+import { toast } from "@/components/ui/use-toast";
+import { editProfessor } from "../../create/actions";
 
 const fetchUserData = async (id: string) => {
     try {
@@ -40,22 +44,22 @@ export default function UserPage() {
         if (id) {
             fetchUserData(id as string)
                 .then((data) => {
-                    console.log("Dados do usuário:", data);
                     form.reset({
                         teacherName: data.name,
                         phone: data.telefone,
                         email: data.email,
-                        genero: data.genero,
+                        gender: data.gender ?? '',
                         nascimento: data.nascimento,
                         rua: data.rua,
                         numero: data.numero,
                         complemento: data.complemento,
                         bairro: data.bairro,
                         cidade: data.cidade,
-                        uf: data.estado,
+                        estado: data.estado,
                         course: data.curso,
                         instituicao: data.instituicao,
                         conclusion: data.anoConclusao,
+                        nivelFormacao: data.nivelFormacao ?? ''
                     });
                 })
                 .catch((error) => console.error("Error fetching user data:", error));
@@ -64,10 +68,49 @@ export default function UserPage() {
         }
     }, [form, id]);
 
+    const onSubmit = async (data: Schema) => {
+        if (id) {
+            console.log('teste')
+            try {
+                const payload: TeacherPayload = {
+                    teacherName: data.teacherName,
+                    phone: data.phone,
+                    email: data.email,
+                    nascimento: data.nascimento,
+                    rua: data.rua,
+                    numero: data.numero,
+                    complemento: data.complemento,
+                    bairro: data.bairro,
+                    cidade: data.cidade,
+                    estado: data.estado,
+                    course: data.course,
+                    instituicao: data.instituicao,
+                    conclusion: data.conclusion,
+                    gender: data.gender || '',
+                    nivelFormacao: data.nivelFormacao || ''
+                };
+
+                await editProfessor(Number(id), payload);
+                toast({
+                    title: "Sucesso!",
+                    description: "Professor editado com sucesso!",
+                });
+            } catch (error) {
+                toast({
+                    title: "Erro",
+                    description: "Ocorreu um erro ao editar o professor.",
+                    variant: "destructive",
+                });
+            }
+        } else {
+            console.error("ID não encontrado na URL");
+        }
+    };
+
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
-                <form onSubmit={() => {}} className="space-y-8 mb-8">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mb-8">
                     <h1 className="text-m text-muted-foreground">Dados pessoais</h1>
                     <FormField
                         control={form.control}
@@ -110,12 +153,22 @@ export default function UserPage() {
                     />
                     <FormField
                         control={form.control}
-                        name="genero"
+                        name="gender"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Gênero</FormLabel>
+                                <FormLabel>Selecione seu gênero:</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Select {...field} value={field.value} onValueChange={field.onChange}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Selecione" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="masculino">Masculino</SelectItem>
+                                                <SelectItem value="feminino">Feminino</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -209,7 +262,7 @@ export default function UserPage() {
                         />
                         <FormField
                             control={form.control}
-                            name="uf"
+                            name="estado"
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Estado</FormLabel>
@@ -248,6 +301,29 @@ export default function UserPage() {
                             </FormItem>
                         )}
                     />
+                    <FormField
+                        control={form.control}
+                        name="nivelFormacao"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Nível de formação:</FormLabel>
+                                <FormControl>
+                                    <Select {...field} value={field.value} onValueChange={field.onChange}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Selecione" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                <SelectItem value="medio">Médio</SelectItem>
+                                                <SelectItem value="superior">Superior</SelectItem>
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <div className="grid grid-cols-2 gap-4">
                         <FormField
                             control={form.control}
@@ -263,8 +339,8 @@ export default function UserPage() {
                             )}
                         />
                     </div>
+                    <Button type="submit">Atualizar cadastro</Button>
                 </form>
-                <Button type="submit">Atualizar cadastro</Button>
             </Form>
         </ScrollArea>
     );

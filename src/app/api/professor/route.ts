@@ -1,4 +1,5 @@
 import prisma from "@/lib/db";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
     const url = new URL(request.url);
@@ -51,20 +52,24 @@ export async function POST(request: Request) {
             complemento,
             bairro,
             cidade,
-            uf,
+            estado,
             course,
             instituicao,
             conclusion,
             nivelFormacao,
         } = await request.json();
-
-        if (!teacherName || !phone || !email || !gender || !nascimento || !rua || !numero || !bairro || !cidade || !uf || !course || !instituicao || !conclusion || !nivelFormacao) {
+        const requiredFields = [teacherName, phone, email, gender, nascimento, rua, numero, bairro, cidade, estado, course, instituicao, conclusion, nivelFormacao];
+        if (requiredFields.some(field => !field)) {
             return new Response(JSON.stringify({ message: 'Todos os campos são obrigatórios.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
         }
-
         const dobPattern = /^\d{2}\/\d{2}\/\d{4}$/;
         if (!dobPattern.test(nascimento)) {
             return new Response(JSON.stringify({ message: 'Data de nascimento inválida. Use o formato DD/MM/YYYY.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+        }
+        const [day, month, year] = nascimento.split('/').map(Number);
+        const birthDate = new Date(year, month - 1, day);
+        if (birthDate.getDate() !== day || birthDate.getMonth() + 1 !== month || birthDate.getFullYear() !== year) {
+            return new Response(JSON.stringify({ message: 'Data de nascimento inválida.' }), { status: 400, headers: { 'Content-Type': 'application/json' } });
         }
 
         const professor = await prisma.professor.create({
@@ -79,7 +84,7 @@ export async function POST(request: Request) {
                 complemento,
                 bairro,
                 cidade,
-                estado: uf,
+                estado,
                 curso: course,
                 instituicao,
                 anoConclusao: conclusion,
@@ -90,10 +95,17 @@ export async function POST(request: Request) {
         const { id } = professor;
 
         console.log('Professor Created:', professor);
-        return new Response(JSON.stringify({ message: 'Funcionando', id, professor }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify({ message: 'Professor criado com sucesso!', id, professor }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+        });
+
     } catch (err) {
         console.error('Error creating professor:', err);
-        return new Response(JSON.stringify({ message: "Error", err: String(err) }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify({ message: "Erro ao criar professor", error: String(err) }), {
+            status: 500,
+            headers: { 'Content-Type': 'application/json' }
+        });
     }
 }
 

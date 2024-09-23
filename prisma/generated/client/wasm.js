@@ -122,26 +122,27 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.ProfessorScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  nascimento: 'nascimento',
   telefone: 'telefone',
   email: 'email',
-  genero: 'genero',
-  nascimento: 'nascimento',
-  rua: 'rua',
-  numero: 'numero',
-  complemento: 'complemento',
+  anoConclusao: 'anoConclusao',
   bairro: 'bairro',
   cidade: 'cidade',
-  estado: 'estado',
+  complemento: 'complemento',
   curso: 'curso',
+  estado: 'estado',
+  genero: 'genero',
   instituicao: 'instituicao',
-  anoConclusao: 'anoConclusao',
-  nivelFormacao: 'nivelFormacao'
+  nivelFormacao: 'nivelFormacao',
+  numero: 'numero',
+  rua: 'rua'
 };
 
 exports.Prisma.DisciplinasScalarFieldEnum = {
   id: 'id',
   idProfessor: 'idProfessor',
-  nomeDisciplina: 'nomeDisciplina'
+  nomeDisciplina: 'nomeDisciplina',
+  idCurso: 'idCurso'
 };
 
 exports.Prisma.CursosScalarFieldEnum = {
@@ -159,7 +160,19 @@ exports.Prisma.AlunoScalarFieldEnum = {
   periodo: 'periodo',
   serie: 'serie',
   telefone: 'telefone',
-  rendaFamilia: 'rendaFamilia'
+  rendaFamilia: 'rendaFamilia',
+  bairro: 'bairro',
+  cidade: 'cidade',
+  complemento: 'complemento',
+  mae: 'mae',
+  numero: 'numero',
+  pai: 'pai',
+  phoneMae: 'phoneMae',
+  phonePai: 'phonePai',
+  profMae: 'profMae',
+  profPai: 'profPai',
+  rua: 'rua',
+  uf: 'uf'
 };
 
 exports.Prisma.FaltasDisciplinaresScalarFieldEnum = {

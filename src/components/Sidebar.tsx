@@ -240,12 +240,6 @@ export default function Sidebar() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-
-          <div className="mt-4">
-            <h1 className="text-sm text-muted-foreground mb-3">Relatórios</h1>
-            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted ml-2 p-1 rounded-sm">Relatório por aluno</p></Link>
-            <Link href="/"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted ml-2 p-1 rounded-sm">Relatório por turma</p></Link>
-          </div>
         </div>
       </ScrollArea>
 

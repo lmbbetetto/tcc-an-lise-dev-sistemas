@@ -2,8 +2,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { z } from "zod"
-
 import { Button } from "@/components/ui/button"
 import {
     Form,
@@ -25,8 +23,14 @@ import {
 } from "@/components/ui/select"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { schema, Schema } from "./schema"
+import { useEffect, useState } from "react"
+import { TeacherShow } from "@/service/professor"
+import { Curso } from "@/service/curso"
 
 export default function CreateCurso() {
+    const [professors, setProfessors] = useState<TeacherShow[]>([]);
+    const [cursos, setCursos] = useState<Curso[]>([]);
+
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -36,10 +40,36 @@ export default function CreateCurso() {
             professor: ''
         },
     })
+
+    async function fetchProfessors() {
+        const response = await fetch('/api/professor', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setProfessors(data);
+        };
+    }
+
+    async function fetchCursos() {
+        const response = await fetch('/api/curso', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setCursos(data);
+        };
+    }
+
+    useEffect(() => {
+        fetchProfessors();
+        fetchCursos();
+    }, []);
+
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
-                <form onSubmit={() => {}} className="space-y-8 p-2 pt-0">
+                <form onSubmit={() => { }} className="space-y-8 p-2 pt-0">
                     <FormField
                         control={form.control}
                         name="name"
@@ -67,8 +97,11 @@ export default function CreateCurso() {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="leonardo.betetto">Leonardo Manoel</SelectItem>
-                                                <SelectItem value="joaozinho.silva">Joãozinho da Silva</SelectItem>
+                                                {professors.map((professor) => (
+                                                    <SelectItem key={professor.id} value={String(professor.id)}>
+                                                        {professor.name}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -90,9 +123,11 @@ export default function CreateCurso() {
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="supermercado">Supermercado</SelectItem>
-                                                <SelectItem value="administrativo">Administrativo</SelectItem>
-                                                <SelectItem value="preQualificacao">Pré-qualificação</SelectItem>
+                                                {cursos.map((curso) => (
+                                                    <SelectItem key={curso.id} value={String(curso.id)}>
+                                                        {curso.nomeCurso}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
