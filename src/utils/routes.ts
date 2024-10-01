@@ -26,7 +26,8 @@ export const routes = {
   },
   disciplina: {
     new: '/disciplina/create',
-    search: '/disciplina/search'
+    search: '/disciplina/search',
+    edit: (id: string): string => `/disciplina/edit/${id}`
   },
   faltasDisciplinares: {
     new: '/faltas-disciplinares/create',

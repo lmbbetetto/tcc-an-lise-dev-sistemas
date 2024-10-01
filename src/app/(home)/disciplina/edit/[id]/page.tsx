@@ -1,48 +1,48 @@
-'use client'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+'use client';
 
-import { Button } from "@/components/ui/button"
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+import { useEffect, useState } from "react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+import { editDisciplina } from "../../create/actions";
+import { schema, Schema } from "../../create/schema";
+import { Curso } from "@/service/curso";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { TeacherShow } from "@/service/professor";
+import { DisciplinaPayload } from "@/service/disciplina";
 
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { schema, Schema } from "./schema"
-import { useEffect, useState } from "react"
-import { TeacherShow } from "@/service/professor"
-import { Curso } from "@/service/curso"
-import { createNewDisciplina } from "./actions"
-import { toast } from "@/components/ui/use-toast"
-import { DisciplinaPayload } from "@/service/disciplina"
-
-export default function CreateCurso() {
+export default function UserPage() {
+    const params = useParams();
+    const id = Array.isArray(params.id) ? params.id[0] : params.id;
     const [professors, setProfessors] = useState<TeacherShow[]>([]);
     const [cursos, setCursos] = useState<Curso[]>([]);
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
-        defaultValues: {
-            id: '',
-            curse: '',
-            name: '',
-            professor: ''
-        },
-    })
+        defaultValues: {},
+    });
+
+    const fetchUserData = async (id: string) => {
+        try {
+            const response = await fetch(`/api/disciplina?id=${id}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error(`Error: ${response.status} ${response.statusText}`);
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error("Failed to fetch user data", error);
+            throw error;
+        }
+    };
 
     async function fetchProfessors() {
         const response = await fetch('/api/professor', {
@@ -51,7 +51,7 @@ export default function CreateCurso() {
         if (response.ok) {
             const data = await response.json();
             setProfessors(data);
-        };
+        }
     }
 
     async function fetchCursos() {
@@ -61,38 +61,50 @@ export default function CreateCurso() {
         if (response.ok) {
             const data = await response.json();
             setCursos(data);
-        };
+        }
     }
 
     useEffect(() => {
-        fetchProfessors();
-        fetchCursos();
-    }, []);
+        async function fetchInitialData() {
+            await fetchCursos();
+            await fetchProfessors();
 
-    const { reset } = form;
+            if (id) {
+                const data = await fetchUserData(id as string);
+                form.reset({
+                    curse: data.idCurso,
+                    professor: data.idProfessor,
+                    name: data.nomeDisciplina,
+                });
+            }
+        }
+
+        fetchInitialData();
+    }, [id]);
 
     const onSubmit = async (data: Schema) => {
-        try {
-            const payload: DisciplinaPayload = {
-                idCurso: Number(data.curse),
-                idProfessor: Number(data.professor),
-                nomeDisciplina: data.name
-            };
-
-            await createNewDisciplina(payload);
-
-            toast({
-                title: "Sucesso!",
-                description: "Professor criado com sucesso!",
-            });
-
-            reset();
-        } catch (error) {
-            toast({
-                title: "Erro",
-                description: "Ocorreu um erro ao criar o professor.",
-                variant: "destructive",
-            });
+        console.log("Dados do formulário:", data);
+        if (id) {
+            try {
+                const payload: DisciplinaPayload = {
+                    idCurso: Number(data.curse),
+                    idProfessor: Number(data.professor),
+                    nomeDisciplina: data.name,
+                };
+                await editDisciplina(Number(id), payload);
+                toast({
+                    title: "Sucesso!",
+                    description: "Disciplina editada com sucesso!",
+                });
+            } catch (error) {
+                toast({
+                    title: "Erro",
+                    description: "Ocorreu um erro ao editar a disciplina.",
+                    variant: "destructive",
+                });
+            }
+        } else {
+            console.error("ID não encontrado na URL");
         }
     };
 
@@ -113,7 +125,6 @@ export default function CreateCurso() {
                             </FormItem>
                         )}
                     />
-
                     <FormField
                         control={form.control}
                         name="professor"
@@ -140,7 +151,6 @@ export default function CreateCurso() {
                             </FormItem>
                         )}
                     />
-
                     <FormField
                         control={form.control}
                         name="curse"
@@ -167,10 +177,9 @@ export default function CreateCurso() {
                             </FormItem>
                         )}
                     />
-
                     <Button type="submit">Confirmar</Button>
                 </form>
             </Form>
         </ScrollArea>
-    )
+    );
 }

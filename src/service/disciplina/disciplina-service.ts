@@ -1,8 +1,8 @@
-import { Curso, CursoPayload } from "./types";
+import { DisciplinaPayload, DisciplinaShow } from "./types";
 
-export async function createCurso(data: CursoPayload): Promise<Curso> {
+export async function createDisciplina(data: DisciplinaPayload): Promise<DisciplinaShow> {
     try {
-        const response = await fetch('http://localhost:3000/api/curso', {
+        const response = await fetch('http://localhost:3000/api/disciplina', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -22,9 +22,9 @@ export async function createCurso(data: CursoPayload): Promise<Curso> {
     }
 }
 
-export async function updateCurso(id: string, data: CursoPayload): Promise<Curso> {
+export async function updateDisciplina(id: string, data: DisciplinaPayload): Promise<DisciplinaShow> {
     try {
-        const response = await fetch(`http://localhost:3000/api/curso/${id}`, {
+        const response = await fetch(`http://localhost:3000/api/disciplina/${id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
