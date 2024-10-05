@@ -191,10 +191,9 @@ exports.Prisma.MatriculaScalarFieldEnum = {
 
 exports.Prisma.TurmaScalarFieldEnum = {
   id: 'id',
-  idMatricula: 'idMatricula',
-  idDisciplina: 'idDisciplina',
   idCurso: 'idCurso',
-  nomeTurma: 'nomeTurma'
+  nomeTurma: 'nomeTurma',
+  disciplinas: 'disciplinas'
 };
 
 exports.Prisma.ChamadaScalarFieldEnum = {

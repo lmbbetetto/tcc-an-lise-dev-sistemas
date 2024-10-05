@@ -1,10 +1,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { routes } from "@/utils/routes";
 import { BookOpen, Plus } from "lucide-react";
 import Link from "next/link";
 
 export default function CardChamada() {
     return (
-        <Link href={'#chamada'} className="w-[50%]">
+        <Link href={routes.chamada.home} className="w-[50%]">
             <Card className="hover:bg-muted">
                 <CardHeader className="flex-row space-y-0 items-center justify-between pb-2">
                     <CardTitle className="text-base font-semibold">Chamada</CardTitle>

@@ -5,7 +5,6 @@ export async function POST(request: Request) {
     try {
         const { idProfessor, idCurso, nomeDisciplina } = await request.json();
 
-        // Verifica campos obrigatórios
         if (!idProfessor || !idCurso || !nomeDisciplina) {
             return new Response(
                 JSON.stringify({ message: 'Todos os campos obrigatórios devem ser preenchidos.' }),
@@ -13,7 +12,6 @@ export async function POST(request: Request) {
             );
         }
 
-        // Cria disciplina no Prisma
         const disciplina = await prisma.disciplinas.create({
             data: {
                 idProfessor,

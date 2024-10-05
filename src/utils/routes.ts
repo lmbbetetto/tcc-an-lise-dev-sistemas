@@ -7,12 +7,12 @@ export const routes = {
   },
   professor: {
     new: '/professor/create',
-    search: '/professor/search',
+    search: '/professor',
     edit: (id: string): string => `/professor/edit/${id}`,
   },
   aluno: {
     new: '/aluno/create',
-    search: '/aluno/search',
+    search: '/aluno',
     edit: (id: string): string => `/aluno/edit/${id}`,
   },
   turma: {
@@ -21,17 +21,17 @@ export const routes = {
   },
   curso: {
     new: '/curso/create',
-    search: '/curso/search',
+    search: '/curso',
     edit: (id: string): string => `/curso/edit/${id}`,
   },
   disciplina: {
     new: '/disciplina/create',
-    search: '/disciplina/search',
+    search: '/disciplina',
     edit: (id: string): string => `/disciplina/edit/${id}`
   },
   faltasDisciplinares: {
     new: '/faltas-disciplinares/create',
-    search: '/faltas-disciplinares/search'
+    search: '/faltas-disciplinares'
   },
   userPage: {
     user: (id: string): string => `/user/${id}`,

@@ -1,46 +1,40 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { EyeIcon, Pencil, Trash2 } from "lucide-react";
+import { EyeIcon, Trash2 } from "lucide-react";
 
 import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { FaltasDisciplinares } from "./components/faltas-disciplinares/faltas-disciplinares";
-import { useEffect, useState } from "react";
-import { Aluno } from "./types";
-import { toast } from "@/components/ui/use-toast";
+    AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
+
+import {
+    Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger,
+} from "@/components/ui/dialog"
 import Link from "next/link";
+import { toast } from "@/components/ui/use-toast";
 import { routes } from "@/utils/routes";
+import { Professor } from "./type";
 
-export function StudentsRows() {
-    const [alunos, setAlunos] = useState<Aluno[]>([]);
+export function TeacherRows() {
+    const [professors, setProfessors] = useState<Professor[]>([]);
 
-    async function fetchAlunos() {
-        const response = await fetch('/api/aluno', {
+    async function fetchProfessors() {
+        const response = await fetch('/api/professor', {
             method: 'GET',
         })
         if (response.ok) {
             const data = await response.json()
-            setAlunos(data);
+            setProfessors(data);
         }
     }
 
     useEffect(() => {
-        fetchAlunos();
+        fetchProfessors();
     }, [])
 
-    const handleDeleteAluno = async (id: string) => {
+    const handleDeleteProfessor = async (id: string) => {
         try {
-            const response = await fetch('/api/aluno', {
+            const response = await fetch('/api/professor', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -52,7 +46,7 @@ export function StudentsRows() {
                     title: "Sucesso",
                     description: "Professor excluído com sucesso.",
                 })
-                fetchAlunos()
+                fetchProfessors()
             } else {
                 toast({
                     title: "Erro",
@@ -69,8 +63,8 @@ export function StudentsRows() {
 
     return (
         <>
-            {alunos.map((aluno) => (
-                <TableRow key={aluno.id}>
+            {professors.map((professor) => (
+                <TableRow key={professor.id}>
                     <TableCell>
                         <Dialog>
                             <DialogTrigger asChild>
@@ -78,58 +72,41 @@ export function StudentsRows() {
                                     <Dialog>
                                         <DialogTrigger asChild>
                                             <Button variant="outline">
-                                                <EyeIcon className="h-3.5 w-3.5" />
-                                                <span className="sr-only">Visualizar Aluno</span>
+                                                <EyeIcon className="h-3 w-3" />
+                                                <span className="sr-only">Visualizar professor</span>
                                             </Button></DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
-                                                <DialogTitle className="text-2xl">{aluno.nome}</DialogTitle>
+                                                <DialogTitle className="text-2xl">{professor.name}</DialogTitle>
                                             </DialogHeader>
                                             <DialogDescription>
                                                 <div>
                                                     <span className="text-white">Dados pessoais</span>
                                                     <div className="flex flex-col gap-1 ml-2">
-                                                        <p>{aluno.telefone}</p>
-                                                        <p>{aluno.rg} | {aluno.cpf}</p>
-                                                        <p>Renda Familiar: {aluno.rendaFamilia}</p>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
-                                                    <span className="text-white">Pai</span>
-                                                    <div className="flex flex-col gap-1 ml-2">
-                                                        <p>{aluno.pai}</p>
-                                                        <p>{aluno.phonePai}</p>
-                                                        <p>{aluno.profPai}</p>
-                                                        <p></p>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
-                                                    <span className="text-white">Mãe</span>
-                                                    <div className="flex flex-col gap-1 ml-2">
-                                                        <p>{aluno.mae}</p>
-                                                        <p>{aluno.phoneMae}</p>
-                                                        <p>{aluno.profMae}</p>
-                                                        <p></p>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
-                                                    <span className="text-white">Escola</span>
-                                                    <div className="flex flex-col gap-1 ml-2">
-                                                        <span>{aluno.escola}</span>
-                                                        <span>{aluno.serie} - {aluno.periodo}</span>
+                                                        <p>{professor.telefone}</p>
+                                                        <p>{professor.email}</p>
+                                                        <p>{professor.nascimento}</p>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
                                                     <span className="text-white">Endereço</span>
                                                     <div className="flex flex-col gap-1 ml-2">
-                                                        <span>{aluno.rua}, {aluno.numero} - {aluno.complemento}</span>
-                                                        <span>{aluno.bairro}</span>
-                                                        <span>{aluno.cidade} - {aluno.uf}</span>
+                                                        <span>{professor.rua}, {professor.numero} - {professor.complemento}</span>
+                                                        <span>{professor.bairro}</span>
+                                                        <span>{professor.cidade} - {professor.estado}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-4">
+                                                    <span className="text-white">Formação</span>
+                                                    <div className="flex flex-col gap-1 ml-2">
+                                                        <span>{professor.curso}</span>
+                                                        <span>{professor.instituicao}</span>
+                                                        <span>Concluído em {professor.anoConclusao}</span>
                                                     </div>
                                                 </div>
                                             </DialogDescription>
                                             <DialogFooter>
-                                                <Link href={routes.aluno.edit(aluno.id)}>
+                                                <Link href={routes.professor.edit(professor.id)}>
                                                     <Button variant={"outline"}>Editar</Button>
                                                 </Link>
                                             </DialogFooter>
@@ -139,36 +116,35 @@ export function StudentsRows() {
                                     <AlertDialog>
                                         <AlertDialogTrigger asChild>
                                             <Button variant="outline">
-                                                <Trash2 className="h-3.5 w-3.5" />
-                                                <span className="sr-only">Excluir aluno</span>
+                                                <Trash2 className="h-3 w-3" />
+                                                <span className="sr-only">Excluir professor</span>
                                             </Button>
                                         </AlertDialogTrigger>
                                         <AlertDialogContent>
                                             <AlertDialogHeader>
-                                                <AlertDialogTitle>Excluir aluno?</AlertDialogTitle>
+                                                <AlertDialogTitle>Excluir professor?</AlertDialogTitle>
                                                 <AlertDialogDescription>
-                                                    Esta ação não poderá ser desfeita. Excluindo este aluno, ele será removido permanentemente do sistema!
+                                                    Esta ação não poderá ser desfeita. Excluindo este professor, ele será removido permanentemente do sistema!
                                                 </AlertDialogDescription>
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>
                                                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => handleDeleteAluno(aluno.id)}>Excluir</AlertDialogAction>
+                                                <AlertDialogAction onClick={() => handleDeleteProfessor(professor.id)}>Excluir</AlertDialogAction>
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
-                                    <FaltasDisciplinares />
                                 </div>
                             </DialogTrigger>
                         </Dialog>
                     </TableCell>
                     <TableCell className="font-mono text-xs font-medium">
-                        {aluno.id}
+                        {professor.codeProfessor}
                     </TableCell>
                     <TableCell className="font-medium">
-                        {aluno.nome}
+                        {professor.name}
                     </TableCell>
                     <TableCell className="font-medium">
-                        {aluno.telefone}
+                        {professor.telefone}
                     </TableCell>
                 </TableRow >
             ))
@@ -176,3 +152,4 @@ export function StudentsRows() {
         </>
     )
 }
+

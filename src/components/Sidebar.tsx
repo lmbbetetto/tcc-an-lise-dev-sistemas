@@ -111,7 +111,7 @@ export default function Sidebar() {
         <div className="grow">
           <section className="flex flex-col gap-2  mt-2 mb-6">
             <Link href={routes.home.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><House size={18} />Início</p></Link>
-            <Link href="#chamada"><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
+            <Link href={routes.chamada.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
           </section>
 
           <h1 className="text-sm text-muted-foreground">Cadastros</h1>

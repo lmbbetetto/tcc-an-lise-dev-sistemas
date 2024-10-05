@@ -3,45 +3,74 @@ import prisma from "@/lib/db";
 
 export async function POST(request: Request) {
     try {
-        const {
-            nomeCurso
-        } = await request.json();
+        const body = await request.json();
 
-        const requiredFields = [
-            nomeCurso
-        ];
+        // Validação dos dados da requisição
+        const { nomeTurma, idCurso, idProfessor } = schema.parse(body);
 
-        if (requiredFields.some(field => !field)) {
+        // Verificação se todos os campos obrigatórios foram enviados
+        if (!nomeTurma || !idCurso || !idProfessor) {
             return new Response(
-                JSON.stringify({ message: 'Todos os campos obrigatórios devem ser preenchidos.' }),
-                { status: 400, headers: { 'Content-Type': 'application/json' } }
+                JSON.stringify({
+                    message: "Todos os campos obrigatórios devem ser preenchidos.",
+                }),
+                { status: 400, headers: { "Content-Type": "application/json" } }
             );
         }
 
-        const aluno = await prisma.cursos.create({
+        // Verificar se o curso existe
+        const cursoExistente = await prisma.curso.findUnique({
+            where: { id: idCurso },
+        });
+
+        if (!cursoExistente) {
+            return new Response(
+                JSON.stringify({ message: "Curso não encontrado." }),
+                { status: 404, headers: { "Content-Type": "application/json" } }
+            );
+        }
+
+        // Verificar se o professor existe
+        const professorExistente = await prisma.professor.findUnique({
+            where: { id: idProfessor },
+        });
+
+        if (!professorExistente) {
+            return new Response(
+                JSON.stringify({ message: "Professor não encontrado." }),
+                { status: 404, headers: { "Content-Type": "application/json" } }
+            );
+        }
+
+        // Criar a turma associando ao curso e ao professor
+        const turma = await prisma.turma.create({
             data: {
-                nomeCurso
-            }
+                nomeTurma,
+                curso: {
+                    connect: { id: idCurso },
+                },
+                professor: {
+                    connect: { id: idProfessor },
+                },
+            },
         });
 
         return new Response(
-            JSON.stringify({ message: 'Curso criado com sucesso!', aluno }),
-            { status: 200, headers: { 'Content-Type': 'application/json' } }
+            JSON.stringify({ message: "Turma criada com sucesso!", turma }),
+            { status: 200, headers: { "Content-Type": "application/json" } }
         );
-
     } catch (err) {
-        console.error('Erro ao criar aluno:', err);
+        console.error("Erro ao criar turma:", err);
         return new Response(
             JSON.stringify({
-                message: "Erro ao criar aluno",
+                message: "Erro ao criar turma",
                 error: err instanceof Error ? err.message : String(err),
-                stack: err instanceof Error ? err.stack : undefined
+                stack: err instanceof Error ? err.stack : undefined,
             }),
-            { status: 500, headers: { 'Content-Type': 'application/json' } }
+            { status: 500, headers: { "Content-Type": "application/json" } }
         );
     }
 }
-
 export async function GET(request: Request) {
     const url = new URL(request.url);
     const id = url.searchParams.get("id");

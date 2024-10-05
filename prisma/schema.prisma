@@ -35,7 +35,6 @@ model Disciplinas {
   idCurso        Int
   cursos         Cursos    @relation(fields: [idCurso], references: [id])
   professor      Professor @relation(fields: [idProfessor], references: [id])
-  Turma          Turma[]
 }
 
 model Cursos {
@@ -86,19 +85,14 @@ model Matricula {
   dataInicio DateTime
   situacao   String
   aluno      Aluno    @relation(fields: [idAluno], references: [id])
-  Turma      Turma[]
 }
 
 model Turma {
-  id           Int         @id @default(autoincrement())
-  idMatricula  Int
-  idDisciplina Int
-  idCurso      Int
-  nomeTurma    String
-  Chamada      Chamada[]
-  curso        Cursos      @relation(fields: [idCurso], references: [id])
-  disciplina   Disciplinas @relation(fields: [idDisciplina], references: [id])
-  matricula    Matricula   @relation(fields: [idMatricula], references: [id])
+  id          Int    @id @default(autoincrement())
+  idCurso     Int
+  nomeTurma   String
+  disciplinas Int[]
+  curso       Cursos @relation(fields: [idCurso], references: [id])
 }
 
 model Chamada {
@@ -107,7 +101,6 @@ model Chamada {
   idAtividadeSala Int
   presenca        String
   atividadeSala   AtividadeSala @relation(fields: [idAtividadeSala], references: [id])
-  turma           Turma         @relation(fields: [idTurma], references: [id])
 }
 
 model AtividadeSala {
