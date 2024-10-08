@@ -216,7 +216,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Leonardo\\Desktop\\TCC\\sis-integrado-projeto-cara\\prisma\\generated\\client",
+      "value": "C:\\Users\\Leonardo\\OneDrive - Fundação Educacional do Município de Assis\\Área de Trabalho\\ADS\\TCC\\sis-integrado-projetocaraV2\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -230,7 +230,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Leonardo\\Desktop\\TCC\\sis-integrado-projeto-cara\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Leonardo\\OneDrive - Fundação Educacional do Município de Assis\\Área de Trabalho\\ADS\\TCC\\sis-integrado-projetocaraV2\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
