@@ -1,5 +1,6 @@
 import Sidebar from "@/components/Sidebar";
 import { Toaster } from "@/components/ui/toaster";
+import MenuBar from "./components/menu-bar";
 
 export default function HomeLayout({
   children,
@@ -8,8 +9,8 @@ export default function HomeLayout({
 }>) {
   return (
     <>
-      <Sidebar />
-      <main className="grid w-full h-full pl-[300px]">
+      <MenuBar />
+      <main className="w-full h-full">
         <div className="p-8">
           {children}
         </div>

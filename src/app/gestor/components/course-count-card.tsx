@@ -1,34 +1,29 @@
 'use client'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Users } from "lucide-react";
+import { Curso } from "@/service/curso";
+import { BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface Aluno {
-    id: number;
-}
-
-export default function StudentCountCard() {
-    const [alunos, setAlunos] = useState<Aluno[]>([]);
+export default function CourseCountCard() {
+    const [alunos, setAlunos] = useState<Curso[]>([]);
 
     async function fetchProfessors() {
-        const response = await fetch('/api/aluno', {
+        const response = await fetch('/api/curso', {
             method: 'GET',
         });
         if (response.ok) {
             const data = await response.json();
             setAlunos(data);
-            console.log(data)
         };
     }
     useEffect(() => {
         fetchProfessors();
     }, []);
-
     return (
         <Card>
             <CardHeader className="flex-row space-y-0 items-center justify-between pb-2">
-                <CardTitle className="text-base font-semibold">Alunos</CardTitle>
-                <Users className="w-4 h-4 text-muted-foreground" />
+                <CardTitle className="text-base font-semibold">Cursos</CardTitle>
+                <BookOpen className="w-4 h-4 text-muted-foreground" />
             </CardHeader>
 
             <CardContent className="space-y-1">
@@ -36,7 +31,7 @@ export default function StudentCountCard() {
                     {alunos.length}
                 </span>
                 <p className="text-xs text-muted-foreground">
-                    Quantidade de alunos cadastrados
+                    Quantidade de cursos cadastrados
                 </p>
             </CardContent>
         </Card>

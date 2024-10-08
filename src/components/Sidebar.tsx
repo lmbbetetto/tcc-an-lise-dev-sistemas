@@ -252,7 +252,7 @@ export default function Sidebar() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             <DropdownMenuItem className="flex gap-2 text-rose-500 dark:text-rose-400">
-              <span>Sair</span>
+              <span><Link href={routes.auth.home}>Sair</Link></span>
               <LogOut className="w-4 h-4" />
             </DropdownMenuItem>
             <DropdownMenuSeparator />
