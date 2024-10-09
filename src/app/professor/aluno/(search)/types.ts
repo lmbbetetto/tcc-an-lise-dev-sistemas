@@ -1,3 +1,5 @@
+import { Turma } from "@/service/turma";
+
 export interface Aluno {
     id: string;
     nome: string;
@@ -21,4 +23,5 @@ export interface Aluno {
     bairro: string;
     cidade: string;
     uf: string;
+    turma: Turma
 }

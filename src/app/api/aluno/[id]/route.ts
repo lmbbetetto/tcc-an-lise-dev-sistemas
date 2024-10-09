@@ -23,6 +23,7 @@ interface StudentPayload {
     bairro: string;
     cidade: string;
     uf: string;
+    idTurma: number;
 }
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
@@ -59,7 +60,8 @@ export async function PATCH(request: Request, { params }: { params: { id: string
                 complemento: data.complemento,
                 bairro: data.bairro,
                 cidade: data.cidade,
-                uf: data.uf
+                uf: data.uf,
+                idTurma: data.idTurma
             },
         });
 

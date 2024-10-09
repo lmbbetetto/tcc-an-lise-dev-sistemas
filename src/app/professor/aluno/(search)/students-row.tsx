@@ -86,7 +86,13 @@ export function StudentsRows() {
                                                 <DialogTitle className="text-2xl">{aluno.nome}</DialogTitle>
                                             </DialogHeader>
                                             <DialogDescription>
-                                                <div>
+                                                <div className="mb-">
+                                                    <span className="text-white">Turma</span>
+                                                    <div className="flex flex-col gap-1 ml-2">
+                                                        <p>{aluno.turma.nomeTurma}</p>
+                                                    </div>
+                                                </div>
+                                                <div className="mt-4">
                                                     <span className="text-white">Dados pessoais</span>
                                                     <div className="flex flex-col gap-1 ml-2">
                                                         <p>{aluno.telefone}</p>

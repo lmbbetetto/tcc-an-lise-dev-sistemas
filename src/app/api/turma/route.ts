@@ -4,12 +4,9 @@ import prisma from "@/lib/db";
 export async function POST(request: Request) {
     try {
         const body = await request.json();
+        const { idCurso, nomeTurma } = body;
 
-        // Validação dos dados da requisição
-        const { nomeTurma, idCurso, idProfessor } = schema.parse(body);
-
-        // Verificação se todos os campos obrigatórios foram enviados
-        if (!nomeTurma || !idCurso || !idProfessor) {
+        if (!idCurso || !nomeTurma) {
             return new Response(
                 JSON.stringify({
                     message: "Todos os campos obrigatórios devem ser preenchidos.",
@@ -17,9 +14,7 @@ export async function POST(request: Request) {
                 { status: 400, headers: { "Content-Type": "application/json" } }
             );
         }
-
-        // Verificar se o curso existe
-        const cursoExistente = await prisma.curso.findUnique({
+        const cursoExistente = await prisma.cursos.findUnique({
             where: { id: idCurso },
         });
 
@@ -29,35 +24,18 @@ export async function POST(request: Request) {
                 { status: 404, headers: { "Content-Type": "application/json" } }
             );
         }
-
-        // Verificar se o professor existe
-        const professorExistente = await prisma.professor.findUnique({
-            where: { id: idProfessor },
-        });
-
-        if (!professorExistente) {
-            return new Response(
-                JSON.stringify({ message: "Professor não encontrado." }),
-                { status: 404, headers: { "Content-Type": "application/json" } }
-            );
-        }
-
-        // Criar a turma associando ao curso e ao professor
-        const turma = await prisma.turma.create({
+        const novaTurma = await prisma.turma.create({
             data: {
                 nomeTurma,
                 curso: {
                     connect: { id: idCurso },
                 },
-                professor: {
-                    connect: { id: idProfessor },
-                },
             },
         });
 
         return new Response(
-            JSON.stringify({ message: "Turma criada com sucesso!", turma }),
-            { status: 200, headers: { "Content-Type": "application/json" } }
+            JSON.stringify({ message: "Turma criada com sucesso!", novaTurma }),
+            { status: 201, headers: { "Content-Type": "application/json" } }
         );
     } catch (err) {
         console.error("Erro ao criar turma:", err);
@@ -71,57 +49,83 @@ export async function POST(request: Request) {
         );
     }
 }
+
 export async function GET(request: Request) {
     const url = new URL(request.url);
     const id = url.searchParams.get("id");
 
     if (id) {
-        return getCursoById(id);
+        return getTurmaById(id);
     } else {
-        return getAllCursos();
+        return getAllTurmas();
     }
 }
 
-async function getAllCursos() {
+async function getAllTurmas() {
     try {
-        const cursos = await prisma.cursos.findMany();
-        return new Response(JSON.stringify(cursos), { status: 200, headers: { 'Content-Type': 'application/json' } });
-    } catch (err) {
-        console.error("Erro ao buscar cursos:", err);
-        return new Response(JSON.stringify({ message: "Erro ao buscar cursos", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
-    }
-}
-
-async function getCursoById(id: string) {
-    try {
-        const curso = await prisma.cursos.findUnique({
-            where: { id: Number(id) }
+        const turmas = await prisma.turma.findMany({
+            include: {
+                curso: true,
+            },
         });
 
-        if (!curso) {
-            return new Response(JSON.stringify({ message: "Curso não encontrado" }), { status: 404 });
-        }
-
-        return new Response(JSON.stringify(curso), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        return new Response(JSON.stringify(turmas), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
     } catch (err) {
-        console.error("Erro ao buscar aluno:", err);
-        return new Response(JSON.stringify({ message: "Erro ao buscar aluno", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        console.error("Erro ao buscar turmas:", err);
+        return new Response(
+            JSON.stringify({ message: "Erro ao buscar turmas", err }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
     }
 }
+
+async function getTurmaById(id: string) {
+    try {
+        const turma = await prisma.turma.findUnique({
+            where: { id: Number(id) },
+            include: {
+                curso: true,
+            },
+        });
+
+        if (!turma) {
+            return new Response(
+                JSON.stringify({ message: "Turma não encontrada" }),
+                { status: 404 }
+            );
+        }
+
+        return new Response(JSON.stringify(turma), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
+    } catch (err) {
+        console.error("Erro ao buscar turma:", err);
+        return new Response(
+            JSON.stringify({ message: "Erro ao buscar turma", err }),
+            { status: 500, headers: { 'Content-Type': 'application/json' } }
+        );
+    }
+}
+
 
 export async function DELETE(request: Request) {
     try {
         const { id } = await request.json();
 
-        const deletedCurso = await prisma.cursos.delete({
+        const deletedTurma = await prisma.turma.delete({
             where: {
                 id: parseInt(id)
             }
         });
 
-        console.log(deletedCurso);
-        return new Response(JSON.stringify({ message: 'Curso excluído com sucesso', deletedCurso }), { status: 200, headers: { 'Content-Type': 'application/json' } });
+        console.log(deletedTurma);
+        return new Response(JSON.stringify({ message: 'Turma excluída com sucesso', deletedTurma }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     } catch (err) {
-        return new Response(JSON.stringify({ message: "Erro ao excluir curso", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        console.error("Erro ao excluir turma:", err);
+        return new Response(JSON.stringify({ message: "Erro ao excluir turma", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 }

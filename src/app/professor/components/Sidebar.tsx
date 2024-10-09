@@ -21,7 +21,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: routes.professor.search,
+          link: routesProfessor.professor.search,
           text: "Buscar professor"
         }
       ]
@@ -31,7 +31,7 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: routes.aluno.search,
+          link: routesProfessor.aluno.search,
           text: "Buscar aluno"
         }
       ]
@@ -41,11 +41,11 @@ export default function Sidebar() {
     {
       items: [
         {
-          link: routes.faltasDisciplinares.new,
+          link: routesProfessor.faltasDisciplinares.new,
           text: "Cadastrar faltas disciplinares"
         },
         {
-          link: routes.faltasDisciplinares.search,
+          link: routesProfessor.faltasDisciplinares.search,
           text: "Buscar faltas disciplinares"
         }
       ]
@@ -60,8 +60,8 @@ export default function Sidebar() {
       <ScrollArea className="h-[35rem] w-[282px] pr-4">
         <div className="grow">
           <section className="flex flex-col gap-2  mt-2 mb-6">
-            <Link href={routes.home.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><House size={18} />Início</p></Link>
-            <Link href={routes.chamada.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
+            <Link href={routesProfessor.home.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><House size={18} />Início</p></Link>
+            <Link href={routesProfessor.chamada.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
           </section>
 
           <h1 className="text-sm text-muted-foreground">Cadastros</h1>
@@ -146,7 +146,7 @@ export default function Sidebar() {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <Link href={routes.userPage.user('H542R5')}><DropdownMenuItem>Perfil</DropdownMenuItem></Link>
+            <Link href={routesProfessor.userPage.user('H542R5')}><DropdownMenuItem>Perfil</DropdownMenuItem></Link>
           </DropdownMenuContent>
         </DropdownMenu>
 

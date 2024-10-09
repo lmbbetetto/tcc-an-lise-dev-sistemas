@@ -1,22 +1,26 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
-import { schema, Schema } from "./schema";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, Select } from "@/components/ui/select";
-import { TeacherPayload, updateProfessor } from "@/service/professor";
+import { TeacherPayload, TeacherShow, updateProfessor } from "@/service/professor";
 import { toast } from "@/components/ui/use-toast";
 import { editProfessor } from "../../create/actions";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { schema, Schema } from "../../create/schema";
+import { Aluno } from "@/service/aluno";
+import { FaltaDisciplinarPayload } from "@/service/faltas-disicplinares";
 
 const fetchUserData = async (id: string) => {
     try {
-        const response = await fetch(`/api/professor?id=${id}`, {
+        const response = await fetch(`/api/faltas-disciplinares?id=${id}`, {
             method: 'GET',
         });
 
@@ -35,31 +39,46 @@ export default function UserPage() {
     const params = useParams();
     const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
+    const [message, setMessage] = useState("");
+    const [professors, setProfessors] = useState<TeacherShow[]>([]);
+    const [alunos, setAlunos] = useState<Aluno[]>([]);
+
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {},
     });
 
+    async function fetchProfessors() {
+        const response = await fetch('/api/professor', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setProfessors(data);
+        };
+    }
+
+    async function fetchAlunos() {
+        const response = await fetch('/api/aluno', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setAlunos(data);
+        };
+    }
+
     useEffect(() => {
+        fetchProfessors();
+        fetchAlunos();
         if (id) {
             fetchUserData(id as string)
                 .then((data) => {
                     form.reset({
-                        teacherName: data.name,
-                        phone: data.telefone,
-                        email: data.email,
-                        gender: data.gender ?? '',
-                        nascimento: data.nascimento,
-                        rua: data.rua,
-                        numero: data.numero,
-                        complemento: data.complemento,
-                        bairro: data.bairro,
-                        cidade: data.cidade,
-                        estado: data.estado,
-                        course: data.curso,
-                        instituicao: data.instituicao,
-                        conclusion: data.anoConclusao,
-                        nivelFormacao: data.nivelFormacao ?? ''
+                        aluno: data.idAluno,
+                        data: data.dataFalta,
+                        descricao: data.descricao,
+                        professor: data.idProfessor
                     });
                 })
                 .catch((error) => console.error("Error fetching user data:", error));
@@ -72,25 +91,15 @@ export default function UserPage() {
         if (id) {
             console.log('teste')
             try {
-                const payload: TeacherPayload = {
-                    teacherName: data.teacherName,
-                    phone: data.phone,
-                    email: data.email,
-                    nascimento: data.nascimento,
-                    rua: data.rua,
-                    numero: data.numero,
-                    complemento: data.complemento,
-                    bairro: data.bairro,
-                    cidade: data.cidade,
-                    estado: data.estado,
-                    course: data.course,
-                    instituicao: data.instituicao,
-                    conclusion: data.conclusion,
-                    gender: data.gender || '',
-                    nivelFormacao: data.nivelFormacao || ''
+                const payload: FaltaDisciplinarPayload = {
+                    dataFalta: data.data,
+                    descricao: message,
+                    idAluno: Number(data.aluno),
+                    idProfessor: Number(data.professor),
+                    titulo: data.descricao
                 };
 
-                await editProfessor(Number(id), payload);
+                // await editProfessor(Number(id), payload);
                 toast({
                     title: "Sucesso!",
                     description: "Professor editado com sucesso!",
@@ -107,19 +116,22 @@ export default function UserPage() {
         }
     };
 
+    const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setMessage(event.target.value);
+    };
+
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 mb-8">
-                    <h1 className="text-m text-muted-foreground">Dados pessoais</h1>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
                     <FormField
                         control={form.control}
-                        name="teacherName"
+                        name="descricao"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Nome completo</FormLabel>
+                                <FormLabel>Titulo da ocorrência:</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input {...field} type="tel" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -127,45 +139,45 @@ export default function UserPage() {
                     />
                     <FormField
                         control={form.control}
-                        name="phone"
+                        name="data"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Telefone</FormLabel>
+                            <FormItem className="w-[50%]">
+                                <FormLabel>Data: *</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
+                                    <Input {...field} type="text" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
+                    <div className="grid w-full gap-3">
+                        <Label htmlFor="message">Descrição da ocorrência:</Label>
+                        <Textarea
+                            placeholder="Descreva a ocorrência."
+                            id="message"
+                            value={message}
+                            onChange={handleMessageChange}
+                        />
+                    </div>
+
                     <FormField
                         control={form.control}
-                        name="email"
+                        name="professor"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>E-mail</FormLabel>
+                                <FormLabel>Professor *</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="gender"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Selecione seu gênero:</FormLabel>
-                                <FormControl>
-                                    <Select {...field} value={field.value} onValueChange={field.onChange}>
-                                        <SelectTrigger className="w-[180px]">
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <SelectTrigger className="w-[280px]">
                                             <SelectValue placeholder="Selecione" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="masculino">Masculino</SelectItem>
-                                                <SelectItem value="feminino">Feminino</SelectItem>
+                                                {professors.map((professor) => (
+                                                    <SelectItem key={professor.id} value={String(professor.id)}>
+                                                        {professor.name}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -174,148 +186,25 @@ export default function UserPage() {
                             </FormItem>
                         )}
                     />
+
                     <FormField
                         control={form.control}
-                        name="nascimento"
+                        name="aluno"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Data de nascimento</FormLabel>
+                                <FormLabel>Alunos *</FormLabel>
                                 <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <h1 className="pt-10 text-m text-muted-foreground">Endereço</h1>
-                    <div className="flex gap-4">
-                        <div className="w-[85%]">
-                            <FormField
-                                control={form.control}
-                                name="rua"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Rua</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                        <div className="w-[15%]">
-                            <FormField
-                                control={form.control}
-                                name="numero"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Número</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage />
-                                    </FormItem>
-                                )}
-                            />
-                        </div>
-                    </div>
-                    <FormField
-                        control={form.control}
-                        name="complemento"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Complemento</FormLabel>
-                                <FormControl>
-                                    <Input className="w-[50%]" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="bairro"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Bairro</FormLabel>
-                                <FormControl>
-                                    <Input className="w-[50%]" {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                            control={form.control}
-                            name="cidade"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Cidade</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                        <FormField
-                            control={form.control}
-                            name="estado"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Estado</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                    <h1 className="pt-10 text-m text-muted-foreground">Formação</h1>
-                    <FormField
-                        control={form.control}
-                        name="course"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Curso</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="instituicao"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Instituição</FormLabel>
-                                <FormControl>
-                                    <Input {...field} />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
-                    <FormField
-                        control={form.control}
-                        name="nivelFormacao"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Nível de formação:</FormLabel>
-                                <FormControl>
-                                    <Select {...field} value={field.value} onValueChange={field.onChange}>
-                                        <SelectTrigger className="w-[180px]">
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <SelectTrigger className="w-[280px]">
                                             <SelectValue placeholder="Selecione" />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectGroup>
-                                                <SelectItem value="medio">Médio</SelectItem>
-                                                <SelectItem value="superior">Superior</SelectItem>
+                                                {alunos.map((aluno) => (
+                                                    <SelectItem key={aluno.id} value={String(aluno.id)}>
+                                                        {aluno.nome}
+                                                    </SelectItem>
+                                                ))}
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
@@ -324,22 +213,8 @@ export default function UserPage() {
                             </FormItem>
                         )}
                     />
-                    <div className="grid grid-cols-2 gap-4">
-                        <FormField
-                            control={form.control}
-                            name="conclusion"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Ano de conclusão</FormLabel>
-                                    <FormControl>
-                                        <Input {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                    <Button type="submit">Atualizar cadastro</Button>
+
+                    <Button type="submit">Confirmar</Button>
                 </form>
             </Form>
         </ScrollArea>

@@ -9,12 +9,13 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { schema, Schema } from "./schema"
-import { createNewProfessor } from "./actions"
+import { createNewFaltaDisciplinar } from "./actions"
 import { TeacherPayload, TeacherShow } from "@/service/professor"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useEffect, useState } from "react"
 import { Aluno } from "@/service/aluno"
+import { FaltaDisciplinarPayload } from "@/service/faltas-disicplinares"
 
 export default function CreateFaltaDisciplinar() {
    const [message, setMessage] = useState("");
@@ -60,25 +61,28 @@ export default function CreateFaltaDisciplinar() {
 
    const onSubmit = async (data: Schema) => {
       try {
-         const payload: TeacherPayload = {
-            teacherName: message,
-            phone: data.professor,
+         const payload: FaltaDisciplinarPayload = {
+            idAluno: Number(data.aluno),
+            idProfessor: Number(data.professor),
+            dataFalta: data.data,
+            descricao: message,
+            titulo: data.descricao
          };
 
          console.log('teste')
 
-         await createNewProfessor(payload);
+         await createNewFaltaDisciplinar(payload);
 
          toast({
             title: "Sucesso!",
-            description: "Professor criado com sucesso!",
+            description: "Falta disciplinar resgistrada com sucesso!",
          });
-
+         setMessage("");
          reset();
       } catch (error) {
          toast({
             title: "Erro",
-            description: "Ocorreu um erro ao criar o professor.",
+            description: "Ocorreu um erro ao resgistrar a falta disciplinar.",
             variant: "destructive",
          });
       }

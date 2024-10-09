@@ -1,7 +1,6 @@
 import { Decimal } from '@prisma/client/runtime/library';
 import prisma from "@/lib/db";
 
-
 export async function POST(request: Request) {
     try {
         const {
@@ -25,12 +24,13 @@ export async function POST(request: Request) {
             complemento,
             bairro,
             cidade,
-            uf
+            uf,
+            idTurma
         } = await request.json();
 
         const requiredFields = [
             studentName, nascimento, phone, rendaFamilia, escola, periodo, serie,
-            rua, numero, bairro, cidade, uf
+            rua, numero, bairro, cidade, uf, idTurma
         ];
 
         if (requiredFields.some(field => !field)) {
@@ -73,13 +73,13 @@ export async function POST(request: Request) {
                 complemento,
                 bairro,
                 cidade,
-                uf
+                uf,
+                idTurma: idTurma
             }
         });
-
         return new Response(
             JSON.stringify({ message: 'Aluno criado com sucesso!', aluno }),
-            { status: 200, headers: { 'Content-Type': 'application/json' } }
+            { status: 201, headers: { 'Content-Type': 'application/json' } }
         );
 
     } catch (err) {
@@ -98,9 +98,12 @@ export async function POST(request: Request) {
 export async function GET(request: Request) {
     const url = new URL(request.url);
     const id = url.searchParams.get("id");
+    const idTurma = url.searchParams.get("idTurma");
 
     if (id) {
         return getAlunoById(id);
+    } else if (idTurma) {
+        return getAlunosByTurma(idTurma);
     } else {
         return getAllAlunos();
     }
@@ -108,7 +111,11 @@ export async function GET(request: Request) {
 
 async function getAllAlunos() {
     try {
-        const alunos = await prisma.aluno.findMany();
+        const alunos = await prisma.aluno.findMany({
+            include: {
+                turma: true,
+            },
+        });
         return new Response(JSON.stringify(alunos), { status: 200, headers: { 'Content-Type': 'application/json' } });
     } catch (err) {
         console.error("Erro ao buscar alunos:", err);
@@ -119,7 +126,10 @@ async function getAllAlunos() {
 async function getAlunoById(id: string) {
     try {
         const aluno = await prisma.aluno.findUnique({
-            where: { id: Number(id) }
+            where: { id: Number(id) },
+            include: {
+                turma: true,
+            },
         });
 
         if (!aluno) {
@@ -132,6 +142,29 @@ async function getAlunoById(id: string) {
         return new Response(JSON.stringify({ message: "Erro ao buscar aluno", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
     }
 }
+
+async function getAlunosByTurma(idTurma: string) {
+    try {
+        const alunos = await prisma.aluno.findMany({
+            where: {
+                idTurma: Number(idTurma),
+            },
+            include: {
+                turma: true,
+            },
+        });
+
+        if (alunos.length === 0) {
+            return new Response(JSON.stringify({ message: "Nenhum aluno encontrado para essa turma" }), { status: 404 });
+        }
+
+        return new Response(JSON.stringify(alunos), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    } catch (err) {
+        console.error("Erro ao buscar alunos por turma:", err);
+        return new Response(JSON.stringify({ message: "Erro ao buscar alunos por turma", err }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
+}
+
 
 export async function DELETE(request: Request) {
     try {

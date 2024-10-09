@@ -1,49 +1,27 @@
 'use client'
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Table, TableBody, TableCaption, TableCell, TableHeader, TableRow } from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/components/ui/table"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { toast } from "@/components/ui/use-toast"
+import { Aluno } from "@/service/aluno"
 import { TeacherShow } from "@/service/professor"
+import { Turma } from "@/service/turma"
 import { Check, X } from "lucide-react"
 import { useEffect, useState } from "react"
 
-const mockClasses = [
-    {
-        id: 'turma1',
-        name: 'Turma 1',
-        students: [
-            { id: 1, name: 'Leonardo' },
-            { id: 2, name: 'Mariana' },
-            { id: 3, name: 'Carlos' }
-        ]
-    },
-    {
-        id: 'turma2',
-        name: 'Turma 2',
-        students: [
-            { id: 4, name: 'Ana' },
-            { id: 5, name: 'João' },
-            { id: 6, name: 'Sofia' }
-        ]
-    },
-    {
-        id: 'turma3',
-        name: 'Turma 3',
-        students: [
-            { id: 7, name: 'Guilherme' },
-            { id: 8, name: 'Isabela' },
-            { id: 9, name: 'Fernanda' }
-        ]
-    }
-];
-
 export default function Chamada() {
     const [professors, setProfessors] = useState<TeacherShow[]>([]);
+    const [turmas, setTurmas] = useState<Turma[]>([]);
     const [selectedClass, setSelectedClass] = useState<string | null>(null);
-    const [students, setStudents] = useState<{ id: number, name: string }[]>([]);
+    const [selectedProfessor, setSelectedProfessor] = useState<string | null>(null);
+    const [selectedDate, setSelectedDate] = useState<string>('');
+    const [students, setStudents] = useState<Aluno[]>([]);
+    const [attendance, setAttendance] = useState<{ [studentId: number]: 'presenca' | 'falta' }>({});
 
     async function fetchProfessors() {
         const response = await fetch('/api/professor', {
@@ -52,18 +30,64 @@ export default function Chamada() {
         if (response.ok) {
             const data = await response.json();
             setProfessors(data);
-        };
+        }
     }
+
+    async function fetchTurmas() {
+        const response = await fetch('/api/turma', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setTurmas(data);
+        }
+    }
+
+    async function fetchStudentsByClass(classId: string) {
+        const response = await fetch(`/api/aluno?idTurma=${classId}`, {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setStudents(data);
+        } else {
+            setStudents([]);
+        }
+    }
+
+    const handleAttendanceChange = (studentId: number, value: 'presenca' | 'falta') => {
+        setAttendance(prevState => ({
+            ...prevState,
+            [studentId]: value
+        }));
+    };
+
+    const handleSubmit = async () => {
+        const data = {
+            classId: selectedClass,
+            professorId: selectedProfessor,
+            date: selectedDate,
+            attendance,
+        };
+
+        console.log("Dados a serem enviados:", data);
+
+        toast({
+            title: "Chamada realizada com sucesso!",
+            description: "Registro de presença realizado com sucesso!",
+        });
+
+        setSelectedClass(null);
+        setSelectedProfessor(null);
+        setSelectedDate('');
+        setStudents([]);
+        setAttendance({});
+    };
 
     useEffect(() => {
         fetchProfessors();
+        fetchTurmas();
     }, []);
-
-    function handleClassChange(value: string) {
-        setSelectedClass(value);
-        const selectedClassData = mockClasses.find(turma => turma.id === value);
-        setStudents(selectedClassData ? selectedClassData.students : []);
-    }
 
     return (
         <ScrollArea className="h-[34rem] w-full pr-[250px]">
@@ -71,15 +95,18 @@ export default function Chamada() {
                 <div className="flex gap-6">
                     <div className="flex flex-col gap-3">
                         <Label>Turma</Label>
-                        <Select onValueChange={handleClassChange}>
-                            <SelectTrigger className="w-[20rem]">
+                        <Select onValueChange={(value) => {
+                            setSelectedClass(value);
+                            fetchStudentsByClass(value);
+                        }}>
+                            <SelectTrigger className="w-[15rem]">
                                 <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectGroup>
-                                    {mockClasses.map(turma => (
-                                        <SelectItem key={turma.id} value={turma.id}>
-                                            {turma.name}
+                                    {turmas.map((turma) => (
+                                        <SelectItem key={turma.id} value={String(turma.id)}>
+                                            {turma.nomeTurma}
                                         </SelectItem>
                                     ))}
                                 </SelectGroup>
@@ -88,8 +115,8 @@ export default function Chamada() {
                     </div>
                     <div className="flex flex-col gap-3">
                         <Label>Professor</Label>
-                        <Select>
-                            <SelectTrigger className="w-[20rem]">
+                        <Select onValueChange={(value) => setSelectedProfessor(value)}>
+                            <SelectTrigger className="w-[15rem]">
                                 <SelectValue placeholder="Selecione" />
                             </SelectTrigger>
                             <SelectContent>
@@ -103,11 +130,14 @@ export default function Chamada() {
                             </SelectContent>
                         </Select>
                     </div>
+                    <div className="flex flex-col gap-3">
+                        <Label>Data</Label>
+                        <Input value={selectedDate} onChange={(e) => setSelectedDate(e.target.value)} />
+                    </div>
                 </div>
 
                 {selectedClass && (
                     <Table>
-                        <TableCaption>{`Turma ${selectedClass}`}</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 <TableCell className="w-[80%]">Nome do Aluno</TableCell>
@@ -118,9 +148,13 @@ export default function Chamada() {
                             {students.length > 0 ? (
                                 students.map(student => (
                                     <TableRow key={student.id}>
-                                        <TableCell className="font-medium">{student.name}</TableCell>
+                                        <TableCell className="font-medium">{student.nome}</TableCell>
                                         <TableCell className="font-medium">
-                                            <ToggleGroup type="single">
+                                            <ToggleGroup
+                                                type="single"
+                                                value={attendance[Number(student.id)] || ''}
+                                                onValueChange={(value) => handleAttendanceChange(Number(student.id), value as 'presenca' | 'falta')}
+                                            >
                                                 <ToggleGroupItem value="presenca">
                                                     <Check className="h-4 w-4" />
                                                 </ToggleGroupItem>
@@ -140,7 +174,7 @@ export default function Chamada() {
                     </Table>
                 )}
 
-                <Button type="submit">Confirmar</Button>
+                <Button type="button" onClick={handleSubmit}>Confirmar</Button>
             </main>
         </ScrollArea>
     )

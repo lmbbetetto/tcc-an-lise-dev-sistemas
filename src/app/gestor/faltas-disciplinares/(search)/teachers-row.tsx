@@ -13,28 +13,28 @@ import {
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
 import { routes } from "@/utils/routes";
-import { Professor } from "./type";
+import { FaltaDisciplinar } from "@/service/faltas-disicplinares";
 
 export function TeacherRows() {
-    const [professors, setProfessors] = useState<Professor[]>([]);
+    const [faltasDisciplinares, setFaltasDisciplinares] = useState<FaltaDisciplinar[]>([]);
 
-    async function fetchProfessors() {
-        const response = await fetch('/api/professor', {
+    async function fetchFaltasDisciplinares() {
+        const response = await fetch('/api/faltas-disciplinares', {
             method: 'GET',
         })
         if (response.ok) {
             const data = await response.json()
-            setProfessors(data);
+            setFaltasDisciplinares(data);
         }
     }
 
     useEffect(() => {
-        fetchProfessors();
+        fetchFaltasDisciplinares();
     }, [])
 
-    const handleDeleteProfessor = async (id: string) => {
+    const handleDeleteFalta = async (id: string) => {
         try {
-            const response = await fetch('/api/professor', {
+            const response = await fetch('/api/faltas-disciplinares', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ export function TeacherRows() {
                     title: "Sucesso",
                     description: "Professor excluído com sucesso.",
                 })
-                fetchProfessors()
+                fetchFaltasDisciplinares()
             } else {
                 toast({
                     title: "Erro",
@@ -63,8 +63,8 @@ export function TeacherRows() {
 
     return (
         <>
-            {professors.map((professor) => (
-                <TableRow key={professor.id}>
+            {faltasDisciplinares.map((faltas) => (
+                <TableRow key={faltas.id}>
                     <TableCell>
                         <Dialog>
                             <DialogTrigger asChild>
@@ -77,36 +77,25 @@ export function TeacherRows() {
                                             </Button></DialogTrigger>
                                         <DialogContent>
                                             <DialogHeader>
-                                                <DialogTitle className="text-2xl">{professor.name}</DialogTitle>
+                                                <DialogTitle className="text-2xl">{faltas.aluno.nome}</DialogTitle>
                                             </DialogHeader>
                                             <DialogDescription>
                                                 <div>
-                                                    <span className="text-white">Dados pessoais</span>
+                                                    <span className="text-white">Dados</span>
                                                     <div className="flex flex-col gap-1 ml-2">
-                                                        <p>{professor.telefone}</p>
-                                                        <p>{professor.email}</p>
-                                                        <p>{professor.nascimento}</p>
+                                                        <p>{faltas.dataFalta}</p>
+                                                        <p>{faltas.professor.name}</p>
                                                     </div>
                                                 </div>
                                                 <div className="mt-4">
-                                                    <span className="text-white">Endereço</span>
+                                                    <span className="text-white">Descricao</span>
                                                     <div className="flex flex-col gap-1 ml-2">
-                                                        <span>{professor.rua}, {professor.numero} - {professor.complemento}</span>
-                                                        <span>{professor.bairro}</span>
-                                                        <span>{professor.cidade} - {professor.estado}</span>
-                                                    </div>
-                                                </div>
-                                                <div className="mt-4">
-                                                    <span className="text-white">Formação</span>
-                                                    <div className="flex flex-col gap-1 ml-2">
-                                                        <span>{professor.curso}</span>
-                                                        <span>{professor.instituicao}</span>
-                                                        <span>Concluído em {professor.anoConclusao}</span>
+                                                        <span>{faltas.descricao}</span>
                                                     </div>
                                                 </div>
                                             </DialogDescription>
                                             <DialogFooter>
-                                                <Link href={routes.professor.edit(professor.id)}>
+                                                <Link href={routes.faltasDisciplinares.edit(String(faltas.id))}>
                                                     <Button variant={"outline"}>Editar</Button>
                                                 </Link>
                                             </DialogFooter>
@@ -117,19 +106,19 @@ export function TeacherRows() {
                                         <AlertDialogTrigger asChild>
                                             <Button variant="outline">
                                                 <Trash2 className="h-3 w-3" />
-                                                <span className="sr-only">Excluir professor</span>
+                                                <span className="sr-only">Excluir falta disciplinar</span>
                                             </Button>
                                         </AlertDialogTrigger>
                                         <AlertDialogContent>
                                             <AlertDialogHeader>
-                                                <AlertDialogTitle>Excluir professor?</AlertDialogTitle>
+                                                <AlertDialogTitle>Excluir falta disciplinar?</AlertDialogTitle>
                                                 <AlertDialogDescription>
-                                                    Esta ação não poderá ser desfeita. Excluindo este professor, ele será removido permanentemente do sistema!
+                                                    Esta ação não poderá ser desfeita. Excluindo esta falta disciplinar, ela será removida permanentemente do sistema!
                                                 </AlertDialogDescription>
                                             </AlertDialogHeader>
                                             <AlertDialogFooter>
                                                 <AlertDialogCancel>Cancelar</AlertDialogCancel>
-                                                <AlertDialogAction onClick={() => handleDeleteProfessor(professor.id)}>Excluir</AlertDialogAction>
+                                                <AlertDialogAction onClick={() => handleDeleteFalta(String(faltas.id))}>Excluir</AlertDialogAction>
                                             </AlertDialogFooter>
                                         </AlertDialogContent>
                                     </AlertDialog>
@@ -138,13 +127,13 @@ export function TeacherRows() {
                         </Dialog>
                     </TableCell>
                     <TableCell className="font-mono text-xs font-medium">
-                        {professor.codeProfessor}
+                        {faltas.id}
                     </TableCell>
                     <TableCell className="font-medium">
-                        {professor.name}
+                        {faltas.aluno.nome}
                     </TableCell>
                     <TableCell className="font-medium">
-                        {professor.telefone}
+                        {faltas.descricao}
                     </TableCell>
                 </TableRow >
             ))

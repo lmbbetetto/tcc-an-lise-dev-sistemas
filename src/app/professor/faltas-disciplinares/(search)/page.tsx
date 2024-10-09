@@ -20,7 +20,8 @@ export default function SearchTeacher() {
                 <TableCaption>Fim da lista de Faltas disciplinares.</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[150px]">Ações</TableHead>
+                        <TableHead className="w-[50px]">Ações</TableHead>
+                        <TableHead className="w-[50px]">Codigo</TableHead>
                         <TableHead className="w-[200px]">Aluno</TableHead>
                         <TableHead className="w-[400px]">Descrição</TableHead>
                     </TableRow>

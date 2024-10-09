@@ -28,7 +28,8 @@ export async function createNewAluno(
         phoneMae: payload.phoneMae,
         phonePai: payload.phonePai,
         profMae: payload.profMae,
-        profPai: payload.profPai
+        profPai: payload.profPai,
+        idTurma: payload.idTurma
     };
 
     console.log(JSON.stringify(data))
@@ -65,7 +66,8 @@ export async function editAluno(
         phoneMae: payload.phoneMae,
         phonePai: payload.phonePai,
         profMae: payload.profMae,
-        profPai: payload.profPai
+        profPai: payload.profPai,
+        idTurma: payload.idTurma
     };
 
     console.log(JSON.stringify(data))

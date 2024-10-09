@@ -141,8 +141,8 @@ exports.Prisma.ProfessorScalarFieldEnum = {
 exports.Prisma.DisciplinasScalarFieldEnum = {
   id: 'id',
   idProfessor: 'idProfessor',
-  nomeDisciplina: 'nomeDisciplina',
-  idCurso: 'idCurso'
+  idCurso: 'idCurso',
+  nomeDisciplina: 'nomeDisciplina'
 };
 
 exports.Prisma.CursosScalarFieldEnum = {
@@ -172,12 +172,15 @@ exports.Prisma.AlunoScalarFieldEnum = {
   profMae: 'profMae',
   profPai: 'profPai',
   rua: 'rua',
-  uf: 'uf'
+  uf: 'uf',
+  idTurma: 'idTurma'
 };
 
 exports.Prisma.FaltasDisciplinaresScalarFieldEnum = {
   id: 'id',
   idAluno: 'idAluno',
+  idProfessor: 'idProfessor',
+  titulo: 'titulo',
   descricao: 'descricao',
   dataFalta: 'dataFalta'
 };
@@ -192,8 +195,7 @@ exports.Prisma.MatriculaScalarFieldEnum = {
 exports.Prisma.TurmaScalarFieldEnum = {
   id: 'id',
   idCurso: 'idCurso',
-  nomeTurma: 'nomeTurma',
-  disciplinas: 'disciplinas'
+  nomeTurma: 'nomeTurma'
 };
 
 exports.Prisma.ChamadaScalarFieldEnum = {

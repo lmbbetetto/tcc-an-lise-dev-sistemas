@@ -9,30 +9,31 @@ datasource db {
 }
 
 model Professor {
-  id            Int           @id @default(autoincrement())
-  name          String
-  nascimento    String
-  telefone      String
-  email         String
-  anoConclusao  String
-  bairro        String
-  cidade        String
-  complemento   String
-  curso         String
-  estado        String
-  genero        String
-  instituicao   String
-  nivelFormacao String
-  numero        String
-  rua           String
-  disciplina    Disciplinas[]
+  id                  Int                   @id @default(autoincrement())
+  name                String
+  nascimento          String
+  telefone            String
+  email               String
+  anoConclusao        String
+  bairro              String
+  cidade              String
+  complemento         String
+  curso               String
+  estado              String
+  genero              String
+  instituicao         String
+  nivelFormacao       String
+  numero              String
+  rua                 String
+  disciplina          Disciplinas[]
+  FaltasDisciplinares FaltasDisciplinares[]
 }
 
 model Disciplinas {
   id             Int       @id @default(autoincrement())
   idProfessor    Int
-  nomeDisciplina String
   idCurso        Int
+  nomeDisciplina String
   cursos         Cursos    @relation(fields: [idCurso], references: [id])
   professor      Professor @relation(fields: [idProfessor], references: [id])
 }
@@ -67,16 +68,21 @@ model Aluno {
   profPai          String
   rua              String
   uf               String
+  idTurma          Int
+  turma            Turma                 @relation(fields: [idTurma], references: [id])
   faltaDisciplinar FaltasDisciplinares[]
   Matricula        Matricula[]
 }
 
 model FaltasDisciplinares {
-  id        Int      @id @default(autoincrement())
-  idAluno   Int
-  descricao String
-  dataFalta DateTime
-  aluno     Aluno    @relation(fields: [idAluno], references: [id])
+  id          Int       @id @default(autoincrement())
+  idAluno     Int
+  idProfessor Int
+  titulo      String
+  descricao   String
+  dataFalta   String
+  professor   Professor @relation(fields: [idProfessor], references: [id])
+  aluno       Aluno     @relation(fields: [idAluno], references: [id])
 }
 
 model Matricula {
@@ -88,11 +94,11 @@ model Matricula {
 }
 
 model Turma {
-  id          Int    @id @default(autoincrement())
-  idCurso     Int
-  nomeTurma   String
-  disciplinas Int[]
-  curso       Cursos @relation(fields: [idCurso], references: [id])
+  id        Int     @id @default(autoincrement())
+  idCurso   Int
+  nomeTurma String
+  curso     Cursos  @relation(fields: [idCurso], references: [id])
+  Aluno     Aluno[]
 }
 
 model Chamada {

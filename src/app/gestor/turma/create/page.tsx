@@ -24,10 +24,10 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { schema, Schema } from "./schema"
 import { useEffect, useState } from "react"
-import { TeacherShow } from "@/service/professor"
 import { Curso } from "@/service/curso"
 import { toast } from "@/components/ui/use-toast"
-import { DisciplinaPayload } from "@/service/disciplina"
+import { TurmaPayload } from "@/service/turma"
+import { createNewTurma } from "./actions"
 
 export default function CreateCurso() {
     const [cursos, setCursos] = useState<Curso[]>([]);
@@ -54,10 +54,37 @@ export default function CreateCurso() {
         fetchCursos();
     }, []);
 
+    const { reset } = form;
+
+    const onSubmit = async (data: Schema) => {
+        try {
+            const payload: TurmaPayload = {
+                idCurso: Number(data.curse),
+                nomeTurma: data.nomeTurma
+            };
+
+            console.log('teste')
+
+            await createNewTurma(payload);
+
+            toast({
+                title: "Sucesso!",
+                description: "Turma resgistrada com sucesso!",
+            });
+            reset();
+        } catch (error) {
+            toast({
+                title: "Erro",
+                description: "Ocorreu um erro ao resgistrar a turma.",
+                variant: "destructive",
+            });
+        }
+    };
+
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
-                <form className="space-y-8 p-2 pt-0">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
                     <FormField
                         control={form.control}
                         name="nomeTurma"

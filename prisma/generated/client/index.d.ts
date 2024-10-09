@@ -1653,10 +1653,12 @@ export namespace Prisma {
 
   export type ProfessorCountOutputType = {
     disciplina: number
+    FaltasDisciplinares: number
   }
 
   export type ProfessorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     disciplina?: boolean | ProfessorCountOutputTypeCountDisciplinaArgs
+    FaltasDisciplinares?: boolean | ProfessorCountOutputTypeCountFaltasDisciplinaresArgs
   }
 
   // Custom InputTypes
@@ -1675,6 +1677,13 @@ export namespace Prisma {
    */
   export type ProfessorCountOutputTypeCountDisciplinaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DisciplinasWhereInput
+  }
+
+  /**
+   * ProfessorCountOutputType without action
+   */
+  export type ProfessorCountOutputTypeCountFaltasDisciplinaresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: FaltasDisciplinaresWhereInput
   }
 
 
@@ -1755,6 +1764,37 @@ export namespace Prisma {
    */
   export type AlunoCountOutputTypeCountMatriculaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MatriculaWhereInput
+  }
+
+
+  /**
+   * Count Type TurmaCountOutputType
+   */
+
+  export type TurmaCountOutputType = {
+    Aluno: number
+  }
+
+  export type TurmaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    Aluno?: boolean | TurmaCountOutputTypeCountAlunoArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TurmaCountOutputType without action
+   */
+  export type TurmaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TurmaCountOutputType
+     */
+    select?: TurmaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TurmaCountOutputType without action
+   */
+  export type TurmaCountOutputTypeCountAlunoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AlunoWhereInput
   }
 
 
@@ -2080,6 +2120,7 @@ export namespace Prisma {
     numero?: boolean
     rua?: boolean
     disciplina?: boolean | Professor$disciplinaArgs<ExtArgs>
+    FaltasDisciplinares?: boolean | Professor$FaltasDisciplinaresArgs<ExtArgs>
     _count?: boolean | ProfessorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["professor"]>
 
@@ -2123,6 +2164,7 @@ export namespace Prisma {
 
   export type ProfessorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     disciplina?: boolean | Professor$disciplinaArgs<ExtArgs>
+    FaltasDisciplinares?: boolean | Professor$FaltasDisciplinaresArgs<ExtArgs>
     _count?: boolean | ProfessorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProfessorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2131,6 +2173,7 @@ export namespace Prisma {
     name: "Professor"
     objects: {
       disciplina: Prisma.$DisciplinasPayload<ExtArgs>[]
+      FaltasDisciplinares: Prisma.$FaltasDisciplinaresPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2514,6 +2557,7 @@ export namespace Prisma {
   export interface Prisma__ProfessorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     disciplina<T extends Professor$disciplinaArgs<ExtArgs> = {}>(args?: Subset<T, Professor$disciplinaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DisciplinasPayload<ExtArgs>, T, "findMany"> | Null>
+    FaltasDisciplinares<T extends Professor$FaltasDisciplinaresArgs<ExtArgs> = {}>(args?: Subset<T, Professor$FaltasDisciplinaresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FaltasDisciplinaresPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2893,6 +2937,26 @@ export namespace Prisma {
   }
 
   /**
+   * Professor.FaltasDisciplinares
+   */
+  export type Professor$FaltasDisciplinaresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the FaltasDisciplinares
+     */
+    select?: FaltasDisciplinaresSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: FaltasDisciplinaresInclude<ExtArgs> | null
+    where?: FaltasDisciplinaresWhereInput
+    orderBy?: FaltasDisciplinaresOrderByWithRelationInput | FaltasDisciplinaresOrderByWithRelationInput[]
+    cursor?: FaltasDisciplinaresWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: FaltasDisciplinaresScalarFieldEnum | FaltasDisciplinaresScalarFieldEnum[]
+  }
+
+  /**
    * Professor without action
    */
   export type ProfessorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2934,22 +2998,22 @@ export namespace Prisma {
   export type DisciplinasMinAggregateOutputType = {
     id: number | null
     idProfessor: number | null
-    nomeDisciplina: string | null
     idCurso: number | null
+    nomeDisciplina: string | null
   }
 
   export type DisciplinasMaxAggregateOutputType = {
     id: number | null
     idProfessor: number | null
-    nomeDisciplina: string | null
     idCurso: number | null
+    nomeDisciplina: string | null
   }
 
   export type DisciplinasCountAggregateOutputType = {
     id: number
     idProfessor: number
-    nomeDisciplina: number
     idCurso: number
+    nomeDisciplina: number
     _all: number
   }
 
@@ -2969,22 +3033,22 @@ export namespace Prisma {
   export type DisciplinasMinAggregateInputType = {
     id?: true
     idProfessor?: true
-    nomeDisciplina?: true
     idCurso?: true
+    nomeDisciplina?: true
   }
 
   export type DisciplinasMaxAggregateInputType = {
     id?: true
     idProfessor?: true
-    nomeDisciplina?: true
     idCurso?: true
+    nomeDisciplina?: true
   }
 
   export type DisciplinasCountAggregateInputType = {
     id?: true
     idProfessor?: true
-    nomeDisciplina?: true
     idCurso?: true
+    nomeDisciplina?: true
     _all?: true
   }
 
@@ -3077,8 +3141,8 @@ export namespace Prisma {
   export type DisciplinasGroupByOutputType = {
     id: number
     idProfessor: number
-    nomeDisciplina: string
     idCurso: number
+    nomeDisciplina: string
     _count: DisciplinasCountAggregateOutputType | null
     _avg: DisciplinasAvgAggregateOutputType | null
     _sum: DisciplinasSumAggregateOutputType | null
@@ -3103,8 +3167,8 @@ export namespace Prisma {
   export type DisciplinasSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idProfessor?: boolean
-    nomeDisciplina?: boolean
     idCurso?: boolean
+    nomeDisciplina?: boolean
     cursos?: boolean | CursosDefaultArgs<ExtArgs>
     professor?: boolean | ProfessorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["disciplinas"]>
@@ -3112,8 +3176,8 @@ export namespace Prisma {
   export type DisciplinasSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idProfessor?: boolean
-    nomeDisciplina?: boolean
     idCurso?: boolean
+    nomeDisciplina?: boolean
     cursos?: boolean | CursosDefaultArgs<ExtArgs>
     professor?: boolean | ProfessorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["disciplinas"]>
@@ -3121,8 +3185,8 @@ export namespace Prisma {
   export type DisciplinasSelectScalar = {
     id?: boolean
     idProfessor?: boolean
-    nomeDisciplina?: boolean
     idCurso?: boolean
+    nomeDisciplina?: boolean
   }
 
   export type DisciplinasInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3143,8 +3207,8 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       idProfessor: number
-      nomeDisciplina: string
       idCurso: number
+      nomeDisciplina: string
     }, ExtArgs["result"]["disciplinas"]>
     composites: {}
   }
@@ -3542,8 +3606,8 @@ export namespace Prisma {
   interface DisciplinasFieldRefs {
     readonly id: FieldRef<"Disciplinas", 'Int'>
     readonly idProfessor: FieldRef<"Disciplinas", 'Int'>
-    readonly nomeDisciplina: FieldRef<"Disciplinas", 'String'>
     readonly idCurso: FieldRef<"Disciplinas", 'Int'>
+    readonly nomeDisciplina: FieldRef<"Disciplinas", 'String'>
   }
     
 
@@ -4861,11 +4925,13 @@ export namespace Prisma {
   export type AlunoAvgAggregateOutputType = {
     id: number | null
     rendaFamilia: Decimal | null
+    idTurma: number | null
   }
 
   export type AlunoSumAggregateOutputType = {
     id: number | null
     rendaFamilia: Decimal | null
+    idTurma: number | null
   }
 
   export type AlunoMinAggregateOutputType = {
@@ -4891,6 +4957,7 @@ export namespace Prisma {
     profPai: string | null
     rua: string | null
     uf: string | null
+    idTurma: number | null
   }
 
   export type AlunoMaxAggregateOutputType = {
@@ -4916,6 +4983,7 @@ export namespace Prisma {
     profPai: string | null
     rua: string | null
     uf: string | null
+    idTurma: number | null
   }
 
   export type AlunoCountAggregateOutputType = {
@@ -4941,6 +5009,7 @@ export namespace Prisma {
     profPai: number
     rua: number
     uf: number
+    idTurma: number
     _all: number
   }
 
@@ -4948,11 +5017,13 @@ export namespace Prisma {
   export type AlunoAvgAggregateInputType = {
     id?: true
     rendaFamilia?: true
+    idTurma?: true
   }
 
   export type AlunoSumAggregateInputType = {
     id?: true
     rendaFamilia?: true
+    idTurma?: true
   }
 
   export type AlunoMinAggregateInputType = {
@@ -4978,6 +5049,7 @@ export namespace Prisma {
     profPai?: true
     rua?: true
     uf?: true
+    idTurma?: true
   }
 
   export type AlunoMaxAggregateInputType = {
@@ -5003,6 +5075,7 @@ export namespace Prisma {
     profPai?: true
     rua?: true
     uf?: true
+    idTurma?: true
   }
 
   export type AlunoCountAggregateInputType = {
@@ -5028,6 +5101,7 @@ export namespace Prisma {
     profPai?: true
     rua?: true
     uf?: true
+    idTurma?: true
     _all?: true
   }
 
@@ -5140,6 +5214,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    idTurma: number
     _count: AlunoCountAggregateOutputType | null
     _avg: AlunoAvgAggregateOutputType | null
     _sum: AlunoSumAggregateOutputType | null
@@ -5184,6 +5259,8 @@ export namespace Prisma {
     profPai?: boolean
     rua?: boolean
     uf?: boolean
+    idTurma?: boolean
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
     faltaDisciplinar?: boolean | Aluno$faltaDisciplinarArgs<ExtArgs>
     Matricula?: boolean | Aluno$MatriculaArgs<ExtArgs>
     _count?: boolean | AlunoCountOutputTypeDefaultArgs<ExtArgs>
@@ -5212,6 +5289,8 @@ export namespace Prisma {
     profPai?: boolean
     rua?: boolean
     uf?: boolean
+    idTurma?: boolean
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["aluno"]>
 
   export type AlunoSelectScalar = {
@@ -5237,18 +5316,23 @@ export namespace Prisma {
     profPai?: boolean
     rua?: boolean
     uf?: boolean
+    idTurma?: boolean
   }
 
   export type AlunoInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
     faltaDisciplinar?: boolean | Aluno$faltaDisciplinarArgs<ExtArgs>
     Matricula?: boolean | Aluno$MatriculaArgs<ExtArgs>
     _count?: boolean | AlunoCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type AlunoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AlunoIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
+  }
 
   export type $AlunoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Aluno"
     objects: {
+      turma: Prisma.$TurmaPayload<ExtArgs>
       faltaDisciplinar: Prisma.$FaltasDisciplinaresPayload<ExtArgs>[]
       Matricula: Prisma.$MatriculaPayload<ExtArgs>[]
     }
@@ -5275,6 +5359,7 @@ export namespace Prisma {
       profPai: string
       rua: string
       uf: string
+      idTurma: number
     }, ExtArgs["result"]["aluno"]>
     composites: {}
   }
@@ -5639,6 +5724,7 @@ export namespace Prisma {
    */
   export interface Prisma__AlunoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    turma<T extends TurmaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TurmaDefaultArgs<ExtArgs>>): Prisma__TurmaClient<$Result.GetResult<Prisma.$TurmaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     faltaDisciplinar<T extends Aluno$faltaDisciplinarArgs<ExtArgs> = {}>(args?: Subset<T, Aluno$faltaDisciplinarArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FaltasDisciplinaresPayload<ExtArgs>, T, "findMany"> | Null>
     Matricula<T extends Aluno$MatriculaArgs<ExtArgs> = {}>(args?: Subset<T, Aluno$MatriculaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MatriculaPayload<ExtArgs>, T, "findMany"> | Null>
     /**
@@ -5692,6 +5778,7 @@ export namespace Prisma {
     readonly profPai: FieldRef<"Aluno", 'String'>
     readonly rua: FieldRef<"Aluno", 'String'>
     readonly uf: FieldRef<"Aluno", 'String'>
+    readonly idTurma: FieldRef<"Aluno", 'Int'>
   }
     
 
@@ -5913,6 +6000,10 @@ export namespace Prisma {
      */
     data: AlunoCreateManyInput | AlunoCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlunoIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6075,30 +6166,38 @@ export namespace Prisma {
   export type FaltasDisciplinaresAvgAggregateOutputType = {
     id: number | null
     idAluno: number | null
+    idProfessor: number | null
   }
 
   export type FaltasDisciplinaresSumAggregateOutputType = {
     id: number | null
     idAluno: number | null
+    idProfessor: number | null
   }
 
   export type FaltasDisciplinaresMinAggregateOutputType = {
     id: number | null
     idAluno: number | null
+    idProfessor: number | null
+    titulo: string | null
     descricao: string | null
-    dataFalta: Date | null
+    dataFalta: string | null
   }
 
   export type FaltasDisciplinaresMaxAggregateOutputType = {
     id: number | null
     idAluno: number | null
+    idProfessor: number | null
+    titulo: string | null
     descricao: string | null
-    dataFalta: Date | null
+    dataFalta: string | null
   }
 
   export type FaltasDisciplinaresCountAggregateOutputType = {
     id: number
     idAluno: number
+    idProfessor: number
+    titulo: number
     descricao: number
     dataFalta: number
     _all: number
@@ -6108,16 +6207,20 @@ export namespace Prisma {
   export type FaltasDisciplinaresAvgAggregateInputType = {
     id?: true
     idAluno?: true
+    idProfessor?: true
   }
 
   export type FaltasDisciplinaresSumAggregateInputType = {
     id?: true
     idAluno?: true
+    idProfessor?: true
   }
 
   export type FaltasDisciplinaresMinAggregateInputType = {
     id?: true
     idAluno?: true
+    idProfessor?: true
+    titulo?: true
     descricao?: true
     dataFalta?: true
   }
@@ -6125,6 +6228,8 @@ export namespace Prisma {
   export type FaltasDisciplinaresMaxAggregateInputType = {
     id?: true
     idAluno?: true
+    idProfessor?: true
+    titulo?: true
     descricao?: true
     dataFalta?: true
   }
@@ -6132,6 +6237,8 @@ export namespace Prisma {
   export type FaltasDisciplinaresCountAggregateInputType = {
     id?: true
     idAluno?: true
+    idProfessor?: true
+    titulo?: true
     descricao?: true
     dataFalta?: true
     _all?: true
@@ -6226,8 +6333,10 @@ export namespace Prisma {
   export type FaltasDisciplinaresGroupByOutputType = {
     id: number
     idAluno: number
+    idProfessor: number
+    titulo: string
     descricao: string
-    dataFalta: Date
+    dataFalta: string
     _count: FaltasDisciplinaresCountAggregateOutputType | null
     _avg: FaltasDisciplinaresAvgAggregateOutputType | null
     _sum: FaltasDisciplinaresSumAggregateOutputType | null
@@ -6252,43 +6361,56 @@ export namespace Prisma {
   export type FaltasDisciplinaresSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idAluno?: boolean
+    idProfessor?: boolean
+    titulo?: boolean
     descricao?: boolean
     dataFalta?: boolean
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
     aluno?: boolean | AlunoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["faltasDisciplinares"]>
 
   export type FaltasDisciplinaresSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idAluno?: boolean
+    idProfessor?: boolean
+    titulo?: boolean
     descricao?: boolean
     dataFalta?: boolean
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
     aluno?: boolean | AlunoDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["faltasDisciplinares"]>
 
   export type FaltasDisciplinaresSelectScalar = {
     id?: boolean
     idAluno?: boolean
+    idProfessor?: boolean
+    titulo?: boolean
     descricao?: boolean
     dataFalta?: boolean
   }
 
   export type FaltasDisciplinaresInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
     aluno?: boolean | AlunoDefaultArgs<ExtArgs>
   }
   export type FaltasDisciplinaresIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
     aluno?: boolean | AlunoDefaultArgs<ExtArgs>
   }
 
   export type $FaltasDisciplinaresPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "FaltasDisciplinares"
     objects: {
+      professor: Prisma.$ProfessorPayload<ExtArgs>
       aluno: Prisma.$AlunoPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       idAluno: number
+      idProfessor: number
+      titulo: string
       descricao: string
-      dataFalta: Date
+      dataFalta: string
     }, ExtArgs["result"]["faltasDisciplinares"]>
     composites: {}
   }
@@ -6653,6 +6775,7 @@ export namespace Prisma {
    */
   export interface Prisma__FaltasDisciplinaresClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    professor<T extends ProfessorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfessorDefaultArgs<ExtArgs>>): Prisma__ProfessorClient<$Result.GetResult<Prisma.$ProfessorPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     aluno<T extends AlunoDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AlunoDefaultArgs<ExtArgs>>): Prisma__AlunoClient<$Result.GetResult<Prisma.$AlunoPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -6685,8 +6808,10 @@ export namespace Prisma {
   interface FaltasDisciplinaresFieldRefs {
     readonly id: FieldRef<"FaltasDisciplinares", 'Int'>
     readonly idAluno: FieldRef<"FaltasDisciplinares", 'Int'>
+    readonly idProfessor: FieldRef<"FaltasDisciplinares", 'Int'>
+    readonly titulo: FieldRef<"FaltasDisciplinares", 'String'>
     readonly descricao: FieldRef<"FaltasDisciplinares", 'String'>
-    readonly dataFalta: FieldRef<"FaltasDisciplinares", 'DateTime'>
+    readonly dataFalta: FieldRef<"FaltasDisciplinares", 'String'>
   }
     
 
@@ -7993,13 +8118,11 @@ export namespace Prisma {
   export type TurmaAvgAggregateOutputType = {
     id: number | null
     idCurso: number | null
-    disciplinas: number | null
   }
 
   export type TurmaSumAggregateOutputType = {
     id: number | null
     idCurso: number | null
-    disciplinas: number[]
   }
 
   export type TurmaMinAggregateOutputType = {
@@ -8018,7 +8141,6 @@ export namespace Prisma {
     id: number
     idCurso: number
     nomeTurma: number
-    disciplinas: number
     _all: number
   }
 
@@ -8026,13 +8148,11 @@ export namespace Prisma {
   export type TurmaAvgAggregateInputType = {
     id?: true
     idCurso?: true
-    disciplinas?: true
   }
 
   export type TurmaSumAggregateInputType = {
     id?: true
     idCurso?: true
-    disciplinas?: true
   }
 
   export type TurmaMinAggregateInputType = {
@@ -8051,7 +8171,6 @@ export namespace Prisma {
     id?: true
     idCurso?: true
     nomeTurma?: true
-    disciplinas?: true
     _all?: true
   }
 
@@ -8145,7 +8264,6 @@ export namespace Prisma {
     id: number
     idCurso: number
     nomeTurma: string
-    disciplinas: number[]
     _count: TurmaCountAggregateOutputType | null
     _avg: TurmaAvgAggregateOutputType | null
     _sum: TurmaSumAggregateOutputType | null
@@ -8171,15 +8289,15 @@ export namespace Prisma {
     id?: boolean
     idCurso?: boolean
     nomeTurma?: boolean
-    disciplinas?: boolean
     curso?: boolean | CursosDefaultArgs<ExtArgs>
+    Aluno?: boolean | Turma$AlunoArgs<ExtArgs>
+    _count?: boolean | TurmaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["turma"]>
 
   export type TurmaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idCurso?: boolean
     nomeTurma?: boolean
-    disciplinas?: boolean
     curso?: boolean | CursosDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["turma"]>
 
@@ -8187,11 +8305,12 @@ export namespace Prisma {
     id?: boolean
     idCurso?: boolean
     nomeTurma?: boolean
-    disciplinas?: boolean
   }
 
   export type TurmaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     curso?: boolean | CursosDefaultArgs<ExtArgs>
+    Aluno?: boolean | Turma$AlunoArgs<ExtArgs>
+    _count?: boolean | TurmaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TurmaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     curso?: boolean | CursosDefaultArgs<ExtArgs>
@@ -8201,12 +8320,12 @@ export namespace Prisma {
     name: "Turma"
     objects: {
       curso: Prisma.$CursosPayload<ExtArgs>
+      Aluno: Prisma.$AlunoPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       idCurso: number
       nomeTurma: string
-      disciplinas: number[]
     }, ExtArgs["result"]["turma"]>
     composites: {}
   }
@@ -8572,6 +8691,7 @@ export namespace Prisma {
   export interface Prisma__TurmaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     curso<T extends CursosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CursosDefaultArgs<ExtArgs>>): Prisma__CursosClient<$Result.GetResult<Prisma.$CursosPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    Aluno<T extends Turma$AlunoArgs<ExtArgs> = {}>(args?: Subset<T, Turma$AlunoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlunoPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8604,7 +8724,6 @@ export namespace Prisma {
     readonly id: FieldRef<"Turma", 'Int'>
     readonly idCurso: FieldRef<"Turma", 'Int'>
     readonly nomeTurma: FieldRef<"Turma", 'String'>
-    readonly disciplinas: FieldRef<"Turma", 'Int[]'>
   }
     
 
@@ -8920,6 +9039,26 @@ export namespace Prisma {
      * Filter which Turmas to delete
      */
     where?: TurmaWhereInput
+  }
+
+  /**
+   * Turma.Aluno
+   */
+  export type Turma$AlunoArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aluno
+     */
+    select?: AlunoSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AlunoInclude<ExtArgs> | null
+    where?: AlunoWhereInput
+    orderBy?: AlunoOrderByWithRelationInput | AlunoOrderByWithRelationInput[]
+    cursor?: AlunoWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AlunoScalarFieldEnum | AlunoScalarFieldEnum[]
   }
 
   /**
@@ -11773,8 +11912,8 @@ export namespace Prisma {
   export const DisciplinasScalarFieldEnum: {
     id: 'id',
     idProfessor: 'idProfessor',
-    nomeDisciplina: 'nomeDisciplina',
-    idCurso: 'idCurso'
+    idCurso: 'idCurso',
+    nomeDisciplina: 'nomeDisciplina'
   };
 
   export type DisciplinasScalarFieldEnum = (typeof DisciplinasScalarFieldEnum)[keyof typeof DisciplinasScalarFieldEnum]
@@ -11810,7 +11949,8 @@ export namespace Prisma {
     profMae: 'profMae',
     profPai: 'profPai',
     rua: 'rua',
-    uf: 'uf'
+    uf: 'uf',
+    idTurma: 'idTurma'
   };
 
   export type AlunoScalarFieldEnum = (typeof AlunoScalarFieldEnum)[keyof typeof AlunoScalarFieldEnum]
@@ -11819,6 +11959,8 @@ export namespace Prisma {
   export const FaltasDisciplinaresScalarFieldEnum: {
     id: 'id',
     idAluno: 'idAluno',
+    idProfessor: 'idProfessor',
+    titulo: 'titulo',
     descricao: 'descricao',
     dataFalta: 'dataFalta'
   };
@@ -11839,8 +11981,7 @@ export namespace Prisma {
   export const TurmaScalarFieldEnum: {
     id: 'id',
     idCurso: 'idCurso',
-    nomeTurma: 'nomeTurma',
-    disciplinas: 'disciplinas'
+    nomeTurma: 'nomeTurma'
   };
 
   export type TurmaScalarFieldEnum = (typeof TurmaScalarFieldEnum)[keyof typeof TurmaScalarFieldEnum]
@@ -11988,6 +12129,7 @@ export namespace Prisma {
     numero?: StringFilter<"Professor"> | string
     rua?: StringFilter<"Professor"> | string
     disciplina?: DisciplinasListRelationFilter
+    FaltasDisciplinares?: FaltasDisciplinaresListRelationFilter
   }
 
   export type ProfessorOrderByWithRelationInput = {
@@ -12008,6 +12150,7 @@ export namespace Prisma {
     numero?: SortOrder
     rua?: SortOrder
     disciplina?: DisciplinasOrderByRelationAggregateInput
+    FaltasDisciplinares?: FaltasDisciplinaresOrderByRelationAggregateInput
   }
 
   export type ProfessorWhereUniqueInput = Prisma.AtLeast<{
@@ -12031,6 +12174,7 @@ export namespace Prisma {
     numero?: StringFilter<"Professor"> | string
     rua?: StringFilter<"Professor"> | string
     disciplina?: DisciplinasListRelationFilter
+    FaltasDisciplinares?: FaltasDisciplinaresListRelationFilter
   }, "id">
 
   export type ProfessorOrderByWithAggregationInput = {
@@ -12085,8 +12229,8 @@ export namespace Prisma {
     NOT?: DisciplinasWhereInput | DisciplinasWhereInput[]
     id?: IntFilter<"Disciplinas"> | number
     idProfessor?: IntFilter<"Disciplinas"> | number
-    nomeDisciplina?: StringFilter<"Disciplinas"> | string
     idCurso?: IntFilter<"Disciplinas"> | number
+    nomeDisciplina?: StringFilter<"Disciplinas"> | string
     cursos?: XOR<CursosRelationFilter, CursosWhereInput>
     professor?: XOR<ProfessorRelationFilter, ProfessorWhereInput>
   }
@@ -12094,8 +12238,8 @@ export namespace Prisma {
   export type DisciplinasOrderByWithRelationInput = {
     id?: SortOrder
     idProfessor?: SortOrder
-    nomeDisciplina?: SortOrder
     idCurso?: SortOrder
+    nomeDisciplina?: SortOrder
     cursos?: CursosOrderByWithRelationInput
     professor?: ProfessorOrderByWithRelationInput
   }
@@ -12106,8 +12250,8 @@ export namespace Prisma {
     OR?: DisciplinasWhereInput[]
     NOT?: DisciplinasWhereInput | DisciplinasWhereInput[]
     idProfessor?: IntFilter<"Disciplinas"> | number
-    nomeDisciplina?: StringFilter<"Disciplinas"> | string
     idCurso?: IntFilter<"Disciplinas"> | number
+    nomeDisciplina?: StringFilter<"Disciplinas"> | string
     cursos?: XOR<CursosRelationFilter, CursosWhereInput>
     professor?: XOR<ProfessorRelationFilter, ProfessorWhereInput>
   }, "id">
@@ -12115,8 +12259,8 @@ export namespace Prisma {
   export type DisciplinasOrderByWithAggregationInput = {
     id?: SortOrder
     idProfessor?: SortOrder
-    nomeDisciplina?: SortOrder
     idCurso?: SortOrder
+    nomeDisciplina?: SortOrder
     _count?: DisciplinasCountOrderByAggregateInput
     _avg?: DisciplinasAvgOrderByAggregateInput
     _max?: DisciplinasMaxOrderByAggregateInput
@@ -12130,8 +12274,8 @@ export namespace Prisma {
     NOT?: DisciplinasScalarWhereWithAggregatesInput | DisciplinasScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Disciplinas"> | number
     idProfessor?: IntWithAggregatesFilter<"Disciplinas"> | number
-    nomeDisciplina?: StringWithAggregatesFilter<"Disciplinas"> | string
     idCurso?: IntWithAggregatesFilter<"Disciplinas"> | number
+    nomeDisciplina?: StringWithAggregatesFilter<"Disciplinas"> | string
   }
 
   export type CursosWhereInput = {
@@ -12205,6 +12349,8 @@ export namespace Prisma {
     profPai?: StringFilter<"Aluno"> | string
     rua?: StringFilter<"Aluno"> | string
     uf?: StringFilter<"Aluno"> | string
+    idTurma?: IntFilter<"Aluno"> | number
+    turma?: XOR<TurmaRelationFilter, TurmaWhereInput>
     faltaDisciplinar?: FaltasDisciplinaresListRelationFilter
     Matricula?: MatriculaListRelationFilter
   }
@@ -12232,6 +12378,8 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    idTurma?: SortOrder
+    turma?: TurmaOrderByWithRelationInput
     faltaDisciplinar?: FaltasDisciplinaresOrderByRelationAggregateInput
     Matricula?: MatriculaOrderByRelationAggregateInput
   }
@@ -12262,6 +12410,8 @@ export namespace Prisma {
     profPai?: StringFilter<"Aluno"> | string
     rua?: StringFilter<"Aluno"> | string
     uf?: StringFilter<"Aluno"> | string
+    idTurma?: IntFilter<"Aluno"> | number
+    turma?: XOR<TurmaRelationFilter, TurmaWhereInput>
     faltaDisciplinar?: FaltasDisciplinaresListRelationFilter
     Matricula?: MatriculaListRelationFilter
   }, "id">
@@ -12289,6 +12439,7 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    idTurma?: SortOrder
     _count?: AlunoCountOrderByAggregateInput
     _avg?: AlunoAvgOrderByAggregateInput
     _max?: AlunoMaxOrderByAggregateInput
@@ -12322,6 +12473,7 @@ export namespace Prisma {
     profPai?: StringWithAggregatesFilter<"Aluno"> | string
     rua?: StringWithAggregatesFilter<"Aluno"> | string
     uf?: StringWithAggregatesFilter<"Aluno"> | string
+    idTurma?: IntWithAggregatesFilter<"Aluno"> | number
   }
 
   export type FaltasDisciplinaresWhereInput = {
@@ -12330,16 +12482,22 @@ export namespace Prisma {
     NOT?: FaltasDisciplinaresWhereInput | FaltasDisciplinaresWhereInput[]
     id?: IntFilter<"FaltasDisciplinares"> | number
     idAluno?: IntFilter<"FaltasDisciplinares"> | number
+    idProfessor?: IntFilter<"FaltasDisciplinares"> | number
+    titulo?: StringFilter<"FaltasDisciplinares"> | string
     descricao?: StringFilter<"FaltasDisciplinares"> | string
-    dataFalta?: DateTimeFilter<"FaltasDisciplinares"> | Date | string
+    dataFalta?: StringFilter<"FaltasDisciplinares"> | string
+    professor?: XOR<ProfessorRelationFilter, ProfessorWhereInput>
     aluno?: XOR<AlunoRelationFilter, AlunoWhereInput>
   }
 
   export type FaltasDisciplinaresOrderByWithRelationInput = {
     id?: SortOrder
     idAluno?: SortOrder
+    idProfessor?: SortOrder
+    titulo?: SortOrder
     descricao?: SortOrder
     dataFalta?: SortOrder
+    professor?: ProfessorOrderByWithRelationInput
     aluno?: AlunoOrderByWithRelationInput
   }
 
@@ -12349,14 +12507,19 @@ export namespace Prisma {
     OR?: FaltasDisciplinaresWhereInput[]
     NOT?: FaltasDisciplinaresWhereInput | FaltasDisciplinaresWhereInput[]
     idAluno?: IntFilter<"FaltasDisciplinares"> | number
+    idProfessor?: IntFilter<"FaltasDisciplinares"> | number
+    titulo?: StringFilter<"FaltasDisciplinares"> | string
     descricao?: StringFilter<"FaltasDisciplinares"> | string
-    dataFalta?: DateTimeFilter<"FaltasDisciplinares"> | Date | string
+    dataFalta?: StringFilter<"FaltasDisciplinares"> | string
+    professor?: XOR<ProfessorRelationFilter, ProfessorWhereInput>
     aluno?: XOR<AlunoRelationFilter, AlunoWhereInput>
   }, "id">
 
   export type FaltasDisciplinaresOrderByWithAggregationInput = {
     id?: SortOrder
     idAluno?: SortOrder
+    idProfessor?: SortOrder
+    titulo?: SortOrder
     descricao?: SortOrder
     dataFalta?: SortOrder
     _count?: FaltasDisciplinaresCountOrderByAggregateInput
@@ -12372,8 +12535,10 @@ export namespace Prisma {
     NOT?: FaltasDisciplinaresScalarWhereWithAggregatesInput | FaltasDisciplinaresScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"FaltasDisciplinares"> | number
     idAluno?: IntWithAggregatesFilter<"FaltasDisciplinares"> | number
+    idProfessor?: IntWithAggregatesFilter<"FaltasDisciplinares"> | number
+    titulo?: StringWithAggregatesFilter<"FaltasDisciplinares"> | string
     descricao?: StringWithAggregatesFilter<"FaltasDisciplinares"> | string
-    dataFalta?: DateTimeWithAggregatesFilter<"FaltasDisciplinares"> | Date | string
+    dataFalta?: StringWithAggregatesFilter<"FaltasDisciplinares"> | string
   }
 
   export type MatriculaWhereInput = {
@@ -12435,16 +12600,16 @@ export namespace Prisma {
     id?: IntFilter<"Turma"> | number
     idCurso?: IntFilter<"Turma"> | number
     nomeTurma?: StringFilter<"Turma"> | string
-    disciplinas?: IntNullableListFilter<"Turma">
     curso?: XOR<CursosRelationFilter, CursosWhereInput>
+    Aluno?: AlunoListRelationFilter
   }
 
   export type TurmaOrderByWithRelationInput = {
     id?: SortOrder
     idCurso?: SortOrder
     nomeTurma?: SortOrder
-    disciplinas?: SortOrder
     curso?: CursosOrderByWithRelationInput
+    Aluno?: AlunoOrderByRelationAggregateInput
   }
 
   export type TurmaWhereUniqueInput = Prisma.AtLeast<{
@@ -12454,15 +12619,14 @@ export namespace Prisma {
     NOT?: TurmaWhereInput | TurmaWhereInput[]
     idCurso?: IntFilter<"Turma"> | number
     nomeTurma?: StringFilter<"Turma"> | string
-    disciplinas?: IntNullableListFilter<"Turma">
     curso?: XOR<CursosRelationFilter, CursosWhereInput>
+    Aluno?: AlunoListRelationFilter
   }, "id">
 
   export type TurmaOrderByWithAggregationInput = {
     id?: SortOrder
     idCurso?: SortOrder
     nomeTurma?: SortOrder
-    disciplinas?: SortOrder
     _count?: TurmaCountOrderByAggregateInput
     _avg?: TurmaAvgOrderByAggregateInput
     _max?: TurmaMaxOrderByAggregateInput
@@ -12477,7 +12641,6 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"Turma"> | number
     idCurso?: IntWithAggregatesFilter<"Turma"> | number
     nomeTurma?: StringWithAggregatesFilter<"Turma"> | string
-    disciplinas?: IntNullableListFilter<"Turma">
   }
 
   export type ChamadaWhereInput = {
@@ -12635,6 +12798,7 @@ export namespace Prisma {
     numero: string
     rua: string
     disciplina?: DisciplinasCreateNestedManyWithoutProfessorInput
+    FaltasDisciplinares?: FaltasDisciplinaresCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUncheckedCreateInput = {
@@ -12655,6 +12819,7 @@ export namespace Prisma {
     numero: string
     rua: string
     disciplina?: DisciplinasUncheckedCreateNestedManyWithoutProfessorInput
+    FaltasDisciplinares?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUpdateInput = {
@@ -12674,6 +12839,7 @@ export namespace Prisma {
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     disciplina?: DisciplinasUpdateManyWithoutProfessorNestedInput
+    FaltasDisciplinares?: FaltasDisciplinaresUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorUncheckedUpdateInput = {
@@ -12694,6 +12860,7 @@ export namespace Prisma {
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     disciplina?: DisciplinasUncheckedUpdateManyWithoutProfessorNestedInput
+    FaltasDisciplinares?: FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorCreateManyInput = {
@@ -12761,8 +12928,8 @@ export namespace Prisma {
   export type DisciplinasUncheckedCreateInput = {
     id?: number
     idProfessor: number
-    nomeDisciplina: string
     idCurso: number
+    nomeDisciplina: string
   }
 
   export type DisciplinasUpdateInput = {
@@ -12774,15 +12941,15 @@ export namespace Prisma {
   export type DisciplinasUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     idProfessor?: IntFieldUpdateOperationsInput | number
-    nomeDisciplina?: StringFieldUpdateOperationsInput | string
     idCurso?: IntFieldUpdateOperationsInput | number
+    nomeDisciplina?: StringFieldUpdateOperationsInput | string
   }
 
   export type DisciplinasCreateManyInput = {
     id?: number
     idProfessor: number
-    nomeDisciplina: string
     idCurso: number
+    nomeDisciplina: string
   }
 
   export type DisciplinasUpdateManyMutationInput = {
@@ -12792,8 +12959,8 @@ export namespace Prisma {
   export type DisciplinasUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     idProfessor?: IntFieldUpdateOperationsInput | number
-    nomeDisciplina?: StringFieldUpdateOperationsInput | string
     idCurso?: IntFieldUpdateOperationsInput | number
+    nomeDisciplina?: StringFieldUpdateOperationsInput | string
   }
 
   export type CursosCreateInput = {
@@ -12858,6 +13025,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    turma: TurmaCreateNestedOneWithoutAlunoInput
     faltaDisciplinar?: FaltasDisciplinaresCreateNestedManyWithoutAlunoInput
     Matricula?: MatriculaCreateNestedManyWithoutAlunoInput
   }
@@ -12885,6 +13053,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    idTurma: number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutAlunoInput
     Matricula?: MatriculaUncheckedCreateNestedManyWithoutAlunoInput
   }
@@ -12911,6 +13080,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    turma?: TurmaUpdateOneRequiredWithoutAlunoNestedInput
     faltaDisciplinar?: FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput
     Matricula?: MatriculaUpdateManyWithoutAlunoNestedInput
   }
@@ -12938,6 +13108,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    idTurma?: IntFieldUpdateOperationsInput | number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoNestedInput
     Matricula?: MatriculaUncheckedUpdateManyWithoutAlunoNestedInput
   }
@@ -12965,6 +13136,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    idTurma: number
   }
 
   export type AlunoUpdateManyMutationInput = {
@@ -13014,51 +13186,65 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    idTurma?: IntFieldUpdateOperationsInput | number
   }
 
   export type FaltasDisciplinaresCreateInput = {
+    titulo: string
     descricao: string
-    dataFalta: Date | string
+    dataFalta: string
+    professor: ProfessorCreateNestedOneWithoutFaltasDisciplinaresInput
     aluno: AlunoCreateNestedOneWithoutFaltaDisciplinarInput
   }
 
   export type FaltasDisciplinaresUncheckedCreateInput = {
     id?: number
     idAluno: number
+    idProfessor: number
+    titulo: string
     descricao: string
-    dataFalta: Date | string
+    dataFalta: string
   }
 
   export type FaltasDisciplinaresUpdateInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
+    professor?: ProfessorUpdateOneRequiredWithoutFaltasDisciplinaresNestedInput
     aluno?: AlunoUpdateOneRequiredWithoutFaltaDisciplinarNestedInput
   }
 
   export type FaltasDisciplinaresUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     idAluno?: IntFieldUpdateOperationsInput | number
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
   export type FaltasDisciplinaresCreateManyInput = {
     id?: number
     idAluno: number
+    idProfessor: number
+    titulo: string
     descricao: string
-    dataFalta: Date | string
+    dataFalta: string
   }
 
   export type FaltasDisciplinaresUpdateManyMutationInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
   export type FaltasDisciplinaresUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     idAluno?: IntFieldUpdateOperationsInput | number
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
   export type MatriculaCreateInput = {
@@ -13108,47 +13294,44 @@ export namespace Prisma {
 
   export type TurmaCreateInput = {
     nomeTurma: string
-    disciplinas?: TurmaCreatedisciplinasInput | number[]
     curso: CursosCreateNestedOneWithoutTurmaInput
+    Aluno?: AlunoCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUncheckedCreateInput = {
     id?: number
     idCurso: number
     nomeTurma: string
-    disciplinas?: TurmaCreatedisciplinasInput | number[]
+    Aluno?: AlunoUncheckedCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUpdateInput = {
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
     curso?: CursosUpdateOneRequiredWithoutTurmaNestedInput
+    Aluno?: AlunoUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     idCurso?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
+    Aluno?: AlunoUncheckedUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaCreateManyInput = {
     id?: number
     idCurso: number
     nomeTurma: string
-    disciplinas?: TurmaCreatedisciplinasInput | number[]
   }
 
   export type TurmaUpdateManyMutationInput = {
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
   }
 
   export type TurmaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     idCurso?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
   }
 
   export type ChamadaCreateInput = {
@@ -13303,7 +13486,17 @@ export namespace Prisma {
     none?: DisciplinasWhereInput
   }
 
+  export type FaltasDisciplinaresListRelationFilter = {
+    every?: FaltasDisciplinaresWhereInput
+    some?: FaltasDisciplinaresWhereInput
+    none?: FaltasDisciplinaresWhereInput
+  }
+
   export type DisciplinasOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type FaltasDisciplinaresOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13419,8 +13612,8 @@ export namespace Prisma {
   export type DisciplinasCountOrderByAggregateInput = {
     id?: SortOrder
     idProfessor?: SortOrder
-    nomeDisciplina?: SortOrder
     idCurso?: SortOrder
+    nomeDisciplina?: SortOrder
   }
 
   export type DisciplinasAvgOrderByAggregateInput = {
@@ -13432,15 +13625,15 @@ export namespace Prisma {
   export type DisciplinasMaxOrderByAggregateInput = {
     id?: SortOrder
     idProfessor?: SortOrder
-    nomeDisciplina?: SortOrder
     idCurso?: SortOrder
+    nomeDisciplina?: SortOrder
   }
 
   export type DisciplinasMinOrderByAggregateInput = {
     id?: SortOrder
     idProfessor?: SortOrder
-    nomeDisciplina?: SortOrder
     idCurso?: SortOrder
+    nomeDisciplina?: SortOrder
   }
 
   export type DisciplinasSumOrderByAggregateInput = {
@@ -13493,20 +13686,15 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
-  export type FaltasDisciplinaresListRelationFilter = {
-    every?: FaltasDisciplinaresWhereInput
-    some?: FaltasDisciplinaresWhereInput
-    none?: FaltasDisciplinaresWhereInput
+  export type TurmaRelationFilter = {
+    is?: TurmaWhereInput
+    isNot?: TurmaWhereInput
   }
 
   export type MatriculaListRelationFilter = {
     every?: MatriculaWhereInput
     some?: MatriculaWhereInput
     none?: MatriculaWhereInput
-  }
-
-  export type FaltasDisciplinaresOrderByRelationAggregateInput = {
-    _count?: SortOrder
   }
 
   export type MatriculaOrderByRelationAggregateInput = {
@@ -13536,11 +13724,13 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    idTurma?: SortOrder
   }
 
   export type AlunoAvgOrderByAggregateInput = {
     id?: SortOrder
     rendaFamilia?: SortOrder
+    idTurma?: SortOrder
   }
 
   export type AlunoMaxOrderByAggregateInput = {
@@ -13566,6 +13756,7 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    idTurma?: SortOrder
   }
 
   export type AlunoMinOrderByAggregateInput = {
@@ -13591,11 +13782,13 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    idTurma?: SortOrder
   }
 
   export type AlunoSumOrderByAggregateInput = {
     id?: SortOrder
     rendaFamilia?: SortOrder
+    idTurma?: SortOrder
   }
 
   export type DecimalWithAggregatesFilter<$PrismaModel = never> = {
@@ -13614,6 +13807,50 @@ export namespace Prisma {
     _max?: NestedDecimalFilter<$PrismaModel>
   }
 
+  export type AlunoRelationFilter = {
+    is?: AlunoWhereInput
+    isNot?: AlunoWhereInput
+  }
+
+  export type FaltasDisciplinaresCountOrderByAggregateInput = {
+    id?: SortOrder
+    idAluno?: SortOrder
+    idProfessor?: SortOrder
+    titulo?: SortOrder
+    descricao?: SortOrder
+    dataFalta?: SortOrder
+  }
+
+  export type FaltasDisciplinaresAvgOrderByAggregateInput = {
+    id?: SortOrder
+    idAluno?: SortOrder
+    idProfessor?: SortOrder
+  }
+
+  export type FaltasDisciplinaresMaxOrderByAggregateInput = {
+    id?: SortOrder
+    idAluno?: SortOrder
+    idProfessor?: SortOrder
+    titulo?: SortOrder
+    descricao?: SortOrder
+    dataFalta?: SortOrder
+  }
+
+  export type FaltasDisciplinaresMinOrderByAggregateInput = {
+    id?: SortOrder
+    idAluno?: SortOrder
+    idProfessor?: SortOrder
+    titulo?: SortOrder
+    descricao?: SortOrder
+    dataFalta?: SortOrder
+  }
+
+  export type FaltasDisciplinaresSumOrderByAggregateInput = {
+    id?: SortOrder
+    idAluno?: SortOrder
+    idProfessor?: SortOrder
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -13623,56 +13860,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
-  }
-
-  export type AlunoRelationFilter = {
-    is?: AlunoWhereInput
-    isNot?: AlunoWhereInput
-  }
-
-  export type FaltasDisciplinaresCountOrderByAggregateInput = {
-    id?: SortOrder
-    idAluno?: SortOrder
-    descricao?: SortOrder
-    dataFalta?: SortOrder
-  }
-
-  export type FaltasDisciplinaresAvgOrderByAggregateInput = {
-    id?: SortOrder
-    idAluno?: SortOrder
-  }
-
-  export type FaltasDisciplinaresMaxOrderByAggregateInput = {
-    id?: SortOrder
-    idAluno?: SortOrder
-    descricao?: SortOrder
-    dataFalta?: SortOrder
-  }
-
-  export type FaltasDisciplinaresMinOrderByAggregateInput = {
-    id?: SortOrder
-    idAluno?: SortOrder
-    descricao?: SortOrder
-    dataFalta?: SortOrder
-  }
-
-  export type FaltasDisciplinaresSumOrderByAggregateInput = {
-    id?: SortOrder
-    idAluno?: SortOrder
-  }
-
-  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
   export type MatriculaCountOrderByAggregateInput = {
@@ -13706,25 +13893,39 @@ export namespace Prisma {
     idAluno?: SortOrder
   }
 
-  export type IntNullableListFilter<$PrismaModel = never> = {
-    equals?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    has?: number | IntFieldRefInput<$PrismaModel> | null
-    hasEvery?: number[] | ListIntFieldRefInput<$PrismaModel>
-    hasSome?: number[] | ListIntFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type AlunoListRelationFilter = {
+    every?: AlunoWhereInput
+    some?: AlunoWhereInput
+    none?: AlunoWhereInput
+  }
+
+  export type AlunoOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type TurmaCountOrderByAggregateInput = {
     id?: SortOrder
     idCurso?: SortOrder
     nomeTurma?: SortOrder
-    disciplinas?: SortOrder
   }
 
   export type TurmaAvgOrderByAggregateInput = {
     id?: SortOrder
     idCurso?: SortOrder
-    disciplinas?: SortOrder
   }
 
   export type TurmaMaxOrderByAggregateInput = {
@@ -13742,7 +13943,6 @@ export namespace Prisma {
   export type TurmaSumOrderByAggregateInput = {
     id?: SortOrder
     idCurso?: SortOrder
-    disciplinas?: SortOrder
   }
 
   export type AtividadeSalaRelationFilter = {
@@ -13849,11 +14049,25 @@ export namespace Prisma {
     connect?: DisciplinasWhereUniqueInput | DisciplinasWhereUniqueInput[]
   }
 
+  export type FaltasDisciplinaresCreateNestedManyWithoutProfessorInput = {
+    create?: XOR<FaltasDisciplinaresCreateWithoutProfessorInput, FaltasDisciplinaresUncheckedCreateWithoutProfessorInput> | FaltasDisciplinaresCreateWithoutProfessorInput[] | FaltasDisciplinaresUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: FaltasDisciplinaresCreateOrConnectWithoutProfessorInput | FaltasDisciplinaresCreateOrConnectWithoutProfessorInput[]
+    createMany?: FaltasDisciplinaresCreateManyProfessorInputEnvelope
+    connect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+  }
+
   export type DisciplinasUncheckedCreateNestedManyWithoutProfessorInput = {
     create?: XOR<DisciplinasCreateWithoutProfessorInput, DisciplinasUncheckedCreateWithoutProfessorInput> | DisciplinasCreateWithoutProfessorInput[] | DisciplinasUncheckedCreateWithoutProfessorInput[]
     connectOrCreate?: DisciplinasCreateOrConnectWithoutProfessorInput | DisciplinasCreateOrConnectWithoutProfessorInput[]
     createMany?: DisciplinasCreateManyProfessorInputEnvelope
     connect?: DisciplinasWhereUniqueInput | DisciplinasWhereUniqueInput[]
+  }
+
+  export type FaltasDisciplinaresUncheckedCreateNestedManyWithoutProfessorInput = {
+    create?: XOR<FaltasDisciplinaresCreateWithoutProfessorInput, FaltasDisciplinaresUncheckedCreateWithoutProfessorInput> | FaltasDisciplinaresCreateWithoutProfessorInput[] | FaltasDisciplinaresUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: FaltasDisciplinaresCreateOrConnectWithoutProfessorInput | FaltasDisciplinaresCreateOrConnectWithoutProfessorInput[]
+    createMany?: FaltasDisciplinaresCreateManyProfessorInputEnvelope
+    connect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13872,6 +14086,20 @@ export namespace Prisma {
     update?: DisciplinasUpdateWithWhereUniqueWithoutProfessorInput | DisciplinasUpdateWithWhereUniqueWithoutProfessorInput[]
     updateMany?: DisciplinasUpdateManyWithWhereWithoutProfessorInput | DisciplinasUpdateManyWithWhereWithoutProfessorInput[]
     deleteMany?: DisciplinasScalarWhereInput | DisciplinasScalarWhereInput[]
+  }
+
+  export type FaltasDisciplinaresUpdateManyWithoutProfessorNestedInput = {
+    create?: XOR<FaltasDisciplinaresCreateWithoutProfessorInput, FaltasDisciplinaresUncheckedCreateWithoutProfessorInput> | FaltasDisciplinaresCreateWithoutProfessorInput[] | FaltasDisciplinaresUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: FaltasDisciplinaresCreateOrConnectWithoutProfessorInput | FaltasDisciplinaresCreateOrConnectWithoutProfessorInput[]
+    upsert?: FaltasDisciplinaresUpsertWithWhereUniqueWithoutProfessorInput | FaltasDisciplinaresUpsertWithWhereUniqueWithoutProfessorInput[]
+    createMany?: FaltasDisciplinaresCreateManyProfessorInputEnvelope
+    set?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    disconnect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    delete?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    connect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    update?: FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput | FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput[]
+    updateMany?: FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput | FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput[]
+    deleteMany?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -13894,6 +14122,20 @@ export namespace Prisma {
     update?: DisciplinasUpdateWithWhereUniqueWithoutProfessorInput | DisciplinasUpdateWithWhereUniqueWithoutProfessorInput[]
     updateMany?: DisciplinasUpdateManyWithWhereWithoutProfessorInput | DisciplinasUpdateManyWithWhereWithoutProfessorInput[]
     deleteMany?: DisciplinasScalarWhereInput | DisciplinasScalarWhereInput[]
+  }
+
+  export type FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorNestedInput = {
+    create?: XOR<FaltasDisciplinaresCreateWithoutProfessorInput, FaltasDisciplinaresUncheckedCreateWithoutProfessorInput> | FaltasDisciplinaresCreateWithoutProfessorInput[] | FaltasDisciplinaresUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: FaltasDisciplinaresCreateOrConnectWithoutProfessorInput | FaltasDisciplinaresCreateOrConnectWithoutProfessorInput[]
+    upsert?: FaltasDisciplinaresUpsertWithWhereUniqueWithoutProfessorInput | FaltasDisciplinaresUpsertWithWhereUniqueWithoutProfessorInput[]
+    createMany?: FaltasDisciplinaresCreateManyProfessorInputEnvelope
+    set?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    disconnect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    delete?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    connect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+    update?: FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput | FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput[]
+    updateMany?: FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput | FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput[]
+    deleteMany?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
   }
 
   export type CursosCreateNestedOneWithoutDisciplinasInput = {
@@ -14008,6 +14250,12 @@ export namespace Prisma {
     deleteMany?: TurmaScalarWhereInput | TurmaScalarWhereInput[]
   }
 
+  export type TurmaCreateNestedOneWithoutAlunoInput = {
+    create?: XOR<TurmaCreateWithoutAlunoInput, TurmaUncheckedCreateWithoutAlunoInput>
+    connectOrCreate?: TurmaCreateOrConnectWithoutAlunoInput
+    connect?: TurmaWhereUniqueInput
+  }
+
   export type FaltasDisciplinaresCreateNestedManyWithoutAlunoInput = {
     create?: XOR<FaltasDisciplinaresCreateWithoutAlunoInput, FaltasDisciplinaresUncheckedCreateWithoutAlunoInput> | FaltasDisciplinaresCreateWithoutAlunoInput[] | FaltasDisciplinaresUncheckedCreateWithoutAlunoInput[]
     connectOrCreate?: FaltasDisciplinaresCreateOrConnectWithoutAlunoInput | FaltasDisciplinaresCreateOrConnectWithoutAlunoInput[]
@@ -14042,6 +14290,14 @@ export namespace Prisma {
     decrement?: Decimal | DecimalJsLike | number | string
     multiply?: Decimal | DecimalJsLike | number | string
     divide?: Decimal | DecimalJsLike | number | string
+  }
+
+  export type TurmaUpdateOneRequiredWithoutAlunoNestedInput = {
+    create?: XOR<TurmaCreateWithoutAlunoInput, TurmaUncheckedCreateWithoutAlunoInput>
+    connectOrCreate?: TurmaCreateOrConnectWithoutAlunoInput
+    upsert?: TurmaUpsertWithoutAlunoInput
+    connect?: TurmaWhereUniqueInput
+    update?: XOR<XOR<TurmaUpdateToOneWithWhereWithoutAlunoInput, TurmaUpdateWithoutAlunoInput>, TurmaUncheckedUpdateWithoutAlunoInput>
   }
 
   export type FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput = {
@@ -14100,14 +14356,24 @@ export namespace Prisma {
     deleteMany?: MatriculaScalarWhereInput | MatriculaScalarWhereInput[]
   }
 
+  export type ProfessorCreateNestedOneWithoutFaltasDisciplinaresInput = {
+    create?: XOR<ProfessorCreateWithoutFaltasDisciplinaresInput, ProfessorUncheckedCreateWithoutFaltasDisciplinaresInput>
+    connectOrCreate?: ProfessorCreateOrConnectWithoutFaltasDisciplinaresInput
+    connect?: ProfessorWhereUniqueInput
+  }
+
   export type AlunoCreateNestedOneWithoutFaltaDisciplinarInput = {
     create?: XOR<AlunoCreateWithoutFaltaDisciplinarInput, AlunoUncheckedCreateWithoutFaltaDisciplinarInput>
     connectOrCreate?: AlunoCreateOrConnectWithoutFaltaDisciplinarInput
     connect?: AlunoWhereUniqueInput
   }
 
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
+  export type ProfessorUpdateOneRequiredWithoutFaltasDisciplinaresNestedInput = {
+    create?: XOR<ProfessorCreateWithoutFaltasDisciplinaresInput, ProfessorUncheckedCreateWithoutFaltasDisciplinaresInput>
+    connectOrCreate?: ProfessorCreateOrConnectWithoutFaltasDisciplinaresInput
+    upsert?: ProfessorUpsertWithoutFaltasDisciplinaresInput
+    connect?: ProfessorWhereUniqueInput
+    update?: XOR<XOR<ProfessorUpdateToOneWithWhereWithoutFaltasDisciplinaresInput, ProfessorUpdateWithoutFaltasDisciplinaresInput>, ProfessorUncheckedUpdateWithoutFaltasDisciplinaresInput>
   }
 
   export type AlunoUpdateOneRequiredWithoutFaltaDisciplinarNestedInput = {
@@ -14124,6 +14390,10 @@ export namespace Prisma {
     connect?: AlunoWhereUniqueInput
   }
 
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
   export type AlunoUpdateOneRequiredWithoutMatriculaNestedInput = {
     create?: XOR<AlunoCreateWithoutMatriculaInput, AlunoUncheckedCreateWithoutMatriculaInput>
     connectOrCreate?: AlunoCreateOrConnectWithoutMatriculaInput
@@ -14132,19 +14402,24 @@ export namespace Prisma {
     update?: XOR<XOR<AlunoUpdateToOneWithWhereWithoutMatriculaInput, AlunoUpdateWithoutMatriculaInput>, AlunoUncheckedUpdateWithoutMatriculaInput>
   }
 
-  export type TurmaCreatedisciplinasInput = {
-    set: number[]
-  }
-
   export type CursosCreateNestedOneWithoutTurmaInput = {
     create?: XOR<CursosCreateWithoutTurmaInput, CursosUncheckedCreateWithoutTurmaInput>
     connectOrCreate?: CursosCreateOrConnectWithoutTurmaInput
     connect?: CursosWhereUniqueInput
   }
 
-  export type TurmaUpdatedisciplinasInput = {
-    set?: number[]
-    push?: number | number[]
+  export type AlunoCreateNestedManyWithoutTurmaInput = {
+    create?: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput> | AlunoCreateWithoutTurmaInput[] | AlunoUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: AlunoCreateOrConnectWithoutTurmaInput | AlunoCreateOrConnectWithoutTurmaInput[]
+    createMany?: AlunoCreateManyTurmaInputEnvelope
+    connect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+  }
+
+  export type AlunoUncheckedCreateNestedManyWithoutTurmaInput = {
+    create?: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput> | AlunoCreateWithoutTurmaInput[] | AlunoUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: AlunoCreateOrConnectWithoutTurmaInput | AlunoCreateOrConnectWithoutTurmaInput[]
+    createMany?: AlunoCreateManyTurmaInputEnvelope
+    connect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
   }
 
   export type CursosUpdateOneRequiredWithoutTurmaNestedInput = {
@@ -14153,6 +14428,34 @@ export namespace Prisma {
     upsert?: CursosUpsertWithoutTurmaInput
     connect?: CursosWhereUniqueInput
     update?: XOR<XOR<CursosUpdateToOneWithWhereWithoutTurmaInput, CursosUpdateWithoutTurmaInput>, CursosUncheckedUpdateWithoutTurmaInput>
+  }
+
+  export type AlunoUpdateManyWithoutTurmaNestedInput = {
+    create?: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput> | AlunoCreateWithoutTurmaInput[] | AlunoUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: AlunoCreateOrConnectWithoutTurmaInput | AlunoCreateOrConnectWithoutTurmaInput[]
+    upsert?: AlunoUpsertWithWhereUniqueWithoutTurmaInput | AlunoUpsertWithWhereUniqueWithoutTurmaInput[]
+    createMany?: AlunoCreateManyTurmaInputEnvelope
+    set?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    disconnect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    delete?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    connect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    update?: AlunoUpdateWithWhereUniqueWithoutTurmaInput | AlunoUpdateWithWhereUniqueWithoutTurmaInput[]
+    updateMany?: AlunoUpdateManyWithWhereWithoutTurmaInput | AlunoUpdateManyWithWhereWithoutTurmaInput[]
+    deleteMany?: AlunoScalarWhereInput | AlunoScalarWhereInput[]
+  }
+
+  export type AlunoUncheckedUpdateManyWithoutTurmaNestedInput = {
+    create?: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput> | AlunoCreateWithoutTurmaInput[] | AlunoUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: AlunoCreateOrConnectWithoutTurmaInput | AlunoCreateOrConnectWithoutTurmaInput[]
+    upsert?: AlunoUpsertWithWhereUniqueWithoutTurmaInput | AlunoUpsertWithWhereUniqueWithoutTurmaInput[]
+    createMany?: AlunoCreateManyTurmaInputEnvelope
+    set?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    disconnect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    delete?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    connect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+    update?: AlunoUpdateWithWhereUniqueWithoutTurmaInput | AlunoUpdateWithWhereUniqueWithoutTurmaInput[]
+    updateMany?: AlunoUpdateManyWithWhereWithoutTurmaInput | AlunoUpdateManyWithWhereWithoutTurmaInput[]
+    deleteMany?: AlunoScalarWhereInput | AlunoScalarWhereInput[]
   }
 
   export type AtividadeSalaCreateNestedOneWithoutChamadaInput = {
@@ -14339,8 +14642,8 @@ export namespace Prisma {
 
   export type DisciplinasUncheckedCreateWithoutProfessorInput = {
     id?: number
-    nomeDisciplina: string
     idCurso: number
+    nomeDisciplina: string
   }
 
   export type DisciplinasCreateOrConnectWithoutProfessorInput = {
@@ -14350,6 +14653,31 @@ export namespace Prisma {
 
   export type DisciplinasCreateManyProfessorInputEnvelope = {
     data: DisciplinasCreateManyProfessorInput | DisciplinasCreateManyProfessorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type FaltasDisciplinaresCreateWithoutProfessorInput = {
+    titulo: string
+    descricao: string
+    dataFalta: string
+    aluno: AlunoCreateNestedOneWithoutFaltaDisciplinarInput
+  }
+
+  export type FaltasDisciplinaresUncheckedCreateWithoutProfessorInput = {
+    id?: number
+    idAluno: number
+    titulo: string
+    descricao: string
+    dataFalta: string
+  }
+
+  export type FaltasDisciplinaresCreateOrConnectWithoutProfessorInput = {
+    where: FaltasDisciplinaresWhereUniqueInput
+    create: XOR<FaltasDisciplinaresCreateWithoutProfessorInput, FaltasDisciplinaresUncheckedCreateWithoutProfessorInput>
+  }
+
+  export type FaltasDisciplinaresCreateManyProfessorInputEnvelope = {
+    data: FaltasDisciplinaresCreateManyProfessorInput | FaltasDisciplinaresCreateManyProfessorInput[]
     skipDuplicates?: boolean
   }
 
@@ -14375,8 +14703,36 @@ export namespace Prisma {
     NOT?: DisciplinasScalarWhereInput | DisciplinasScalarWhereInput[]
     id?: IntFilter<"Disciplinas"> | number
     idProfessor?: IntFilter<"Disciplinas"> | number
-    nomeDisciplina?: StringFilter<"Disciplinas"> | string
     idCurso?: IntFilter<"Disciplinas"> | number
+    nomeDisciplina?: StringFilter<"Disciplinas"> | string
+  }
+
+  export type FaltasDisciplinaresUpsertWithWhereUniqueWithoutProfessorInput = {
+    where: FaltasDisciplinaresWhereUniqueInput
+    update: XOR<FaltasDisciplinaresUpdateWithoutProfessorInput, FaltasDisciplinaresUncheckedUpdateWithoutProfessorInput>
+    create: XOR<FaltasDisciplinaresCreateWithoutProfessorInput, FaltasDisciplinaresUncheckedCreateWithoutProfessorInput>
+  }
+
+  export type FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput = {
+    where: FaltasDisciplinaresWhereUniqueInput
+    data: XOR<FaltasDisciplinaresUpdateWithoutProfessorInput, FaltasDisciplinaresUncheckedUpdateWithoutProfessorInput>
+  }
+
+  export type FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput = {
+    where: FaltasDisciplinaresScalarWhereInput
+    data: XOR<FaltasDisciplinaresUpdateManyMutationInput, FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorInput>
+  }
+
+  export type FaltasDisciplinaresScalarWhereInput = {
+    AND?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
+    OR?: FaltasDisciplinaresScalarWhereInput[]
+    NOT?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
+    id?: IntFilter<"FaltasDisciplinares"> | number
+    idAluno?: IntFilter<"FaltasDisciplinares"> | number
+    idProfessor?: IntFilter<"FaltasDisciplinares"> | number
+    titulo?: StringFilter<"FaltasDisciplinares"> | string
+    descricao?: StringFilter<"FaltasDisciplinares"> | string
+    dataFalta?: StringFilter<"FaltasDisciplinares"> | string
   }
 
   export type CursosCreateWithoutDisciplinasInput = {
@@ -14411,6 +14767,7 @@ export namespace Prisma {
     nivelFormacao: string
     numero: string
     rua: string
+    FaltasDisciplinares?: FaltasDisciplinaresCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUncheckedCreateWithoutDisciplinaInput = {
@@ -14430,6 +14787,7 @@ export namespace Prisma {
     nivelFormacao: string
     numero: string
     rua: string
+    FaltasDisciplinares?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorCreateOrConnectWithoutDisciplinaInput = {
@@ -14486,6 +14844,7 @@ export namespace Prisma {
     nivelFormacao?: StringFieldUpdateOperationsInput | string
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
+    FaltasDisciplinares?: FaltasDisciplinaresUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorUncheckedUpdateWithoutDisciplinaInput = {
@@ -14505,6 +14864,7 @@ export namespace Prisma {
     nivelFormacao?: StringFieldUpdateOperationsInput | string
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
+    FaltasDisciplinares?: FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type DisciplinasCreateWithoutCursosInput = {
@@ -14530,13 +14890,13 @@ export namespace Prisma {
 
   export type TurmaCreateWithoutCursoInput = {
     nomeTurma: string
-    disciplinas?: TurmaCreatedisciplinasInput | number[]
+    Aluno?: AlunoCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUncheckedCreateWithoutCursoInput = {
     id?: number
     nomeTurma: string
-    disciplinas?: TurmaCreatedisciplinasInput | number[]
+    Aluno?: AlunoUncheckedCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaCreateOrConnectWithoutCursoInput = {
@@ -14588,18 +14948,37 @@ export namespace Prisma {
     id?: IntFilter<"Turma"> | number
     idCurso?: IntFilter<"Turma"> | number
     nomeTurma?: StringFilter<"Turma"> | string
-    disciplinas?: IntNullableListFilter<"Turma">
+  }
+
+  export type TurmaCreateWithoutAlunoInput = {
+    nomeTurma: string
+    curso: CursosCreateNestedOneWithoutTurmaInput
+  }
+
+  export type TurmaUncheckedCreateWithoutAlunoInput = {
+    id?: number
+    idCurso: number
+    nomeTurma: string
+  }
+
+  export type TurmaCreateOrConnectWithoutAlunoInput = {
+    where: TurmaWhereUniqueInput
+    create: XOR<TurmaCreateWithoutAlunoInput, TurmaUncheckedCreateWithoutAlunoInput>
   }
 
   export type FaltasDisciplinaresCreateWithoutAlunoInput = {
+    titulo: string
     descricao: string
-    dataFalta: Date | string
+    dataFalta: string
+    professor: ProfessorCreateNestedOneWithoutFaltasDisciplinaresInput
   }
 
   export type FaltasDisciplinaresUncheckedCreateWithoutAlunoInput = {
     id?: number
+    idProfessor: number
+    titulo: string
     descricao: string
-    dataFalta: Date | string
+    dataFalta: string
   }
 
   export type FaltasDisciplinaresCreateOrConnectWithoutAlunoInput = {
@@ -14633,6 +15012,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type TurmaUpsertWithoutAlunoInput = {
+    update: XOR<TurmaUpdateWithoutAlunoInput, TurmaUncheckedUpdateWithoutAlunoInput>
+    create: XOR<TurmaCreateWithoutAlunoInput, TurmaUncheckedCreateWithoutAlunoInput>
+    where?: TurmaWhereInput
+  }
+
+  export type TurmaUpdateToOneWithWhereWithoutAlunoInput = {
+    where?: TurmaWhereInput
+    data: XOR<TurmaUpdateWithoutAlunoInput, TurmaUncheckedUpdateWithoutAlunoInput>
+  }
+
+  export type TurmaUpdateWithoutAlunoInput = {
+    nomeTurma?: StringFieldUpdateOperationsInput | string
+    curso?: CursosUpdateOneRequiredWithoutTurmaNestedInput
+  }
+
+  export type TurmaUncheckedUpdateWithoutAlunoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idCurso?: IntFieldUpdateOperationsInput | number
+    nomeTurma?: StringFieldUpdateOperationsInput | string
+  }
+
   export type FaltasDisciplinaresUpsertWithWhereUniqueWithoutAlunoInput = {
     where: FaltasDisciplinaresWhereUniqueInput
     update: XOR<FaltasDisciplinaresUpdateWithoutAlunoInput, FaltasDisciplinaresUncheckedUpdateWithoutAlunoInput>
@@ -14647,16 +15048,6 @@ export namespace Prisma {
   export type FaltasDisciplinaresUpdateManyWithWhereWithoutAlunoInput = {
     where: FaltasDisciplinaresScalarWhereInput
     data: XOR<FaltasDisciplinaresUpdateManyMutationInput, FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoInput>
-  }
-
-  export type FaltasDisciplinaresScalarWhereInput = {
-    AND?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
-    OR?: FaltasDisciplinaresScalarWhereInput[]
-    NOT?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
-    id?: IntFilter<"FaltasDisciplinares"> | number
-    idAluno?: IntFilter<"FaltasDisciplinares"> | number
-    descricao?: StringFilter<"FaltasDisciplinares"> | string
-    dataFalta?: DateTimeFilter<"FaltasDisciplinares"> | Date | string
   }
 
   export type MatriculaUpsertWithWhereUniqueWithoutAlunoInput = {
@@ -14685,6 +15076,50 @@ export namespace Prisma {
     situacao?: StringFilter<"Matricula"> | string
   }
 
+  export type ProfessorCreateWithoutFaltasDisciplinaresInput = {
+    name: string
+    nascimento: string
+    telefone: string
+    email: string
+    anoConclusao: string
+    bairro: string
+    cidade: string
+    complemento: string
+    curso: string
+    estado: string
+    genero: string
+    instituicao: string
+    nivelFormacao: string
+    numero: string
+    rua: string
+    disciplina?: DisciplinasCreateNestedManyWithoutProfessorInput
+  }
+
+  export type ProfessorUncheckedCreateWithoutFaltasDisciplinaresInput = {
+    id?: number
+    name: string
+    nascimento: string
+    telefone: string
+    email: string
+    anoConclusao: string
+    bairro: string
+    cidade: string
+    complemento: string
+    curso: string
+    estado: string
+    genero: string
+    instituicao: string
+    nivelFormacao: string
+    numero: string
+    rua: string
+    disciplina?: DisciplinasUncheckedCreateNestedManyWithoutProfessorInput
+  }
+
+  export type ProfessorCreateOrConnectWithoutFaltasDisciplinaresInput = {
+    where: ProfessorWhereUniqueInput
+    create: XOR<ProfessorCreateWithoutFaltasDisciplinaresInput, ProfessorUncheckedCreateWithoutFaltasDisciplinaresInput>
+  }
+
   export type AlunoCreateWithoutFaltaDisciplinarInput = {
     nome: string
     nascimento: string
@@ -14707,6 +15142,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    turma: TurmaCreateNestedOneWithoutAlunoInput
     Matricula?: MatriculaCreateNestedManyWithoutAlunoInput
   }
 
@@ -14733,12 +15169,63 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    idTurma: number
     Matricula?: MatriculaUncheckedCreateNestedManyWithoutAlunoInput
   }
 
   export type AlunoCreateOrConnectWithoutFaltaDisciplinarInput = {
     where: AlunoWhereUniqueInput
     create: XOR<AlunoCreateWithoutFaltaDisciplinarInput, AlunoUncheckedCreateWithoutFaltaDisciplinarInput>
+  }
+
+  export type ProfessorUpsertWithoutFaltasDisciplinaresInput = {
+    update: XOR<ProfessorUpdateWithoutFaltasDisciplinaresInput, ProfessorUncheckedUpdateWithoutFaltasDisciplinaresInput>
+    create: XOR<ProfessorCreateWithoutFaltasDisciplinaresInput, ProfessorUncheckedCreateWithoutFaltasDisciplinaresInput>
+    where?: ProfessorWhereInput
+  }
+
+  export type ProfessorUpdateToOneWithWhereWithoutFaltasDisciplinaresInput = {
+    where?: ProfessorWhereInput
+    data: XOR<ProfessorUpdateWithoutFaltasDisciplinaresInput, ProfessorUncheckedUpdateWithoutFaltasDisciplinaresInput>
+  }
+
+  export type ProfessorUpdateWithoutFaltasDisciplinaresInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    anoConclusao?: StringFieldUpdateOperationsInput | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    curso?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    genero?: StringFieldUpdateOperationsInput | string
+    instituicao?: StringFieldUpdateOperationsInput | string
+    nivelFormacao?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    disciplina?: DisciplinasUpdateManyWithoutProfessorNestedInput
+  }
+
+  export type ProfessorUncheckedUpdateWithoutFaltasDisciplinaresInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    anoConclusao?: StringFieldUpdateOperationsInput | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    curso?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    genero?: StringFieldUpdateOperationsInput | string
+    instituicao?: StringFieldUpdateOperationsInput | string
+    nivelFormacao?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    disciplina?: DisciplinasUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type AlunoUpsertWithoutFaltaDisciplinarInput = {
@@ -14774,6 +15261,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    turma?: TurmaUpdateOneRequiredWithoutAlunoNestedInput
     Matricula?: MatriculaUpdateManyWithoutAlunoNestedInput
   }
 
@@ -14800,6 +15288,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    idTurma?: IntFieldUpdateOperationsInput | number
     Matricula?: MatriculaUncheckedUpdateManyWithoutAlunoNestedInput
   }
 
@@ -14825,6 +15314,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    turma: TurmaCreateNestedOneWithoutAlunoInput
     faltaDisciplinar?: FaltasDisciplinaresCreateNestedManyWithoutAlunoInput
   }
 
@@ -14851,6 +15341,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    idTurma: number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutAlunoInput
   }
 
@@ -14892,6 +15383,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    turma?: TurmaUpdateOneRequiredWithoutAlunoNestedInput
     faltaDisciplinar?: FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput
   }
 
@@ -14918,6 +15410,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    idTurma?: IntFieldUpdateOperationsInput | number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoNestedInput
   }
 
@@ -14935,6 +15428,69 @@ export namespace Prisma {
   export type CursosCreateOrConnectWithoutTurmaInput = {
     where: CursosWhereUniqueInput
     create: XOR<CursosCreateWithoutTurmaInput, CursosUncheckedCreateWithoutTurmaInput>
+  }
+
+  export type AlunoCreateWithoutTurmaInput = {
+    nome: string
+    nascimento: string
+    cpf: string
+    rg: string
+    escola: string
+    periodo: string
+    serie: string
+    telefone: string
+    rendaFamilia: Decimal | DecimalJsLike | number | string
+    bairro: string
+    cidade: string
+    complemento: string
+    mae: string
+    numero: string
+    pai: string
+    phoneMae: string
+    phonePai: string
+    profMae: string
+    profPai: string
+    rua: string
+    uf: string
+    faltaDisciplinar?: FaltasDisciplinaresCreateNestedManyWithoutAlunoInput
+    Matricula?: MatriculaCreateNestedManyWithoutAlunoInput
+  }
+
+  export type AlunoUncheckedCreateWithoutTurmaInput = {
+    id?: number
+    nome: string
+    nascimento: string
+    cpf: string
+    rg: string
+    escola: string
+    periodo: string
+    serie: string
+    telefone: string
+    rendaFamilia: Decimal | DecimalJsLike | number | string
+    bairro: string
+    cidade: string
+    complemento: string
+    mae: string
+    numero: string
+    pai: string
+    phoneMae: string
+    phonePai: string
+    profMae: string
+    profPai: string
+    rua: string
+    uf: string
+    faltaDisciplinar?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutAlunoInput
+    Matricula?: MatriculaUncheckedCreateNestedManyWithoutAlunoInput
+  }
+
+  export type AlunoCreateOrConnectWithoutTurmaInput = {
+    where: AlunoWhereUniqueInput
+    create: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput>
+  }
+
+  export type AlunoCreateManyTurmaInputEnvelope = {
+    data: AlunoCreateManyTurmaInput | AlunoCreateManyTurmaInput[]
+    skipDuplicates?: boolean
   }
 
   export type CursosUpsertWithoutTurmaInput = {
@@ -14957,6 +15513,51 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     nomeCurso?: StringFieldUpdateOperationsInput | string
     Disciplinas?: DisciplinasUncheckedUpdateManyWithoutCursosNestedInput
+  }
+
+  export type AlunoUpsertWithWhereUniqueWithoutTurmaInput = {
+    where: AlunoWhereUniqueInput
+    update: XOR<AlunoUpdateWithoutTurmaInput, AlunoUncheckedUpdateWithoutTurmaInput>
+    create: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput>
+  }
+
+  export type AlunoUpdateWithWhereUniqueWithoutTurmaInput = {
+    where: AlunoWhereUniqueInput
+    data: XOR<AlunoUpdateWithoutTurmaInput, AlunoUncheckedUpdateWithoutTurmaInput>
+  }
+
+  export type AlunoUpdateManyWithWhereWithoutTurmaInput = {
+    where: AlunoScalarWhereInput
+    data: XOR<AlunoUpdateManyMutationInput, AlunoUncheckedUpdateManyWithoutTurmaInput>
+  }
+
+  export type AlunoScalarWhereInput = {
+    AND?: AlunoScalarWhereInput | AlunoScalarWhereInput[]
+    OR?: AlunoScalarWhereInput[]
+    NOT?: AlunoScalarWhereInput | AlunoScalarWhereInput[]
+    id?: IntFilter<"Aluno"> | number
+    nome?: StringFilter<"Aluno"> | string
+    nascimento?: StringFilter<"Aluno"> | string
+    cpf?: StringFilter<"Aluno"> | string
+    rg?: StringFilter<"Aluno"> | string
+    escola?: StringFilter<"Aluno"> | string
+    periodo?: StringFilter<"Aluno"> | string
+    serie?: StringFilter<"Aluno"> | string
+    telefone?: StringFilter<"Aluno"> | string
+    rendaFamilia?: DecimalFilter<"Aluno"> | Decimal | DecimalJsLike | number | string
+    bairro?: StringFilter<"Aluno"> | string
+    cidade?: StringFilter<"Aluno"> | string
+    complemento?: StringFilter<"Aluno"> | string
+    mae?: StringFilter<"Aluno"> | string
+    numero?: StringFilter<"Aluno"> | string
+    pai?: StringFilter<"Aluno"> | string
+    phoneMae?: StringFilter<"Aluno"> | string
+    phonePai?: StringFilter<"Aluno"> | string
+    profMae?: StringFilter<"Aluno"> | string
+    profPai?: StringFilter<"Aluno"> | string
+    rua?: StringFilter<"Aluno"> | string
+    uf?: StringFilter<"Aluno"> | string
+    idTurma?: IntFilter<"Aluno"> | number
   }
 
   export type AtividadeSalaCreateWithoutChamadaInput = {
@@ -15042,8 +15643,16 @@ export namespace Prisma {
 
   export type DisciplinasCreateManyProfessorInput = {
     id?: number
-    nomeDisciplina: string
     idCurso: number
+    nomeDisciplina: string
+  }
+
+  export type FaltasDisciplinaresCreateManyProfessorInput = {
+    id?: number
+    idAluno: number
+    titulo: string
+    descricao: string
+    dataFalta: string
   }
 
   export type DisciplinasUpdateWithoutProfessorInput = {
@@ -15053,14 +15662,37 @@ export namespace Prisma {
 
   export type DisciplinasUncheckedUpdateWithoutProfessorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nomeDisciplina?: StringFieldUpdateOperationsInput | string
     idCurso?: IntFieldUpdateOperationsInput | number
+    nomeDisciplina?: StringFieldUpdateOperationsInput | string
   }
 
   export type DisciplinasUncheckedUpdateManyWithoutProfessorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    nomeDisciplina?: StringFieldUpdateOperationsInput | string
     idCurso?: IntFieldUpdateOperationsInput | number
+    nomeDisciplina?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FaltasDisciplinaresUpdateWithoutProfessorInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
+    aluno?: AlunoUpdateOneRequiredWithoutFaltaDisciplinarNestedInput
+  }
+
+  export type FaltasDisciplinaresUncheckedUpdateWithoutProfessorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idAluno?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idAluno?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
+    descricao?: StringFieldUpdateOperationsInput | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
   export type DisciplinasCreateManyCursosInput = {
@@ -15072,7 +15704,6 @@ export namespace Prisma {
   export type TurmaCreateManyCursoInput = {
     id?: number
     nomeTurma: string
-    disciplinas?: TurmaCreatedisciplinasInput | number[]
   }
 
   export type DisciplinasUpdateWithoutCursosInput = {
@@ -15094,25 +15725,26 @@ export namespace Prisma {
 
   export type TurmaUpdateWithoutCursoInput = {
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
+    Aluno?: AlunoUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateWithoutCursoInput = {
     id?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
+    Aluno?: AlunoUncheckedUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateManyWithoutCursoInput = {
     id?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
-    disciplinas?: TurmaUpdatedisciplinasInput | number[]
   }
 
   export type FaltasDisciplinaresCreateManyAlunoInput = {
     id?: number
+    idProfessor: number
+    titulo: string
     descricao: string
-    dataFalta: Date | string
+    dataFalta: string
   }
 
   export type MatriculaCreateManyAlunoInput = {
@@ -15122,20 +15754,26 @@ export namespace Prisma {
   }
 
   export type FaltasDisciplinaresUpdateWithoutAlunoInput = {
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
+    professor?: ProfessorUpdateOneRequiredWithoutFaltasDisciplinaresNestedInput
   }
 
   export type FaltasDisciplinaresUncheckedUpdateWithoutAlunoInput = {
     id?: IntFieldUpdateOperationsInput | number
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
   export type FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoInput = {
     id?: IntFieldUpdateOperationsInput | number
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    titulo?: StringFieldUpdateOperationsInput | string
     descricao?: StringFieldUpdateOperationsInput | string
-    dataFalta?: DateTimeFieldUpdateOperationsInput | Date | string
+    dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
   export type MatriculaUpdateWithoutAlunoInput = {
@@ -15153,6 +15791,109 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     dataInicio?: DateTimeFieldUpdateOperationsInput | Date | string
     situacao?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type AlunoCreateManyTurmaInput = {
+    id?: number
+    nome: string
+    nascimento: string
+    cpf: string
+    rg: string
+    escola: string
+    periodo: string
+    serie: string
+    telefone: string
+    rendaFamilia: Decimal | DecimalJsLike | number | string
+    bairro: string
+    cidade: string
+    complemento: string
+    mae: string
+    numero: string
+    pai: string
+    phoneMae: string
+    phonePai: string
+    profMae: string
+    profPai: string
+    rua: string
+    uf: string
+  }
+
+  export type AlunoUpdateWithoutTurmaInput = {
+    nome?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    rg?: StringFieldUpdateOperationsInput | string
+    escola?: StringFieldUpdateOperationsInput | string
+    periodo?: StringFieldUpdateOperationsInput | string
+    serie?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    rendaFamilia?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    mae?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    pai?: StringFieldUpdateOperationsInput | string
+    phoneMae?: StringFieldUpdateOperationsInput | string
+    phonePai?: StringFieldUpdateOperationsInput | string
+    profMae?: StringFieldUpdateOperationsInput | string
+    profPai?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    uf?: StringFieldUpdateOperationsInput | string
+    faltaDisciplinar?: FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput
+    Matricula?: MatriculaUpdateManyWithoutAlunoNestedInput
+  }
+
+  export type AlunoUncheckedUpdateWithoutTurmaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    rg?: StringFieldUpdateOperationsInput | string
+    escola?: StringFieldUpdateOperationsInput | string
+    periodo?: StringFieldUpdateOperationsInput | string
+    serie?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    rendaFamilia?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    mae?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    pai?: StringFieldUpdateOperationsInput | string
+    phoneMae?: StringFieldUpdateOperationsInput | string
+    phonePai?: StringFieldUpdateOperationsInput | string
+    profMae?: StringFieldUpdateOperationsInput | string
+    profPai?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    uf?: StringFieldUpdateOperationsInput | string
+    faltaDisciplinar?: FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoNestedInput
+    Matricula?: MatriculaUncheckedUpdateManyWithoutAlunoNestedInput
+  }
+
+  export type AlunoUncheckedUpdateManyWithoutTurmaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    nome?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    cpf?: StringFieldUpdateOperationsInput | string
+    rg?: StringFieldUpdateOperationsInput | string
+    escola?: StringFieldUpdateOperationsInput | string
+    periodo?: StringFieldUpdateOperationsInput | string
+    serie?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    rendaFamilia?: DecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    mae?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    pai?: StringFieldUpdateOperationsInput | string
+    phoneMae?: StringFieldUpdateOperationsInput | string
+    phonePai?: StringFieldUpdateOperationsInput | string
+    profMae?: StringFieldUpdateOperationsInput | string
+    profPai?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    uf?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChamadaCreateManyAtividadeSalaInput = {
@@ -15195,6 +15936,10 @@ export namespace Prisma {
      * @deprecated Use AlunoCountOutputTypeDefaultArgs instead
      */
     export type AlunoCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AlunoCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use TurmaCountOutputTypeDefaultArgs instead
+     */
+    export type TurmaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TurmaCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use AtividadeSalaCountOutputTypeDefaultArgs instead
      */

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +12,7 @@ import { SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, Sel
 import { toast } from "@/components/ui/use-toast";
 import { AlunoPayload, updateAluno } from "@/service/aluno";
 import { schema, Schema } from "../../create/schema";
+import { Turma } from "@/service/turma";
 
 const fetchUserData = async (id: string) => {
     try {
@@ -34,12 +35,25 @@ export default function UserPage() {
     const params = useParams();
     const id = Array.isArray(params.id) ? params.id[0] : params.id;
 
+    const [professors, setProfessors] = useState<Turma[]>([]);
+
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {},
     });
 
+    async function fetchProfessors() {
+        const response = await fetch('/api/turma', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setProfessors(data);
+        };
+    }
+
     useEffect(() => {
+        fetchProfessors();
         if (id) {
             fetchUserData(id as string)
                 .then((data) => {
@@ -64,7 +78,8 @@ export default function UserPage() {
                         phoneMae: data.phoneMae,
                         phonePai: data.phonePai,
                         profMae: data.profMae,
-                        profPai: data.profPai
+                        profPai: data.profPai,
+                        turma: data.idTurma
                     });
                 })
                 .catch((error) => console.error("Error fetching user data:", error));
@@ -98,7 +113,8 @@ export default function UserPage() {
                     phoneMae: data.phoneMae,
                     phonePai: data.phonePai,
                     profMae: data.profMae,
-                    profPai: data.profPai
+                    profPai: data.profPai,
+                    idTurma: Number(data.turma)
                 };
 
                 await updateAluno(id, payload);
@@ -122,6 +138,32 @@ export default function UserPage() {
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
+                    <FormField
+                        control={form.control}
+                        name="turma"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Turma *</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <SelectTrigger className="w-[280px]">
+                                            <SelectValue placeholder="Selecione" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {professors.map((professor) => (
+                                                    <SelectItem key={professor.id} value={String(professor.id)}>
+                                                        {professor.nomeTurma}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <h1 className="text-m text-muted-foreground">Dados pessoais</h1>
                     <FormField
                         control={form.control}

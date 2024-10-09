@@ -24,6 +24,8 @@ export const schema = z.object({
     bairro: z.string(),
     cidade: z.string(),
     uf: z.string(),
+
+    turma: z.string()
 });
 
 export type Schema = z.infer<typeof schema>;
@@ -49,5 +51,6 @@ export const defaultValues: Schema = {
     phonePai: '',
     profMae: '',
     profPai: '',
-    rg: ''
+    rg: '',
+    turma: ''
 };

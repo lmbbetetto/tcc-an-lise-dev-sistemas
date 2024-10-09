@@ -27,8 +27,11 @@ import { AlunoPayload } from "@/service/aluno"
 import { schema, Schema } from "./schema"
 import { createNewAluno } from "./actions"
 import { toast } from "@/components/ui/use-toast"
+import { useEffect, useState } from "react"
+import { Turma } from "@/service/turma"
 
 export default function CreateAluno() {
+    const [professors, setProfessors] = useState<Turma[]>([]);
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {
@@ -52,9 +55,24 @@ export default function CreateAluno() {
             phonePai: '',
             profMae: '',
             profPai: '',
-            rg: ''
+            rg: '',
+            turma: ''
         },
     });
+
+    async function fetchProfessors() {
+        const response = await fetch('/api/turma', {
+            method: 'GET',
+        });
+        if (response.ok) {
+            const data = await response.json();
+            setProfessors(data);
+        };
+    }
+
+    useEffect(() => {
+        fetchProfessors();
+    }, []);
 
     const { reset } = form;
 
@@ -81,7 +99,8 @@ export default function CreateAluno() {
                 phoneMae: data.phoneMae,
                 phonePai: data.phonePai,
                 profMae: data.profMae,
-                profPai: data.profPai
+                profPai: data.profPai,
+                idTurma: Number(data.turma)
             };
 
             console.log('teste')
@@ -106,6 +125,32 @@ export default function CreateAluno() {
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
+                    <FormField
+                        control={form.control}
+                        name="turma"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Turma *</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={field.onChange} value={field.value}>
+                                        <SelectTrigger className="w-[280px]">
+                                            <SelectValue placeholder="Selecione" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectGroup>
+                                                {professors.map((professor) => (
+                                                    <SelectItem key={professor.id} value={String(professor.id)}>
+                                                        {professor.nomeTurma}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectGroup>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
                     <h1 className="text-m text-muted-foreground">Dados pessoais</h1>
                     <FormField
                         control={form.control}
