@@ -8,51 +8,42 @@ import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
+import { SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue, Select } from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
-import { editDisciplina } from "../../create/actions";
 import { schema, Schema } from "../../create/schema";
+import { FaltaDisciplinarPayload } from "@/service/faltas-disicplinares";
 import { Curso } from "@/service/curso";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TeacherShow } from "@/service/professor";
-import { DisciplinaPayload } from "@/service/disciplina";
+import { TurmaPayload } from "@/service/turma";
+import { editTurma } from "../../create/actions";
+
+const fetchUserData = async (id: string) => {
+    try {
+        const response = await fetch(`/api/turma?id=${id}`, {
+            method: 'GET',
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to fetch user data", error);
+        throw error;
+    }
+};
 
 export default function UserPage() {
     const params = useParams();
     const id = Array.isArray(params.id) ? params.id[0] : params.id;
-    const [professors, setProfessors] = useState<TeacherShow[]>([]);
+
+    const [message, setMessage] = useState("");
     const [cursos, setCursos] = useState<Curso[]>([]);
 
     const form = useForm<Schema>({
         resolver: zodResolver(schema),
         defaultValues: {},
     });
-
-    const fetchUserData = async (id: string) => {
-        try {
-            const response = await fetch(`/api/disciplina?id=${id}`, {
-                method: 'GET',
-            });
-
-            if (!response.ok) {
-                throw new Error(`Error: ${response.status} ${response.statusText}`);
-            }
-
-            return await response.json();
-        } catch (error) {
-            console.error("Failed to fetch user data", error);
-            throw error;
-        }
-    };
-
-    async function fetchProfessors() {
-        const response = await fetch('/api/professor', {
-            method: 'GET',
-        });
-        if (response.ok) {
-            const data = await response.json();
-            setProfessors(data);
-        }
-    }
 
     async function fetchCursos() {
         const response = await fetch('/api/curso', {
@@ -61,44 +52,41 @@ export default function UserPage() {
         if (response.ok) {
             const data = await response.json();
             setCursos(data);
-        }
+        };
     }
 
     useEffect(() => {
-        async function fetchInitialData() {
-            await fetchCursos();
-            await fetchProfessors();
-
-            if (id) {
-                const data = await fetchUserData(id as string);
-                form.reset({
-                    curse: data.idCurso,
-                    professor: data.idProfessor,
-                    name: data.nomeDisciplina,
-                });
-            }
+        fetchCursos();
+        if (id) {
+            fetchUserData(id as string)
+                .then((data) => {
+                    form.reset({
+                        curse: data.idCurso,
+                        nomeTurma: data.nomeTurma
+                    });
+                })
+                .catch((error) => console.error("Error fetching user data:", error));
+        } else {
+            console.error("ID não encontrado na URL");
         }
-
-        fetchInitialData();
     }, [form, id]);
 
     const onSubmit = async (data: Schema) => {
         if (id) {
             try {
-                const payload: DisciplinaPayload = {
+                const payload: TurmaPayload = {
                     idCurso: Number(data.curse),
-                    idProfessor: Number(data.professor),
-                    nomeDisciplina: data.name,
+                    nomeTurma: data.nomeTurma
                 };
-                await editDisciplina(Number(id), payload);
+                await editTurma(Number(id), payload);
                 toast({
                     title: "Sucesso!",
-                    description: "Disciplina editada com sucesso!",
+                    description: "Turma editada com sucesso!",
                 });
             } catch (error) {
                 toast({
                     title: "Erro",
-                    description: "Ocorreu um erro ao editar a disciplina.",
+                    description: "Ocorreu um erro ao editar a turma.",
                     variant: "destructive",
                 });
             }
@@ -107,16 +95,20 @@ export default function UserPage() {
         }
     };
 
+    const handleMessageChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setMessage(event.target.value);
+    };
+
     return (
         <ScrollArea className="h-[34rem] w-[853px] pr-[250px]">
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-2 pt-0">
                     <FormField
                         control={form.control}
-                        name="name"
+                        name="nomeTurma"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Nome da disciplina *</FormLabel>
+                                <FormLabel>Nome da Turma *</FormLabel>
                                 <FormControl>
                                     <Input {...field} />
                                 </FormControl>
@@ -124,32 +116,7 @@ export default function UserPage() {
                             </FormItem>
                         )}
                     />
-                    <FormField
-                        control={form.control}
-                        name="professor"
-                        render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Professor *</FormLabel>
-                                <FormControl>
-                                    <Select onValueChange={field.onChange} value={field.value}>
-                                        <SelectTrigger className="w-[280px]">
-                                            <SelectValue placeholder="Selecione" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                {professors.map((professor) => (
-                                                    <SelectItem key={professor.id} value={String(professor.id)}>
-                                                        {professor.name}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </Select>
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                    />
+
                     <FormField
                         control={form.control}
                         name="curse"
@@ -176,7 +143,8 @@ export default function UserPage() {
                             </FormItem>
                         )}
                     />
-                    <Button>Confirmar</Button>
+
+                    <Button type="submit">Confirmar</Button>
                 </form>
             </Form>
         </ScrollArea>

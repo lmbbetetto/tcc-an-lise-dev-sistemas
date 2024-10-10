@@ -27,6 +27,7 @@ model Professor {
   rua                 String
   disciplina          Disciplinas[]
   FaltasDisciplinares FaltasDisciplinares[]
+  Chamada             Chamada[]
 }
 
 model Disciplinas {
@@ -68,6 +69,7 @@ model Aluno {
   profPai          String
   rua              String
   uf               String
+  faltas           Int?                  @default(0)
   idTurma          Int
   turma            Turma                 @relation(fields: [idTurma], references: [id])
   faltaDisciplinar FaltasDisciplinares[]
@@ -94,25 +96,26 @@ model Matricula {
 }
 
 model Turma {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   idCurso   Int
   nomeTurma String
-  curso     Cursos  @relation(fields: [idCurso], references: [id])
+  curso     Cursos    @relation(fields: [idCurso], references: [id])
   Aluno     Aluno[]
+  Chamada   Chamada[]
 }
 
 model Chamada {
-  id              Int           @id @default(autoincrement())
-  idTurma         Int
-  idAtividadeSala Int
-  presenca        String
-  atividadeSala   AtividadeSala @relation(fields: [idAtividadeSala], references: [id])
+  id          Int       @id @default(autoincrement())
+  idTurma     Int
+  idProfessor Int
+  data        String
+  turma       Turma     @relation(fields: [idTurma], references: [id])
+  professor   Professor @relation(fields: [idProfessor], references: [id])
 }
 
 model AtividadeSala {
-  id        Int       @id @default(autoincrement())
+  id        Int    @id @default(autoincrement())
   descricao String
-  Chamada   Chamada[]
 }
 
 model AtividadeExtraSala {

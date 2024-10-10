@@ -17,6 +17,7 @@ export const routes = {
   },
   turma: {
     new: '/gestor/turma/create',
+    edit: (id: string): string => `/gestor/turma/edit/${id}`,
     search: '/gestor/turma'
   },
   curso: {
@@ -38,7 +39,11 @@ export const routes = {
     user: (id: string): string => `/gestor/user/${id}`,
   },
   chamada: {
-    home: "/gestor/chamada"
+    home: "/gestor/chamada",
+    search: "/gestor/chamada/search"
+  },
+  faltas: {
+    faltas: "/gestor/faltas"
   }
 };
 

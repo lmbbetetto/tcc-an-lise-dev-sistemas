@@ -112,6 +112,7 @@ export default function Sidebar() {
           <section className="flex flex-col gap-2  mt-2 mb-6">
             <Link href={routes.home.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><House size={18} />Início</p></Link>
             <Link href={routes.chamada.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
+            <Link href={routes.chamada.search}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Listar chamadas</p></Link>
           </section>
 
           <h1 className="text-sm text-muted-foreground">Cadastros</h1>
@@ -241,6 +242,8 @@ export default function Sidebar() {
             </AccordionItem>
           </Accordion>
         </div>
+        <h1 className="text-sm text-muted-foreground mb-3 mt-5">Relatórios</h1>
+        <Link href={routes.faltas.faltas}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm">Faltas</p></Link>
       </ScrollArea>
 
       <div className="flex gap-2 items-center">

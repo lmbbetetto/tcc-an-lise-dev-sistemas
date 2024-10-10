@@ -24,7 +24,7 @@ export async function createTurma(data: TurmaPayload): Promise<Turma> {
     }
 }
 
-export async function updateAluno(id: string, data: TurmaPayload): Promise<Turma> {
+export async function updateTurma(id: string, data: TurmaPayload): Promise<Turma> {
     try {
         const response = await fetch(`http://localhost:3000/api/turma/${id}`, {
             method: 'PATCH',

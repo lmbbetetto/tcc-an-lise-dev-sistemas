@@ -90,7 +90,6 @@ export default function UserPage() {
 
     const onSubmit = async (data: Schema) => {
         if (id) {
-            console.log('teste')
             try {
                 const payload: AlunoPayload = {
                     bairro: data.bairro,
@@ -98,7 +97,7 @@ export default function UserPage() {
                     cpf: data.cpf ?? '',
                     escola: data.escola,
                     nascimento: data.nascimento,
-                    studentName: data.studentName,
+                    nome: data.studentName,
                     numero: data.numero,
                     periodo: data.periodo,
                     rendaFamilia: Number(data.rendaFamilia),

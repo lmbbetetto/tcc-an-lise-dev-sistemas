@@ -23,11 +23,12 @@ export interface Aluno {
     bairro: string;
     cidade: string;
     uf: string;
+    faltas: number;
     turma: Turma
 }
 
 export interface AlunoPayload {
-    studentName: string;
+    nome: string;
     nascimento: string;
     cpf: string;
     rg: string;

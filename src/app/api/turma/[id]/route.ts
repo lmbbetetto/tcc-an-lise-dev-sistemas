@@ -1,5 +1,5 @@
 import prisma from '@/lib/db';
-import { CursoPayload } from '@/service/curso';
+import { TurmaPayload } from '@/service/turma';
 import { NextResponse } from 'next/server';
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
@@ -11,16 +11,17 @@ export async function PATCH(request: Request, { params }: { params: { id: string
             return NextResponse.json({ message: 'Invalid ID format' }, { status: 400 });
         }
 
-        const data: CursoPayload = await request.json();
+        const data: TurmaPayload = await request.json();
 
-        const updatedCurso = await prisma.cursos.update({
+        const updatedTurma = await prisma.turma.update({
             where: { id: numericId },
             data: {
-                nomeCurso: data.nomeCurso,
+                nomeTurma: data.nomeTurma,
+                idCurso: data.idCurso,
             },
         });
 
-        return NextResponse.json(updatedCurso);
+        return NextResponse.json(updatedTurma);
     } catch (error) {
         const errorMessage = (error as Error).message || 'Internal Server Error';
         return NextResponse.json({ message: errorMessage }, { status: 500 });

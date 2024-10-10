@@ -173,6 +173,7 @@ exports.Prisma.AlunoScalarFieldEnum = {
   profPai: 'profPai',
   rua: 'rua',
   uf: 'uf',
+  faltas: 'faltas',
   idTurma: 'idTurma'
 };
 
@@ -201,8 +202,8 @@ exports.Prisma.TurmaScalarFieldEnum = {
 exports.Prisma.ChamadaScalarFieldEnum = {
   id: 'id',
   idTurma: 'idTurma',
-  idAtividadeSala: 'idAtividadeSala',
-  presenca: 'presenca'
+  idProfessor: 'idProfessor',
+  data: 'data'
 };
 
 exports.Prisma.AtividadeSalaScalarFieldEnum = {
@@ -224,6 +225,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

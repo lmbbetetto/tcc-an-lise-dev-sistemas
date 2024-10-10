@@ -1654,11 +1654,13 @@ export namespace Prisma {
   export type ProfessorCountOutputType = {
     disciplina: number
     FaltasDisciplinares: number
+    Chamada: number
   }
 
   export type ProfessorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     disciplina?: boolean | ProfessorCountOutputTypeCountDisciplinaArgs
     FaltasDisciplinares?: boolean | ProfessorCountOutputTypeCountFaltasDisciplinaresArgs
+    Chamada?: boolean | ProfessorCountOutputTypeCountChamadaArgs
   }
 
   // Custom InputTypes
@@ -1684,6 +1686,13 @@ export namespace Prisma {
    */
   export type ProfessorCountOutputTypeCountFaltasDisciplinaresArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: FaltasDisciplinaresWhereInput
+  }
+
+  /**
+   * ProfessorCountOutputType without action
+   */
+  export type ProfessorCountOutputTypeCountChamadaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ChamadaWhereInput
   }
 
 
@@ -1773,10 +1782,12 @@ export namespace Prisma {
 
   export type TurmaCountOutputType = {
     Aluno: number
+    Chamada: number
   }
 
   export type TurmaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Aluno?: boolean | TurmaCountOutputTypeCountAlunoArgs
+    Chamada?: boolean | TurmaCountOutputTypeCountChamadaArgs
   }
 
   // Custom InputTypes
@@ -1797,34 +1808,10 @@ export namespace Prisma {
     where?: AlunoWhereInput
   }
 
-
   /**
-   * Count Type AtividadeSalaCountOutputType
+   * TurmaCountOutputType without action
    */
-
-  export type AtividadeSalaCountOutputType = {
-    Chamada: number
-  }
-
-  export type AtividadeSalaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Chamada?: boolean | AtividadeSalaCountOutputTypeCountChamadaArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * AtividadeSalaCountOutputType without action
-   */
-  export type AtividadeSalaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the AtividadeSalaCountOutputType
-     */
-    select?: AtividadeSalaCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * AtividadeSalaCountOutputType without action
-   */
-  export type AtividadeSalaCountOutputTypeCountChamadaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type TurmaCountOutputTypeCountChamadaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChamadaWhereInput
   }
 
@@ -2121,6 +2108,7 @@ export namespace Prisma {
     rua?: boolean
     disciplina?: boolean | Professor$disciplinaArgs<ExtArgs>
     FaltasDisciplinares?: boolean | Professor$FaltasDisciplinaresArgs<ExtArgs>
+    Chamada?: boolean | Professor$ChamadaArgs<ExtArgs>
     _count?: boolean | ProfessorCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["professor"]>
 
@@ -2165,6 +2153,7 @@ export namespace Prisma {
   export type ProfessorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     disciplina?: boolean | Professor$disciplinaArgs<ExtArgs>
     FaltasDisciplinares?: boolean | Professor$FaltasDisciplinaresArgs<ExtArgs>
+    Chamada?: boolean | Professor$ChamadaArgs<ExtArgs>
     _count?: boolean | ProfessorCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ProfessorIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -2174,6 +2163,7 @@ export namespace Prisma {
     objects: {
       disciplina: Prisma.$DisciplinasPayload<ExtArgs>[]
       FaltasDisciplinares: Prisma.$FaltasDisciplinaresPayload<ExtArgs>[]
+      Chamada: Prisma.$ChamadaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2558,6 +2548,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     disciplina<T extends Professor$disciplinaArgs<ExtArgs> = {}>(args?: Subset<T, Professor$disciplinaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DisciplinasPayload<ExtArgs>, T, "findMany"> | Null>
     FaltasDisciplinares<T extends Professor$FaltasDisciplinaresArgs<ExtArgs> = {}>(args?: Subset<T, Professor$FaltasDisciplinaresArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$FaltasDisciplinaresPayload<ExtArgs>, T, "findMany"> | Null>
+    Chamada<T extends Professor$ChamadaArgs<ExtArgs> = {}>(args?: Subset<T, Professor$ChamadaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChamadaPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2954,6 +2945,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: FaltasDisciplinaresScalarFieldEnum | FaltasDisciplinaresScalarFieldEnum[]
+  }
+
+  /**
+   * Professor.Chamada
+   */
+  export type Professor$ChamadaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Chamada
+     */
+    select?: ChamadaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChamadaInclude<ExtArgs> | null
+    where?: ChamadaWhereInput
+    orderBy?: ChamadaOrderByWithRelationInput | ChamadaOrderByWithRelationInput[]
+    cursor?: ChamadaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChamadaScalarFieldEnum | ChamadaScalarFieldEnum[]
   }
 
   /**
@@ -4925,12 +4936,14 @@ export namespace Prisma {
   export type AlunoAvgAggregateOutputType = {
     id: number | null
     rendaFamilia: Decimal | null
+    faltas: number | null
     idTurma: number | null
   }
 
   export type AlunoSumAggregateOutputType = {
     id: number | null
     rendaFamilia: Decimal | null
+    faltas: number | null
     idTurma: number | null
   }
 
@@ -4957,6 +4970,7 @@ export namespace Prisma {
     profPai: string | null
     rua: string | null
     uf: string | null
+    faltas: number | null
     idTurma: number | null
   }
 
@@ -4983,6 +4997,7 @@ export namespace Prisma {
     profPai: string | null
     rua: string | null
     uf: string | null
+    faltas: number | null
     idTurma: number | null
   }
 
@@ -5009,6 +5024,7 @@ export namespace Prisma {
     profPai: number
     rua: number
     uf: number
+    faltas: number
     idTurma: number
     _all: number
   }
@@ -5017,12 +5033,14 @@ export namespace Prisma {
   export type AlunoAvgAggregateInputType = {
     id?: true
     rendaFamilia?: true
+    faltas?: true
     idTurma?: true
   }
 
   export type AlunoSumAggregateInputType = {
     id?: true
     rendaFamilia?: true
+    faltas?: true
     idTurma?: true
   }
 
@@ -5049,6 +5067,7 @@ export namespace Prisma {
     profPai?: true
     rua?: true
     uf?: true
+    faltas?: true
     idTurma?: true
   }
 
@@ -5075,6 +5094,7 @@ export namespace Prisma {
     profPai?: true
     rua?: true
     uf?: true
+    faltas?: true
     idTurma?: true
   }
 
@@ -5101,6 +5121,7 @@ export namespace Prisma {
     profPai?: true
     rua?: true
     uf?: true
+    faltas?: true
     idTurma?: true
     _all?: true
   }
@@ -5214,6 +5235,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas: number | null
     idTurma: number
     _count: AlunoCountAggregateOutputType | null
     _avg: AlunoAvgAggregateOutputType | null
@@ -5259,6 +5281,7 @@ export namespace Prisma {
     profPai?: boolean
     rua?: boolean
     uf?: boolean
+    faltas?: boolean
     idTurma?: boolean
     turma?: boolean | TurmaDefaultArgs<ExtArgs>
     faltaDisciplinar?: boolean | Aluno$faltaDisciplinarArgs<ExtArgs>
@@ -5289,6 +5312,7 @@ export namespace Prisma {
     profPai?: boolean
     rua?: boolean
     uf?: boolean
+    faltas?: boolean
     idTurma?: boolean
     turma?: boolean | TurmaDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["aluno"]>
@@ -5316,6 +5340,7 @@ export namespace Prisma {
     profPai?: boolean
     rua?: boolean
     uf?: boolean
+    faltas?: boolean
     idTurma?: boolean
   }
 
@@ -5359,6 +5384,7 @@ export namespace Prisma {
       profPai: string
       rua: string
       uf: string
+      faltas: number | null
       idTurma: number
     }, ExtArgs["result"]["aluno"]>
     composites: {}
@@ -5778,6 +5804,7 @@ export namespace Prisma {
     readonly profPai: FieldRef<"Aluno", 'String'>
     readonly rua: FieldRef<"Aluno", 'String'>
     readonly uf: FieldRef<"Aluno", 'String'>
+    readonly faltas: FieldRef<"Aluno", 'Int'>
     readonly idTurma: FieldRef<"Aluno", 'Int'>
   }
     
@@ -8291,6 +8318,7 @@ export namespace Prisma {
     nomeTurma?: boolean
     curso?: boolean | CursosDefaultArgs<ExtArgs>
     Aluno?: boolean | Turma$AlunoArgs<ExtArgs>
+    Chamada?: boolean | Turma$ChamadaArgs<ExtArgs>
     _count?: boolean | TurmaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["turma"]>
 
@@ -8310,6 +8338,7 @@ export namespace Prisma {
   export type TurmaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     curso?: boolean | CursosDefaultArgs<ExtArgs>
     Aluno?: boolean | Turma$AlunoArgs<ExtArgs>
+    Chamada?: boolean | Turma$ChamadaArgs<ExtArgs>
     _count?: boolean | TurmaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TurmaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8321,6 +8350,7 @@ export namespace Prisma {
     objects: {
       curso: Prisma.$CursosPayload<ExtArgs>
       Aluno: Prisma.$AlunoPayload<ExtArgs>[]
+      Chamada: Prisma.$ChamadaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8692,6 +8722,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     curso<T extends CursosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CursosDefaultArgs<ExtArgs>>): Prisma__CursosClient<$Result.GetResult<Prisma.$CursosPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     Aluno<T extends Turma$AlunoArgs<ExtArgs> = {}>(args?: Subset<T, Turma$AlunoArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AlunoPayload<ExtArgs>, T, "findMany"> | Null>
+    Chamada<T extends Turma$ChamadaArgs<ExtArgs> = {}>(args?: Subset<T, Turma$ChamadaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChamadaPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9062,6 +9093,26 @@ export namespace Prisma {
   }
 
   /**
+   * Turma.Chamada
+   */
+  export type Turma$ChamadaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Chamada
+     */
+    select?: ChamadaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ChamadaInclude<ExtArgs> | null
+    where?: ChamadaWhereInput
+    orderBy?: ChamadaOrderByWithRelationInput | ChamadaOrderByWithRelationInput[]
+    cursor?: ChamadaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ChamadaScalarFieldEnum | ChamadaScalarFieldEnum[]
+  }
+
+  /**
    * Turma without action
    */
   export type TurmaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9091,34 +9142,34 @@ export namespace Prisma {
   export type ChamadaAvgAggregateOutputType = {
     id: number | null
     idTurma: number | null
-    idAtividadeSala: number | null
+    idProfessor: number | null
   }
 
   export type ChamadaSumAggregateOutputType = {
     id: number | null
     idTurma: number | null
-    idAtividadeSala: number | null
+    idProfessor: number | null
   }
 
   export type ChamadaMinAggregateOutputType = {
     id: number | null
     idTurma: number | null
-    idAtividadeSala: number | null
-    presenca: string | null
+    idProfessor: number | null
+    data: string | null
   }
 
   export type ChamadaMaxAggregateOutputType = {
     id: number | null
     idTurma: number | null
-    idAtividadeSala: number | null
-    presenca: string | null
+    idProfessor: number | null
+    data: string | null
   }
 
   export type ChamadaCountAggregateOutputType = {
     id: number
     idTurma: number
-    idAtividadeSala: number
-    presenca: number
+    idProfessor: number
+    data: number
     _all: number
   }
 
@@ -9126,34 +9177,34 @@ export namespace Prisma {
   export type ChamadaAvgAggregateInputType = {
     id?: true
     idTurma?: true
-    idAtividadeSala?: true
+    idProfessor?: true
   }
 
   export type ChamadaSumAggregateInputType = {
     id?: true
     idTurma?: true
-    idAtividadeSala?: true
+    idProfessor?: true
   }
 
   export type ChamadaMinAggregateInputType = {
     id?: true
     idTurma?: true
-    idAtividadeSala?: true
-    presenca?: true
+    idProfessor?: true
+    data?: true
   }
 
   export type ChamadaMaxAggregateInputType = {
     id?: true
     idTurma?: true
-    idAtividadeSala?: true
-    presenca?: true
+    idProfessor?: true
+    data?: true
   }
 
   export type ChamadaCountAggregateInputType = {
     id?: true
     idTurma?: true
-    idAtividadeSala?: true
-    presenca?: true
+    idProfessor?: true
+    data?: true
     _all?: true
   }
 
@@ -9246,8 +9297,8 @@ export namespace Prisma {
   export type ChamadaGroupByOutputType = {
     id: number
     idTurma: number
-    idAtividadeSala: number
-    presenca: string
+    idProfessor: number
+    data: string
     _count: ChamadaCountAggregateOutputType | null
     _avg: ChamadaAvgAggregateOutputType | null
     _sum: ChamadaSumAggregateOutputType | null
@@ -9272,43 +9323,48 @@ export namespace Prisma {
   export type ChamadaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idTurma?: boolean
-    idAtividadeSala?: boolean
-    presenca?: boolean
-    atividadeSala?: boolean | AtividadeSalaDefaultArgs<ExtArgs>
+    idProfessor?: boolean
+    data?: boolean
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chamada"]>
 
   export type ChamadaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     idTurma?: boolean
-    idAtividadeSala?: boolean
-    presenca?: boolean
-    atividadeSala?: boolean | AtividadeSalaDefaultArgs<ExtArgs>
+    idProfessor?: boolean
+    data?: boolean
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["chamada"]>
 
   export type ChamadaSelectScalar = {
     id?: boolean
     idTurma?: boolean
-    idAtividadeSala?: boolean
-    presenca?: boolean
+    idProfessor?: boolean
+    data?: boolean
   }
 
   export type ChamadaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    atividadeSala?: boolean | AtividadeSalaDefaultArgs<ExtArgs>
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
   }
   export type ChamadaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    atividadeSala?: boolean | AtividadeSalaDefaultArgs<ExtArgs>
+    turma?: boolean | TurmaDefaultArgs<ExtArgs>
+    professor?: boolean | ProfessorDefaultArgs<ExtArgs>
   }
 
   export type $ChamadaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Chamada"
     objects: {
-      atividadeSala: Prisma.$AtividadeSalaPayload<ExtArgs>
+      turma: Prisma.$TurmaPayload<ExtArgs>
+      professor: Prisma.$ProfessorPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       idTurma: number
-      idAtividadeSala: number
-      presenca: string
+      idProfessor: number
+      data: string
     }, ExtArgs["result"]["chamada"]>
     composites: {}
   }
@@ -9673,7 +9729,8 @@ export namespace Prisma {
    */
   export interface Prisma__ChamadaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    atividadeSala<T extends AtividadeSalaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AtividadeSalaDefaultArgs<ExtArgs>>): Prisma__AtividadeSalaClient<$Result.GetResult<Prisma.$AtividadeSalaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    turma<T extends TurmaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TurmaDefaultArgs<ExtArgs>>): Prisma__TurmaClient<$Result.GetResult<Prisma.$TurmaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    professor<T extends ProfessorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ProfessorDefaultArgs<ExtArgs>>): Prisma__ProfessorClient<$Result.GetResult<Prisma.$ProfessorPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9705,8 +9762,8 @@ export namespace Prisma {
   interface ChamadaFieldRefs {
     readonly id: FieldRef<"Chamada", 'Int'>
     readonly idTurma: FieldRef<"Chamada", 'Int'>
-    readonly idAtividadeSala: FieldRef<"Chamada", 'Int'>
-    readonly presenca: FieldRef<"Chamada", 'String'>
+    readonly idProfessor: FieldRef<"Chamada", 'Int'>
+    readonly data: FieldRef<"Chamada", 'String'>
   }
     
 
@@ -10213,8 +10270,6 @@ export namespace Prisma {
   export type AtividadeSalaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     descricao?: boolean
-    Chamada?: boolean | AtividadeSala$ChamadaArgs<ExtArgs>
-    _count?: boolean | AtividadeSalaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["atividadeSala"]>
 
   export type AtividadeSalaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -10227,17 +10282,10 @@ export namespace Prisma {
     descricao?: boolean
   }
 
-  export type AtividadeSalaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    Chamada?: boolean | AtividadeSala$ChamadaArgs<ExtArgs>
-    _count?: boolean | AtividadeSalaCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type AtividadeSalaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $AtividadeSalaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "AtividadeSala"
-    objects: {
-      Chamada: Prisma.$ChamadaPayload<ExtArgs>[]
-    }
+    objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
       descricao: string
@@ -10605,7 +10653,6 @@ export namespace Prisma {
    */
   export interface Prisma__AtividadeSalaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    Chamada<T extends AtividadeSala$ChamadaArgs<ExtArgs> = {}>(args?: Subset<T, AtividadeSala$ChamadaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChamadaPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -10650,10 +10697,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * Filter, which AtividadeSala to fetch.
      */
     where: AtividadeSalaWhereUniqueInput
@@ -10668,10 +10711,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * Filter, which AtividadeSala to fetch.
      */
     where: AtividadeSalaWhereUniqueInput
@@ -10685,10 +10724,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the AtividadeSala
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
     /**
      * Filter, which AtividadeSala to fetch.
      */
@@ -10734,10 +10769,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * Filter, which AtividadeSala to fetch.
      */
     where?: AtividadeSalaWhereInput
@@ -10782,10 +10813,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * Filter, which AtividadeSalas to fetch.
      */
     where?: AtividadeSalaWhereInput
@@ -10824,10 +10851,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the AtividadeSala
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
     /**
      * The data needed to create a AtividadeSala.
      */
@@ -10869,10 +10892,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * The data needed to update a AtividadeSala.
      */
     data: XOR<AtividadeSalaUpdateInput, AtividadeSalaUncheckedUpdateInput>
@@ -10905,10 +10924,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * The filter to search for the AtividadeSala to update in case it exists.
      */
     where: AtividadeSalaWhereUniqueInput
@@ -10931,10 +10946,6 @@ export namespace Prisma {
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
     /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
-    /**
      * Filter which AtividadeSala to delete.
      */
     where: AtividadeSalaWhereUniqueInput
@@ -10951,26 +10962,6 @@ export namespace Prisma {
   }
 
   /**
-   * AtividadeSala.Chamada
-   */
-  export type AtividadeSala$ChamadaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Chamada
-     */
-    select?: ChamadaSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ChamadaInclude<ExtArgs> | null
-    where?: ChamadaWhereInput
-    orderBy?: ChamadaOrderByWithRelationInput | ChamadaOrderByWithRelationInput[]
-    cursor?: ChamadaWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ChamadaScalarFieldEnum | ChamadaScalarFieldEnum[]
-  }
-
-  /**
    * AtividadeSala without action
    */
   export type AtividadeSalaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -10978,10 +10969,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the AtividadeSala
      */
     select?: AtividadeSalaSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: AtividadeSalaInclude<ExtArgs> | null
   }
 
 
@@ -11950,6 +11937,7 @@ export namespace Prisma {
     profPai: 'profPai',
     rua: 'rua',
     uf: 'uf',
+    faltas: 'faltas',
     idTurma: 'idTurma'
   };
 
@@ -11990,8 +11978,8 @@ export namespace Prisma {
   export const ChamadaScalarFieldEnum: {
     id: 'id',
     idTurma: 'idTurma',
-    idAtividadeSala: 'idAtividadeSala',
-    presenca: 'presenca'
+    idProfessor: 'idProfessor',
+    data: 'data'
   };
 
   export type ChamadaScalarFieldEnum = (typeof ChamadaScalarFieldEnum)[keyof typeof ChamadaScalarFieldEnum]
@@ -12028,6 +12016,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -12130,6 +12126,7 @@ export namespace Prisma {
     rua?: StringFilter<"Professor"> | string
     disciplina?: DisciplinasListRelationFilter
     FaltasDisciplinares?: FaltasDisciplinaresListRelationFilter
+    Chamada?: ChamadaListRelationFilter
   }
 
   export type ProfessorOrderByWithRelationInput = {
@@ -12151,6 +12148,7 @@ export namespace Prisma {
     rua?: SortOrder
     disciplina?: DisciplinasOrderByRelationAggregateInput
     FaltasDisciplinares?: FaltasDisciplinaresOrderByRelationAggregateInput
+    Chamada?: ChamadaOrderByRelationAggregateInput
   }
 
   export type ProfessorWhereUniqueInput = Prisma.AtLeast<{
@@ -12175,6 +12173,7 @@ export namespace Prisma {
     rua?: StringFilter<"Professor"> | string
     disciplina?: DisciplinasListRelationFilter
     FaltasDisciplinares?: FaltasDisciplinaresListRelationFilter
+    Chamada?: ChamadaListRelationFilter
   }, "id">
 
   export type ProfessorOrderByWithAggregationInput = {
@@ -12349,6 +12348,7 @@ export namespace Prisma {
     profPai?: StringFilter<"Aluno"> | string
     rua?: StringFilter<"Aluno"> | string
     uf?: StringFilter<"Aluno"> | string
+    faltas?: IntNullableFilter<"Aluno"> | number | null
     idTurma?: IntFilter<"Aluno"> | number
     turma?: XOR<TurmaRelationFilter, TurmaWhereInput>
     faltaDisciplinar?: FaltasDisciplinaresListRelationFilter
@@ -12378,6 +12378,7 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    faltas?: SortOrderInput | SortOrder
     idTurma?: SortOrder
     turma?: TurmaOrderByWithRelationInput
     faltaDisciplinar?: FaltasDisciplinaresOrderByRelationAggregateInput
@@ -12410,6 +12411,7 @@ export namespace Prisma {
     profPai?: StringFilter<"Aluno"> | string
     rua?: StringFilter<"Aluno"> | string
     uf?: StringFilter<"Aluno"> | string
+    faltas?: IntNullableFilter<"Aluno"> | number | null
     idTurma?: IntFilter<"Aluno"> | number
     turma?: XOR<TurmaRelationFilter, TurmaWhereInput>
     faltaDisciplinar?: FaltasDisciplinaresListRelationFilter
@@ -12439,6 +12441,7 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    faltas?: SortOrderInput | SortOrder
     idTurma?: SortOrder
     _count?: AlunoCountOrderByAggregateInput
     _avg?: AlunoAvgOrderByAggregateInput
@@ -12473,6 +12476,7 @@ export namespace Prisma {
     profPai?: StringWithAggregatesFilter<"Aluno"> | string
     rua?: StringWithAggregatesFilter<"Aluno"> | string
     uf?: StringWithAggregatesFilter<"Aluno"> | string
+    faltas?: IntNullableWithAggregatesFilter<"Aluno"> | number | null
     idTurma?: IntWithAggregatesFilter<"Aluno"> | number
   }
 
@@ -12602,6 +12606,7 @@ export namespace Prisma {
     nomeTurma?: StringFilter<"Turma"> | string
     curso?: XOR<CursosRelationFilter, CursosWhereInput>
     Aluno?: AlunoListRelationFilter
+    Chamada?: ChamadaListRelationFilter
   }
 
   export type TurmaOrderByWithRelationInput = {
@@ -12610,6 +12615,7 @@ export namespace Prisma {
     nomeTurma?: SortOrder
     curso?: CursosOrderByWithRelationInput
     Aluno?: AlunoOrderByRelationAggregateInput
+    Chamada?: ChamadaOrderByRelationAggregateInput
   }
 
   export type TurmaWhereUniqueInput = Prisma.AtLeast<{
@@ -12621,6 +12627,7 @@ export namespace Prisma {
     nomeTurma?: StringFilter<"Turma"> | string
     curso?: XOR<CursosRelationFilter, CursosWhereInput>
     Aluno?: AlunoListRelationFilter
+    Chamada?: ChamadaListRelationFilter
   }, "id">
 
   export type TurmaOrderByWithAggregationInput = {
@@ -12649,17 +12656,19 @@ export namespace Prisma {
     NOT?: ChamadaWhereInput | ChamadaWhereInput[]
     id?: IntFilter<"Chamada"> | number
     idTurma?: IntFilter<"Chamada"> | number
-    idAtividadeSala?: IntFilter<"Chamada"> | number
-    presenca?: StringFilter<"Chamada"> | string
-    atividadeSala?: XOR<AtividadeSalaRelationFilter, AtividadeSalaWhereInput>
+    idProfessor?: IntFilter<"Chamada"> | number
+    data?: StringFilter<"Chamada"> | string
+    turma?: XOR<TurmaRelationFilter, TurmaWhereInput>
+    professor?: XOR<ProfessorRelationFilter, ProfessorWhereInput>
   }
 
   export type ChamadaOrderByWithRelationInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
-    presenca?: SortOrder
-    atividadeSala?: AtividadeSalaOrderByWithRelationInput
+    idProfessor?: SortOrder
+    data?: SortOrder
+    turma?: TurmaOrderByWithRelationInput
+    professor?: ProfessorOrderByWithRelationInput
   }
 
   export type ChamadaWhereUniqueInput = Prisma.AtLeast<{
@@ -12668,16 +12677,17 @@ export namespace Prisma {
     OR?: ChamadaWhereInput[]
     NOT?: ChamadaWhereInput | ChamadaWhereInput[]
     idTurma?: IntFilter<"Chamada"> | number
-    idAtividadeSala?: IntFilter<"Chamada"> | number
-    presenca?: StringFilter<"Chamada"> | string
-    atividadeSala?: XOR<AtividadeSalaRelationFilter, AtividadeSalaWhereInput>
+    idProfessor?: IntFilter<"Chamada"> | number
+    data?: StringFilter<"Chamada"> | string
+    turma?: XOR<TurmaRelationFilter, TurmaWhereInput>
+    professor?: XOR<ProfessorRelationFilter, ProfessorWhereInput>
   }, "id">
 
   export type ChamadaOrderByWithAggregationInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
-    presenca?: SortOrder
+    idProfessor?: SortOrder
+    data?: SortOrder
     _count?: ChamadaCountOrderByAggregateInput
     _avg?: ChamadaAvgOrderByAggregateInput
     _max?: ChamadaMaxOrderByAggregateInput
@@ -12691,8 +12701,8 @@ export namespace Prisma {
     NOT?: ChamadaScalarWhereWithAggregatesInput | ChamadaScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Chamada"> | number
     idTurma?: IntWithAggregatesFilter<"Chamada"> | number
-    idAtividadeSala?: IntWithAggregatesFilter<"Chamada"> | number
-    presenca?: StringWithAggregatesFilter<"Chamada"> | string
+    idProfessor?: IntWithAggregatesFilter<"Chamada"> | number
+    data?: StringWithAggregatesFilter<"Chamada"> | string
   }
 
   export type AtividadeSalaWhereInput = {
@@ -12701,13 +12711,11 @@ export namespace Prisma {
     NOT?: AtividadeSalaWhereInput | AtividadeSalaWhereInput[]
     id?: IntFilter<"AtividadeSala"> | number
     descricao?: StringFilter<"AtividadeSala"> | string
-    Chamada?: ChamadaListRelationFilter
   }
 
   export type AtividadeSalaOrderByWithRelationInput = {
     id?: SortOrder
     descricao?: SortOrder
-    Chamada?: ChamadaOrderByRelationAggregateInput
   }
 
   export type AtividadeSalaWhereUniqueInput = Prisma.AtLeast<{
@@ -12716,7 +12724,6 @@ export namespace Prisma {
     OR?: AtividadeSalaWhereInput[]
     NOT?: AtividadeSalaWhereInput | AtividadeSalaWhereInput[]
     descricao?: StringFilter<"AtividadeSala"> | string
-    Chamada?: ChamadaListRelationFilter
   }, "id">
 
   export type AtividadeSalaOrderByWithAggregationInput = {
@@ -12799,6 +12806,7 @@ export namespace Prisma {
     rua: string
     disciplina?: DisciplinasCreateNestedManyWithoutProfessorInput
     FaltasDisciplinares?: FaltasDisciplinaresCreateNestedManyWithoutProfessorInput
+    Chamada?: ChamadaCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUncheckedCreateInput = {
@@ -12820,6 +12828,7 @@ export namespace Prisma {
     rua: string
     disciplina?: DisciplinasUncheckedCreateNestedManyWithoutProfessorInput
     FaltasDisciplinares?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutProfessorInput
+    Chamada?: ChamadaUncheckedCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUpdateInput = {
@@ -12840,6 +12849,7 @@ export namespace Prisma {
     rua?: StringFieldUpdateOperationsInput | string
     disciplina?: DisciplinasUpdateManyWithoutProfessorNestedInput
     FaltasDisciplinares?: FaltasDisciplinaresUpdateManyWithoutProfessorNestedInput
+    Chamada?: ChamadaUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorUncheckedUpdateInput = {
@@ -12861,6 +12871,7 @@ export namespace Prisma {
     rua?: StringFieldUpdateOperationsInput | string
     disciplina?: DisciplinasUncheckedUpdateManyWithoutProfessorNestedInput
     FaltasDisciplinares?: FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorNestedInput
+    Chamada?: ChamadaUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorCreateManyInput = {
@@ -13025,6 +13036,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     turma: TurmaCreateNestedOneWithoutAlunoInput
     faltaDisciplinar?: FaltasDisciplinaresCreateNestedManyWithoutAlunoInput
     Matricula?: MatriculaCreateNestedManyWithoutAlunoInput
@@ -13053,6 +13065,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     idTurma: number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutAlunoInput
     Matricula?: MatriculaUncheckedCreateNestedManyWithoutAlunoInput
@@ -13080,6 +13093,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     turma?: TurmaUpdateOneRequiredWithoutAlunoNestedInput
     faltaDisciplinar?: FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput
     Matricula?: MatriculaUpdateManyWithoutAlunoNestedInput
@@ -13108,6 +13122,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     idTurma?: IntFieldUpdateOperationsInput | number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoNestedInput
     Matricula?: MatriculaUncheckedUpdateManyWithoutAlunoNestedInput
@@ -13136,6 +13151,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     idTurma: number
   }
 
@@ -13161,6 +13177,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
   export type AlunoUncheckedUpdateManyInput = {
@@ -13186,6 +13203,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     idTurma?: IntFieldUpdateOperationsInput | number
   }
 
@@ -13296,6 +13314,7 @@ export namespace Prisma {
     nomeTurma: string
     curso: CursosCreateNestedOneWithoutTurmaInput
     Aluno?: AlunoCreateNestedManyWithoutTurmaInput
+    Chamada?: ChamadaCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUncheckedCreateInput = {
@@ -13303,12 +13322,14 @@ export namespace Prisma {
     idCurso: number
     nomeTurma: string
     Aluno?: AlunoUncheckedCreateNestedManyWithoutTurmaInput
+    Chamada?: ChamadaUncheckedCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUpdateInput = {
     nomeTurma?: StringFieldUpdateOperationsInput | string
     curso?: CursosUpdateOneRequiredWithoutTurmaNestedInput
     Aluno?: AlunoUpdateManyWithoutTurmaNestedInput
+    Chamada?: ChamadaUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateInput = {
@@ -13316,6 +13337,7 @@ export namespace Prisma {
     idCurso?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
     Aluno?: AlunoUncheckedUpdateManyWithoutTurmaNestedInput
+    Chamada?: ChamadaUncheckedUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaCreateManyInput = {
@@ -13335,70 +13357,65 @@ export namespace Prisma {
   }
 
   export type ChamadaCreateInput = {
-    idTurma: number
-    presenca: string
-    atividadeSala: AtividadeSalaCreateNestedOneWithoutChamadaInput
+    data: string
+    turma: TurmaCreateNestedOneWithoutChamadaInput
+    professor: ProfessorCreateNestedOneWithoutChamadaInput
   }
 
   export type ChamadaUncheckedCreateInput = {
     id?: number
     idTurma: number
-    idAtividadeSala: number
-    presenca: string
+    idProfessor: number
+    data: string
   }
 
   export type ChamadaUpdateInput = {
-    idTurma?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
-    atividadeSala?: AtividadeSalaUpdateOneRequiredWithoutChamadaNestedInput
+    data?: StringFieldUpdateOperationsInput | string
+    turma?: TurmaUpdateOneRequiredWithoutChamadaNestedInput
+    professor?: ProfessorUpdateOneRequiredWithoutChamadaNestedInput
   }
 
   export type ChamadaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     idTurma?: IntFieldUpdateOperationsInput | number
-    idAtividadeSala?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    data?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChamadaCreateManyInput = {
     id?: number
     idTurma: number
-    idAtividadeSala: number
-    presenca: string
+    idProfessor: number
+    data: string
   }
 
   export type ChamadaUpdateManyMutationInput = {
-    idTurma?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
+    data?: StringFieldUpdateOperationsInput | string
   }
 
   export type ChamadaUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     idTurma?: IntFieldUpdateOperationsInput | number
-    idAtividadeSala?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    data?: StringFieldUpdateOperationsInput | string
   }
 
   export type AtividadeSalaCreateInput = {
     descricao: string
-    Chamada?: ChamadaCreateNestedManyWithoutAtividadeSalaInput
   }
 
   export type AtividadeSalaUncheckedCreateInput = {
     id?: number
     descricao: string
-    Chamada?: ChamadaUncheckedCreateNestedManyWithoutAtividadeSalaInput
   }
 
   export type AtividadeSalaUpdateInput = {
     descricao?: StringFieldUpdateOperationsInput | string
-    Chamada?: ChamadaUpdateManyWithoutAtividadeSalaNestedInput
   }
 
   export type AtividadeSalaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     descricao?: StringFieldUpdateOperationsInput | string
-    Chamada?: ChamadaUncheckedUpdateManyWithoutAtividadeSalaNestedInput
   }
 
   export type AtividadeSalaCreateManyInput = {
@@ -13492,11 +13509,21 @@ export namespace Prisma {
     none?: FaltasDisciplinaresWhereInput
   }
 
+  export type ChamadaListRelationFilter = {
+    every?: ChamadaWhereInput
+    some?: ChamadaWhereInput
+    none?: ChamadaWhereInput
+  }
+
   export type DisciplinasOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type FaltasDisciplinaresOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ChamadaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13686,6 +13713,17 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type TurmaRelationFilter = {
     is?: TurmaWhereInput
     isNot?: TurmaWhereInput
@@ -13695,6 +13733,11 @@ export namespace Prisma {
     every?: MatriculaWhereInput
     some?: MatriculaWhereInput
     none?: MatriculaWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
   }
 
   export type MatriculaOrderByRelationAggregateInput = {
@@ -13724,12 +13767,14 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    faltas?: SortOrder
     idTurma?: SortOrder
   }
 
   export type AlunoAvgOrderByAggregateInput = {
     id?: SortOrder
     rendaFamilia?: SortOrder
+    faltas?: SortOrder
     idTurma?: SortOrder
   }
 
@@ -13756,6 +13801,7 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    faltas?: SortOrder
     idTurma?: SortOrder
   }
 
@@ -13782,12 +13828,14 @@ export namespace Prisma {
     profPai?: SortOrder
     rua?: SortOrder
     uf?: SortOrder
+    faltas?: SortOrder
     idTurma?: SortOrder
   }
 
   export type AlunoSumOrderByAggregateInput = {
     id?: SortOrder
     rendaFamilia?: SortOrder
+    faltas?: SortOrder
     idTurma?: SortOrder
   }
 
@@ -13805,6 +13853,22 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
   export type AlunoRelationFilter = {
@@ -13945,52 +14009,37 @@ export namespace Prisma {
     idCurso?: SortOrder
   }
 
-  export type AtividadeSalaRelationFilter = {
-    is?: AtividadeSalaWhereInput
-    isNot?: AtividadeSalaWhereInput
-  }
-
   export type ChamadaCountOrderByAggregateInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
-    presenca?: SortOrder
+    idProfessor?: SortOrder
+    data?: SortOrder
   }
 
   export type ChamadaAvgOrderByAggregateInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
+    idProfessor?: SortOrder
   }
 
   export type ChamadaMaxOrderByAggregateInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
-    presenca?: SortOrder
+    idProfessor?: SortOrder
+    data?: SortOrder
   }
 
   export type ChamadaMinOrderByAggregateInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
-    presenca?: SortOrder
+    idProfessor?: SortOrder
+    data?: SortOrder
   }
 
   export type ChamadaSumOrderByAggregateInput = {
     id?: SortOrder
     idTurma?: SortOrder
-    idAtividadeSala?: SortOrder
-  }
-
-  export type ChamadaListRelationFilter = {
-    every?: ChamadaWhereInput
-    some?: ChamadaWhereInput
-    none?: ChamadaWhereInput
-  }
-
-  export type ChamadaOrderByRelationAggregateInput = {
-    _count?: SortOrder
+    idProfessor?: SortOrder
   }
 
   export type AtividadeSalaCountOrderByAggregateInput = {
@@ -14056,6 +14105,13 @@ export namespace Prisma {
     connect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
   }
 
+  export type ChamadaCreateNestedManyWithoutProfessorInput = {
+    create?: XOR<ChamadaCreateWithoutProfessorInput, ChamadaUncheckedCreateWithoutProfessorInput> | ChamadaCreateWithoutProfessorInput[] | ChamadaUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutProfessorInput | ChamadaCreateOrConnectWithoutProfessorInput[]
+    createMany?: ChamadaCreateManyProfessorInputEnvelope
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+  }
+
   export type DisciplinasUncheckedCreateNestedManyWithoutProfessorInput = {
     create?: XOR<DisciplinasCreateWithoutProfessorInput, DisciplinasUncheckedCreateWithoutProfessorInput> | DisciplinasCreateWithoutProfessorInput[] | DisciplinasUncheckedCreateWithoutProfessorInput[]
     connectOrCreate?: DisciplinasCreateOrConnectWithoutProfessorInput | DisciplinasCreateOrConnectWithoutProfessorInput[]
@@ -14068,6 +14124,13 @@ export namespace Prisma {
     connectOrCreate?: FaltasDisciplinaresCreateOrConnectWithoutProfessorInput | FaltasDisciplinaresCreateOrConnectWithoutProfessorInput[]
     createMany?: FaltasDisciplinaresCreateManyProfessorInputEnvelope
     connect?: FaltasDisciplinaresWhereUniqueInput | FaltasDisciplinaresWhereUniqueInput[]
+  }
+
+  export type ChamadaUncheckedCreateNestedManyWithoutProfessorInput = {
+    create?: XOR<ChamadaCreateWithoutProfessorInput, ChamadaUncheckedCreateWithoutProfessorInput> | ChamadaCreateWithoutProfessorInput[] | ChamadaUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutProfessorInput | ChamadaCreateOrConnectWithoutProfessorInput[]
+    createMany?: ChamadaCreateManyProfessorInputEnvelope
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -14100,6 +14163,20 @@ export namespace Prisma {
     update?: FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput | FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput[]
     updateMany?: FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput | FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput[]
     deleteMany?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
+  }
+
+  export type ChamadaUpdateManyWithoutProfessorNestedInput = {
+    create?: XOR<ChamadaCreateWithoutProfessorInput, ChamadaUncheckedCreateWithoutProfessorInput> | ChamadaCreateWithoutProfessorInput[] | ChamadaUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutProfessorInput | ChamadaCreateOrConnectWithoutProfessorInput[]
+    upsert?: ChamadaUpsertWithWhereUniqueWithoutProfessorInput | ChamadaUpsertWithWhereUniqueWithoutProfessorInput[]
+    createMany?: ChamadaCreateManyProfessorInputEnvelope
+    set?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    disconnect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    delete?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    update?: ChamadaUpdateWithWhereUniqueWithoutProfessorInput | ChamadaUpdateWithWhereUniqueWithoutProfessorInput[]
+    updateMany?: ChamadaUpdateManyWithWhereWithoutProfessorInput | ChamadaUpdateManyWithWhereWithoutProfessorInput[]
+    deleteMany?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -14136,6 +14213,20 @@ export namespace Prisma {
     update?: FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput | FaltasDisciplinaresUpdateWithWhereUniqueWithoutProfessorInput[]
     updateMany?: FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput | FaltasDisciplinaresUpdateManyWithWhereWithoutProfessorInput[]
     deleteMany?: FaltasDisciplinaresScalarWhereInput | FaltasDisciplinaresScalarWhereInput[]
+  }
+
+  export type ChamadaUncheckedUpdateManyWithoutProfessorNestedInput = {
+    create?: XOR<ChamadaCreateWithoutProfessorInput, ChamadaUncheckedCreateWithoutProfessorInput> | ChamadaCreateWithoutProfessorInput[] | ChamadaUncheckedCreateWithoutProfessorInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutProfessorInput | ChamadaCreateOrConnectWithoutProfessorInput[]
+    upsert?: ChamadaUpsertWithWhereUniqueWithoutProfessorInput | ChamadaUpsertWithWhereUniqueWithoutProfessorInput[]
+    createMany?: ChamadaCreateManyProfessorInputEnvelope
+    set?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    disconnect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    delete?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    update?: ChamadaUpdateWithWhereUniqueWithoutProfessorInput | ChamadaUpdateWithWhereUniqueWithoutProfessorInput[]
+    updateMany?: ChamadaUpdateManyWithWhereWithoutProfessorInput | ChamadaUpdateManyWithWhereWithoutProfessorInput[]
+    deleteMany?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
   }
 
   export type CursosCreateNestedOneWithoutDisciplinasInput = {
@@ -14292,6 +14383,14 @@ export namespace Prisma {
     divide?: Decimal | DecimalJsLike | number | string
   }
 
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type TurmaUpdateOneRequiredWithoutAlunoNestedInput = {
     create?: XOR<TurmaCreateWithoutAlunoInput, TurmaUncheckedCreateWithoutAlunoInput>
     connectOrCreate?: TurmaCreateOrConnectWithoutAlunoInput
@@ -14415,11 +14514,25 @@ export namespace Prisma {
     connect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
   }
 
+  export type ChamadaCreateNestedManyWithoutTurmaInput = {
+    create?: XOR<ChamadaCreateWithoutTurmaInput, ChamadaUncheckedCreateWithoutTurmaInput> | ChamadaCreateWithoutTurmaInput[] | ChamadaUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutTurmaInput | ChamadaCreateOrConnectWithoutTurmaInput[]
+    createMany?: ChamadaCreateManyTurmaInputEnvelope
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+  }
+
   export type AlunoUncheckedCreateNestedManyWithoutTurmaInput = {
     create?: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput> | AlunoCreateWithoutTurmaInput[] | AlunoUncheckedCreateWithoutTurmaInput[]
     connectOrCreate?: AlunoCreateOrConnectWithoutTurmaInput | AlunoCreateOrConnectWithoutTurmaInput[]
     createMany?: AlunoCreateManyTurmaInputEnvelope
     connect?: AlunoWhereUniqueInput | AlunoWhereUniqueInput[]
+  }
+
+  export type ChamadaUncheckedCreateNestedManyWithoutTurmaInput = {
+    create?: XOR<ChamadaCreateWithoutTurmaInput, ChamadaUncheckedCreateWithoutTurmaInput> | ChamadaCreateWithoutTurmaInput[] | ChamadaUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutTurmaInput | ChamadaCreateOrConnectWithoutTurmaInput[]
+    createMany?: ChamadaCreateManyTurmaInputEnvelope
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
   }
 
   export type CursosUpdateOneRequiredWithoutTurmaNestedInput = {
@@ -14444,6 +14557,20 @@ export namespace Prisma {
     deleteMany?: AlunoScalarWhereInput | AlunoScalarWhereInput[]
   }
 
+  export type ChamadaUpdateManyWithoutTurmaNestedInput = {
+    create?: XOR<ChamadaCreateWithoutTurmaInput, ChamadaUncheckedCreateWithoutTurmaInput> | ChamadaCreateWithoutTurmaInput[] | ChamadaUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutTurmaInput | ChamadaCreateOrConnectWithoutTurmaInput[]
+    upsert?: ChamadaUpsertWithWhereUniqueWithoutTurmaInput | ChamadaUpsertWithWhereUniqueWithoutTurmaInput[]
+    createMany?: ChamadaCreateManyTurmaInputEnvelope
+    set?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    disconnect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    delete?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
+    update?: ChamadaUpdateWithWhereUniqueWithoutTurmaInput | ChamadaUpdateWithWhereUniqueWithoutTurmaInput[]
+    updateMany?: ChamadaUpdateManyWithWhereWithoutTurmaInput | ChamadaUpdateManyWithWhereWithoutTurmaInput[]
+    deleteMany?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
+  }
+
   export type AlunoUncheckedUpdateManyWithoutTurmaNestedInput = {
     create?: XOR<AlunoCreateWithoutTurmaInput, AlunoUncheckedCreateWithoutTurmaInput> | AlunoCreateWithoutTurmaInput[] | AlunoUncheckedCreateWithoutTurmaInput[]
     connectOrCreate?: AlunoCreateOrConnectWithoutTurmaInput | AlunoCreateOrConnectWithoutTurmaInput[]
@@ -14458,60 +14585,46 @@ export namespace Prisma {
     deleteMany?: AlunoScalarWhereInput | AlunoScalarWhereInput[]
   }
 
-  export type AtividadeSalaCreateNestedOneWithoutChamadaInput = {
-    create?: XOR<AtividadeSalaCreateWithoutChamadaInput, AtividadeSalaUncheckedCreateWithoutChamadaInput>
-    connectOrCreate?: AtividadeSalaCreateOrConnectWithoutChamadaInput
-    connect?: AtividadeSalaWhereUniqueInput
-  }
-
-  export type AtividadeSalaUpdateOneRequiredWithoutChamadaNestedInput = {
-    create?: XOR<AtividadeSalaCreateWithoutChamadaInput, AtividadeSalaUncheckedCreateWithoutChamadaInput>
-    connectOrCreate?: AtividadeSalaCreateOrConnectWithoutChamadaInput
-    upsert?: AtividadeSalaUpsertWithoutChamadaInput
-    connect?: AtividadeSalaWhereUniqueInput
-    update?: XOR<XOR<AtividadeSalaUpdateToOneWithWhereWithoutChamadaInput, AtividadeSalaUpdateWithoutChamadaInput>, AtividadeSalaUncheckedUpdateWithoutChamadaInput>
-  }
-
-  export type ChamadaCreateNestedManyWithoutAtividadeSalaInput = {
-    create?: XOR<ChamadaCreateWithoutAtividadeSalaInput, ChamadaUncheckedCreateWithoutAtividadeSalaInput> | ChamadaCreateWithoutAtividadeSalaInput[] | ChamadaUncheckedCreateWithoutAtividadeSalaInput[]
-    connectOrCreate?: ChamadaCreateOrConnectWithoutAtividadeSalaInput | ChamadaCreateOrConnectWithoutAtividadeSalaInput[]
-    createMany?: ChamadaCreateManyAtividadeSalaInputEnvelope
-    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-  }
-
-  export type ChamadaUncheckedCreateNestedManyWithoutAtividadeSalaInput = {
-    create?: XOR<ChamadaCreateWithoutAtividadeSalaInput, ChamadaUncheckedCreateWithoutAtividadeSalaInput> | ChamadaCreateWithoutAtividadeSalaInput[] | ChamadaUncheckedCreateWithoutAtividadeSalaInput[]
-    connectOrCreate?: ChamadaCreateOrConnectWithoutAtividadeSalaInput | ChamadaCreateOrConnectWithoutAtividadeSalaInput[]
-    createMany?: ChamadaCreateManyAtividadeSalaInputEnvelope
-    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-  }
-
-  export type ChamadaUpdateManyWithoutAtividadeSalaNestedInput = {
-    create?: XOR<ChamadaCreateWithoutAtividadeSalaInput, ChamadaUncheckedCreateWithoutAtividadeSalaInput> | ChamadaCreateWithoutAtividadeSalaInput[] | ChamadaUncheckedCreateWithoutAtividadeSalaInput[]
-    connectOrCreate?: ChamadaCreateOrConnectWithoutAtividadeSalaInput | ChamadaCreateOrConnectWithoutAtividadeSalaInput[]
-    upsert?: ChamadaUpsertWithWhereUniqueWithoutAtividadeSalaInput | ChamadaUpsertWithWhereUniqueWithoutAtividadeSalaInput[]
-    createMany?: ChamadaCreateManyAtividadeSalaInputEnvelope
+  export type ChamadaUncheckedUpdateManyWithoutTurmaNestedInput = {
+    create?: XOR<ChamadaCreateWithoutTurmaInput, ChamadaUncheckedCreateWithoutTurmaInput> | ChamadaCreateWithoutTurmaInput[] | ChamadaUncheckedCreateWithoutTurmaInput[]
+    connectOrCreate?: ChamadaCreateOrConnectWithoutTurmaInput | ChamadaCreateOrConnectWithoutTurmaInput[]
+    upsert?: ChamadaUpsertWithWhereUniqueWithoutTurmaInput | ChamadaUpsertWithWhereUniqueWithoutTurmaInput[]
+    createMany?: ChamadaCreateManyTurmaInputEnvelope
     set?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
     disconnect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
     delete?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
     connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-    update?: ChamadaUpdateWithWhereUniqueWithoutAtividadeSalaInput | ChamadaUpdateWithWhereUniqueWithoutAtividadeSalaInput[]
-    updateMany?: ChamadaUpdateManyWithWhereWithoutAtividadeSalaInput | ChamadaUpdateManyWithWhereWithoutAtividadeSalaInput[]
+    update?: ChamadaUpdateWithWhereUniqueWithoutTurmaInput | ChamadaUpdateWithWhereUniqueWithoutTurmaInput[]
+    updateMany?: ChamadaUpdateManyWithWhereWithoutTurmaInput | ChamadaUpdateManyWithWhereWithoutTurmaInput[]
     deleteMany?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
   }
 
-  export type ChamadaUncheckedUpdateManyWithoutAtividadeSalaNestedInput = {
-    create?: XOR<ChamadaCreateWithoutAtividadeSalaInput, ChamadaUncheckedCreateWithoutAtividadeSalaInput> | ChamadaCreateWithoutAtividadeSalaInput[] | ChamadaUncheckedCreateWithoutAtividadeSalaInput[]
-    connectOrCreate?: ChamadaCreateOrConnectWithoutAtividadeSalaInput | ChamadaCreateOrConnectWithoutAtividadeSalaInput[]
-    upsert?: ChamadaUpsertWithWhereUniqueWithoutAtividadeSalaInput | ChamadaUpsertWithWhereUniqueWithoutAtividadeSalaInput[]
-    createMany?: ChamadaCreateManyAtividadeSalaInputEnvelope
-    set?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-    disconnect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-    delete?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-    connect?: ChamadaWhereUniqueInput | ChamadaWhereUniqueInput[]
-    update?: ChamadaUpdateWithWhereUniqueWithoutAtividadeSalaInput | ChamadaUpdateWithWhereUniqueWithoutAtividadeSalaInput[]
-    updateMany?: ChamadaUpdateManyWithWhereWithoutAtividadeSalaInput | ChamadaUpdateManyWithWhereWithoutAtividadeSalaInput[]
-    deleteMany?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
+  export type TurmaCreateNestedOneWithoutChamadaInput = {
+    create?: XOR<TurmaCreateWithoutChamadaInput, TurmaUncheckedCreateWithoutChamadaInput>
+    connectOrCreate?: TurmaCreateOrConnectWithoutChamadaInput
+    connect?: TurmaWhereUniqueInput
+  }
+
+  export type ProfessorCreateNestedOneWithoutChamadaInput = {
+    create?: XOR<ProfessorCreateWithoutChamadaInput, ProfessorUncheckedCreateWithoutChamadaInput>
+    connectOrCreate?: ProfessorCreateOrConnectWithoutChamadaInput
+    connect?: ProfessorWhereUniqueInput
+  }
+
+  export type TurmaUpdateOneRequiredWithoutChamadaNestedInput = {
+    create?: XOR<TurmaCreateWithoutChamadaInput, TurmaUncheckedCreateWithoutChamadaInput>
+    connectOrCreate?: TurmaCreateOrConnectWithoutChamadaInput
+    upsert?: TurmaUpsertWithoutChamadaInput
+    connect?: TurmaWhereUniqueInput
+    update?: XOR<XOR<TurmaUpdateToOneWithWhereWithoutChamadaInput, TurmaUpdateWithoutChamadaInput>, TurmaUncheckedUpdateWithoutChamadaInput>
+  }
+
+  export type ProfessorUpdateOneRequiredWithoutChamadaNestedInput = {
+    create?: XOR<ProfessorCreateWithoutChamadaInput, ProfessorUncheckedCreateWithoutChamadaInput>
+    connectOrCreate?: ProfessorCreateOrConnectWithoutChamadaInput
+    upsert?: ProfessorUpsertWithoutChamadaInput
+    connect?: ProfessorWhereUniqueInput
+    update?: XOR<XOR<ProfessorUpdateToOneWithWhereWithoutChamadaInput, ProfessorUpdateWithoutChamadaInput>, ProfessorUncheckedUpdateWithoutChamadaInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -14594,6 +14707,17 @@ export namespace Prisma {
     not?: NestedDecimalFilter<$PrismaModel> | Decimal | DecimalJsLike | number | string
   }
 
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
   export type NestedDecimalWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Decimal | DecimalJsLike | number | string | DecimalFieldRefInput<$PrismaModel>
     in?: Decimal[] | DecimalJsLike[] | number[] | string[] | ListDecimalFieldRefInput<$PrismaModel>
@@ -14608,6 +14732,33 @@ export namespace Prisma {
     _sum?: NestedDecimalFilter<$PrismaModel>
     _min?: NestedDecimalFilter<$PrismaModel>
     _max?: NestedDecimalFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -14681,6 +14832,27 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ChamadaCreateWithoutProfessorInput = {
+    data: string
+    turma: TurmaCreateNestedOneWithoutChamadaInput
+  }
+
+  export type ChamadaUncheckedCreateWithoutProfessorInput = {
+    id?: number
+    idTurma: number
+    data: string
+  }
+
+  export type ChamadaCreateOrConnectWithoutProfessorInput = {
+    where: ChamadaWhereUniqueInput
+    create: XOR<ChamadaCreateWithoutProfessorInput, ChamadaUncheckedCreateWithoutProfessorInput>
+  }
+
+  export type ChamadaCreateManyProfessorInputEnvelope = {
+    data: ChamadaCreateManyProfessorInput | ChamadaCreateManyProfessorInput[]
+    skipDuplicates?: boolean
+  }
+
   export type DisciplinasUpsertWithWhereUniqueWithoutProfessorInput = {
     where: DisciplinasWhereUniqueInput
     update: XOR<DisciplinasUpdateWithoutProfessorInput, DisciplinasUncheckedUpdateWithoutProfessorInput>
@@ -14735,6 +14907,32 @@ export namespace Prisma {
     dataFalta?: StringFilter<"FaltasDisciplinares"> | string
   }
 
+  export type ChamadaUpsertWithWhereUniqueWithoutProfessorInput = {
+    where: ChamadaWhereUniqueInput
+    update: XOR<ChamadaUpdateWithoutProfessorInput, ChamadaUncheckedUpdateWithoutProfessorInput>
+    create: XOR<ChamadaCreateWithoutProfessorInput, ChamadaUncheckedCreateWithoutProfessorInput>
+  }
+
+  export type ChamadaUpdateWithWhereUniqueWithoutProfessorInput = {
+    where: ChamadaWhereUniqueInput
+    data: XOR<ChamadaUpdateWithoutProfessorInput, ChamadaUncheckedUpdateWithoutProfessorInput>
+  }
+
+  export type ChamadaUpdateManyWithWhereWithoutProfessorInput = {
+    where: ChamadaScalarWhereInput
+    data: XOR<ChamadaUpdateManyMutationInput, ChamadaUncheckedUpdateManyWithoutProfessorInput>
+  }
+
+  export type ChamadaScalarWhereInput = {
+    AND?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
+    OR?: ChamadaScalarWhereInput[]
+    NOT?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
+    id?: IntFilter<"Chamada"> | number
+    idTurma?: IntFilter<"Chamada"> | number
+    idProfessor?: IntFilter<"Chamada"> | number
+    data?: StringFilter<"Chamada"> | string
+  }
+
   export type CursosCreateWithoutDisciplinasInput = {
     nomeCurso: string
     Turma?: TurmaCreateNestedManyWithoutCursoInput
@@ -14768,6 +14966,7 @@ export namespace Prisma {
     numero: string
     rua: string
     FaltasDisciplinares?: FaltasDisciplinaresCreateNestedManyWithoutProfessorInput
+    Chamada?: ChamadaCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUncheckedCreateWithoutDisciplinaInput = {
@@ -14788,6 +14987,7 @@ export namespace Prisma {
     numero: string
     rua: string
     FaltasDisciplinares?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutProfessorInput
+    Chamada?: ChamadaUncheckedCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorCreateOrConnectWithoutDisciplinaInput = {
@@ -14845,6 +15045,7 @@ export namespace Prisma {
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     FaltasDisciplinares?: FaltasDisciplinaresUpdateManyWithoutProfessorNestedInput
+    Chamada?: ChamadaUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorUncheckedUpdateWithoutDisciplinaInput = {
@@ -14865,6 +15066,7 @@ export namespace Prisma {
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     FaltasDisciplinares?: FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorNestedInput
+    Chamada?: ChamadaUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type DisciplinasCreateWithoutCursosInput = {
@@ -14891,12 +15093,14 @@ export namespace Prisma {
   export type TurmaCreateWithoutCursoInput = {
     nomeTurma: string
     Aluno?: AlunoCreateNestedManyWithoutTurmaInput
+    Chamada?: ChamadaCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUncheckedCreateWithoutCursoInput = {
     id?: number
     nomeTurma: string
     Aluno?: AlunoUncheckedCreateNestedManyWithoutTurmaInput
+    Chamada?: ChamadaUncheckedCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaCreateOrConnectWithoutCursoInput = {
@@ -14953,12 +15157,14 @@ export namespace Prisma {
   export type TurmaCreateWithoutAlunoInput = {
     nomeTurma: string
     curso: CursosCreateNestedOneWithoutTurmaInput
+    Chamada?: ChamadaCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaUncheckedCreateWithoutAlunoInput = {
     id?: number
     idCurso: number
     nomeTurma: string
+    Chamada?: ChamadaUncheckedCreateNestedManyWithoutTurmaInput
   }
 
   export type TurmaCreateOrConnectWithoutAlunoInput = {
@@ -15026,12 +15232,14 @@ export namespace Prisma {
   export type TurmaUpdateWithoutAlunoInput = {
     nomeTurma?: StringFieldUpdateOperationsInput | string
     curso?: CursosUpdateOneRequiredWithoutTurmaNestedInput
+    Chamada?: ChamadaUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateWithoutAlunoInput = {
     id?: IntFieldUpdateOperationsInput | number
     idCurso?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
+    Chamada?: ChamadaUncheckedUpdateManyWithoutTurmaNestedInput
   }
 
   export type FaltasDisciplinaresUpsertWithWhereUniqueWithoutAlunoInput = {
@@ -15093,6 +15301,7 @@ export namespace Prisma {
     numero: string
     rua: string
     disciplina?: DisciplinasCreateNestedManyWithoutProfessorInput
+    Chamada?: ChamadaCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorUncheckedCreateWithoutFaltasDisciplinaresInput = {
@@ -15113,6 +15322,7 @@ export namespace Prisma {
     numero: string
     rua: string
     disciplina?: DisciplinasUncheckedCreateNestedManyWithoutProfessorInput
+    Chamada?: ChamadaUncheckedCreateNestedManyWithoutProfessorInput
   }
 
   export type ProfessorCreateOrConnectWithoutFaltasDisciplinaresInput = {
@@ -15142,6 +15352,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     turma: TurmaCreateNestedOneWithoutAlunoInput
     Matricula?: MatriculaCreateNestedManyWithoutAlunoInput
   }
@@ -15169,6 +15380,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     idTurma: number
     Matricula?: MatriculaUncheckedCreateNestedManyWithoutAlunoInput
   }
@@ -15206,6 +15418,7 @@ export namespace Prisma {
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     disciplina?: DisciplinasUpdateManyWithoutProfessorNestedInput
+    Chamada?: ChamadaUpdateManyWithoutProfessorNestedInput
   }
 
   export type ProfessorUncheckedUpdateWithoutFaltasDisciplinaresInput = {
@@ -15226,6 +15439,7 @@ export namespace Prisma {
     numero?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     disciplina?: DisciplinasUncheckedUpdateManyWithoutProfessorNestedInput
+    Chamada?: ChamadaUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type AlunoUpsertWithoutFaltaDisciplinarInput = {
@@ -15261,6 +15475,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     turma?: TurmaUpdateOneRequiredWithoutAlunoNestedInput
     Matricula?: MatriculaUpdateManyWithoutAlunoNestedInput
   }
@@ -15288,6 +15503,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     idTurma?: IntFieldUpdateOperationsInput | number
     Matricula?: MatriculaUncheckedUpdateManyWithoutAlunoNestedInput
   }
@@ -15314,6 +15530,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     turma: TurmaCreateNestedOneWithoutAlunoInput
     faltaDisciplinar?: FaltasDisciplinaresCreateNestedManyWithoutAlunoInput
   }
@@ -15341,6 +15558,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     idTurma: number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutAlunoInput
   }
@@ -15383,6 +15601,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     turma?: TurmaUpdateOneRequiredWithoutAlunoNestedInput
     faltaDisciplinar?: FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput
   }
@@ -15410,6 +15629,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     idTurma?: IntFieldUpdateOperationsInput | number
     faltaDisciplinar?: FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoNestedInput
   }
@@ -15452,6 +15672,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     faltaDisciplinar?: FaltasDisciplinaresCreateNestedManyWithoutAlunoInput
     Matricula?: MatriculaCreateNestedManyWithoutAlunoInput
   }
@@ -15479,6 +15700,7 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
     faltaDisciplinar?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutAlunoInput
     Matricula?: MatriculaUncheckedCreateNestedManyWithoutAlunoInput
   }
@@ -15490,6 +15712,27 @@ export namespace Prisma {
 
   export type AlunoCreateManyTurmaInputEnvelope = {
     data: AlunoCreateManyTurmaInput | AlunoCreateManyTurmaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ChamadaCreateWithoutTurmaInput = {
+    data: string
+    professor: ProfessorCreateNestedOneWithoutChamadaInput
+  }
+
+  export type ChamadaUncheckedCreateWithoutTurmaInput = {
+    id?: number
+    idProfessor: number
+    data: string
+  }
+
+  export type ChamadaCreateOrConnectWithoutTurmaInput = {
+    where: ChamadaWhereUniqueInput
+    create: XOR<ChamadaCreateWithoutTurmaInput, ChamadaUncheckedCreateWithoutTurmaInput>
+  }
+
+  export type ChamadaCreateManyTurmaInputEnvelope = {
+    data: ChamadaCreateManyTurmaInput | ChamadaCreateManyTurmaInput[]
     skipDuplicates?: boolean
   }
 
@@ -15557,88 +15800,164 @@ export namespace Prisma {
     profPai?: StringFilter<"Aluno"> | string
     rua?: StringFilter<"Aluno"> | string
     uf?: StringFilter<"Aluno"> | string
+    faltas?: IntNullableFilter<"Aluno"> | number | null
     idTurma?: IntFilter<"Aluno"> | number
   }
 
-  export type AtividadeSalaCreateWithoutChamadaInput = {
-    descricao: string
-  }
-
-  export type AtividadeSalaUncheckedCreateWithoutChamadaInput = {
-    id?: number
-    descricao: string
-  }
-
-  export type AtividadeSalaCreateOrConnectWithoutChamadaInput = {
-    where: AtividadeSalaWhereUniqueInput
-    create: XOR<AtividadeSalaCreateWithoutChamadaInput, AtividadeSalaUncheckedCreateWithoutChamadaInput>
-  }
-
-  export type AtividadeSalaUpsertWithoutChamadaInput = {
-    update: XOR<AtividadeSalaUpdateWithoutChamadaInput, AtividadeSalaUncheckedUpdateWithoutChamadaInput>
-    create: XOR<AtividadeSalaCreateWithoutChamadaInput, AtividadeSalaUncheckedCreateWithoutChamadaInput>
-    where?: AtividadeSalaWhereInput
-  }
-
-  export type AtividadeSalaUpdateToOneWithWhereWithoutChamadaInput = {
-    where?: AtividadeSalaWhereInput
-    data: XOR<AtividadeSalaUpdateWithoutChamadaInput, AtividadeSalaUncheckedUpdateWithoutChamadaInput>
-  }
-
-  export type AtividadeSalaUpdateWithoutChamadaInput = {
-    descricao?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type AtividadeSalaUncheckedUpdateWithoutChamadaInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    descricao?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ChamadaCreateWithoutAtividadeSalaInput = {
-    idTurma: number
-    presenca: string
-  }
-
-  export type ChamadaUncheckedCreateWithoutAtividadeSalaInput = {
-    id?: number
-    idTurma: number
-    presenca: string
-  }
-
-  export type ChamadaCreateOrConnectWithoutAtividadeSalaInput = {
+  export type ChamadaUpsertWithWhereUniqueWithoutTurmaInput = {
     where: ChamadaWhereUniqueInput
-    create: XOR<ChamadaCreateWithoutAtividadeSalaInput, ChamadaUncheckedCreateWithoutAtividadeSalaInput>
+    update: XOR<ChamadaUpdateWithoutTurmaInput, ChamadaUncheckedUpdateWithoutTurmaInput>
+    create: XOR<ChamadaCreateWithoutTurmaInput, ChamadaUncheckedCreateWithoutTurmaInput>
   }
 
-  export type ChamadaCreateManyAtividadeSalaInputEnvelope = {
-    data: ChamadaCreateManyAtividadeSalaInput | ChamadaCreateManyAtividadeSalaInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type ChamadaUpsertWithWhereUniqueWithoutAtividadeSalaInput = {
+  export type ChamadaUpdateWithWhereUniqueWithoutTurmaInput = {
     where: ChamadaWhereUniqueInput
-    update: XOR<ChamadaUpdateWithoutAtividadeSalaInput, ChamadaUncheckedUpdateWithoutAtividadeSalaInput>
-    create: XOR<ChamadaCreateWithoutAtividadeSalaInput, ChamadaUncheckedCreateWithoutAtividadeSalaInput>
+    data: XOR<ChamadaUpdateWithoutTurmaInput, ChamadaUncheckedUpdateWithoutTurmaInput>
   }
 
-  export type ChamadaUpdateWithWhereUniqueWithoutAtividadeSalaInput = {
-    where: ChamadaWhereUniqueInput
-    data: XOR<ChamadaUpdateWithoutAtividadeSalaInput, ChamadaUncheckedUpdateWithoutAtividadeSalaInput>
-  }
-
-  export type ChamadaUpdateManyWithWhereWithoutAtividadeSalaInput = {
+  export type ChamadaUpdateManyWithWhereWithoutTurmaInput = {
     where: ChamadaScalarWhereInput
-    data: XOR<ChamadaUpdateManyMutationInput, ChamadaUncheckedUpdateManyWithoutAtividadeSalaInput>
+    data: XOR<ChamadaUpdateManyMutationInput, ChamadaUncheckedUpdateManyWithoutTurmaInput>
   }
 
-  export type ChamadaScalarWhereInput = {
-    AND?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
-    OR?: ChamadaScalarWhereInput[]
-    NOT?: ChamadaScalarWhereInput | ChamadaScalarWhereInput[]
-    id?: IntFilter<"Chamada"> | number
-    idTurma?: IntFilter<"Chamada"> | number
-    idAtividadeSala?: IntFilter<"Chamada"> | number
-    presenca?: StringFilter<"Chamada"> | string
+  export type TurmaCreateWithoutChamadaInput = {
+    nomeTurma: string
+    curso: CursosCreateNestedOneWithoutTurmaInput
+    Aluno?: AlunoCreateNestedManyWithoutTurmaInput
+  }
+
+  export type TurmaUncheckedCreateWithoutChamadaInput = {
+    id?: number
+    idCurso: number
+    nomeTurma: string
+    Aluno?: AlunoUncheckedCreateNestedManyWithoutTurmaInput
+  }
+
+  export type TurmaCreateOrConnectWithoutChamadaInput = {
+    where: TurmaWhereUniqueInput
+    create: XOR<TurmaCreateWithoutChamadaInput, TurmaUncheckedCreateWithoutChamadaInput>
+  }
+
+  export type ProfessorCreateWithoutChamadaInput = {
+    name: string
+    nascimento: string
+    telefone: string
+    email: string
+    anoConclusao: string
+    bairro: string
+    cidade: string
+    complemento: string
+    curso: string
+    estado: string
+    genero: string
+    instituicao: string
+    nivelFormacao: string
+    numero: string
+    rua: string
+    disciplina?: DisciplinasCreateNestedManyWithoutProfessorInput
+    FaltasDisciplinares?: FaltasDisciplinaresCreateNestedManyWithoutProfessorInput
+  }
+
+  export type ProfessorUncheckedCreateWithoutChamadaInput = {
+    id?: number
+    name: string
+    nascimento: string
+    telefone: string
+    email: string
+    anoConclusao: string
+    bairro: string
+    cidade: string
+    complemento: string
+    curso: string
+    estado: string
+    genero: string
+    instituicao: string
+    nivelFormacao: string
+    numero: string
+    rua: string
+    disciplina?: DisciplinasUncheckedCreateNestedManyWithoutProfessorInput
+    FaltasDisciplinares?: FaltasDisciplinaresUncheckedCreateNestedManyWithoutProfessorInput
+  }
+
+  export type ProfessorCreateOrConnectWithoutChamadaInput = {
+    where: ProfessorWhereUniqueInput
+    create: XOR<ProfessorCreateWithoutChamadaInput, ProfessorUncheckedCreateWithoutChamadaInput>
+  }
+
+  export type TurmaUpsertWithoutChamadaInput = {
+    update: XOR<TurmaUpdateWithoutChamadaInput, TurmaUncheckedUpdateWithoutChamadaInput>
+    create: XOR<TurmaCreateWithoutChamadaInput, TurmaUncheckedCreateWithoutChamadaInput>
+    where?: TurmaWhereInput
+  }
+
+  export type TurmaUpdateToOneWithWhereWithoutChamadaInput = {
+    where?: TurmaWhereInput
+    data: XOR<TurmaUpdateWithoutChamadaInput, TurmaUncheckedUpdateWithoutChamadaInput>
+  }
+
+  export type TurmaUpdateWithoutChamadaInput = {
+    nomeTurma?: StringFieldUpdateOperationsInput | string
+    curso?: CursosUpdateOneRequiredWithoutTurmaNestedInput
+    Aluno?: AlunoUpdateManyWithoutTurmaNestedInput
+  }
+
+  export type TurmaUncheckedUpdateWithoutChamadaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idCurso?: IntFieldUpdateOperationsInput | number
+    nomeTurma?: StringFieldUpdateOperationsInput | string
+    Aluno?: AlunoUncheckedUpdateManyWithoutTurmaNestedInput
+  }
+
+  export type ProfessorUpsertWithoutChamadaInput = {
+    update: XOR<ProfessorUpdateWithoutChamadaInput, ProfessorUncheckedUpdateWithoutChamadaInput>
+    create: XOR<ProfessorCreateWithoutChamadaInput, ProfessorUncheckedCreateWithoutChamadaInput>
+    where?: ProfessorWhereInput
+  }
+
+  export type ProfessorUpdateToOneWithWhereWithoutChamadaInput = {
+    where?: ProfessorWhereInput
+    data: XOR<ProfessorUpdateWithoutChamadaInput, ProfessorUncheckedUpdateWithoutChamadaInput>
+  }
+
+  export type ProfessorUpdateWithoutChamadaInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    anoConclusao?: StringFieldUpdateOperationsInput | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    curso?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    genero?: StringFieldUpdateOperationsInput | string
+    instituicao?: StringFieldUpdateOperationsInput | string
+    nivelFormacao?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    disciplina?: DisciplinasUpdateManyWithoutProfessorNestedInput
+    FaltasDisciplinares?: FaltasDisciplinaresUpdateManyWithoutProfessorNestedInput
+  }
+
+  export type ProfessorUncheckedUpdateWithoutChamadaInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    nascimento?: StringFieldUpdateOperationsInput | string
+    telefone?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    anoConclusao?: StringFieldUpdateOperationsInput | string
+    bairro?: StringFieldUpdateOperationsInput | string
+    cidade?: StringFieldUpdateOperationsInput | string
+    complemento?: StringFieldUpdateOperationsInput | string
+    curso?: StringFieldUpdateOperationsInput | string
+    estado?: StringFieldUpdateOperationsInput | string
+    genero?: StringFieldUpdateOperationsInput | string
+    instituicao?: StringFieldUpdateOperationsInput | string
+    nivelFormacao?: StringFieldUpdateOperationsInput | string
+    numero?: StringFieldUpdateOperationsInput | string
+    rua?: StringFieldUpdateOperationsInput | string
+    disciplina?: DisciplinasUncheckedUpdateManyWithoutProfessorNestedInput
+    FaltasDisciplinares?: FaltasDisciplinaresUncheckedUpdateManyWithoutProfessorNestedInput
   }
 
   export type DisciplinasCreateManyProfessorInput = {
@@ -15653,6 +15972,12 @@ export namespace Prisma {
     titulo: string
     descricao: string
     dataFalta: string
+  }
+
+  export type ChamadaCreateManyProfessorInput = {
+    id?: number
+    idTurma: number
+    data: string
   }
 
   export type DisciplinasUpdateWithoutProfessorInput = {
@@ -15695,6 +16020,23 @@ export namespace Prisma {
     dataFalta?: StringFieldUpdateOperationsInput | string
   }
 
+  export type ChamadaUpdateWithoutProfessorInput = {
+    data?: StringFieldUpdateOperationsInput | string
+    turma?: TurmaUpdateOneRequiredWithoutChamadaNestedInput
+  }
+
+  export type ChamadaUncheckedUpdateWithoutProfessorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idTurma?: IntFieldUpdateOperationsInput | number
+    data?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ChamadaUncheckedUpdateManyWithoutProfessorInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idTurma?: IntFieldUpdateOperationsInput | number
+    data?: StringFieldUpdateOperationsInput | string
+  }
+
   export type DisciplinasCreateManyCursosInput = {
     id?: number
     idProfessor: number
@@ -15726,12 +16068,14 @@ export namespace Prisma {
   export type TurmaUpdateWithoutCursoInput = {
     nomeTurma?: StringFieldUpdateOperationsInput | string
     Aluno?: AlunoUpdateManyWithoutTurmaNestedInput
+    Chamada?: ChamadaUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateWithoutCursoInput = {
     id?: IntFieldUpdateOperationsInput | number
     nomeTurma?: StringFieldUpdateOperationsInput | string
     Aluno?: AlunoUncheckedUpdateManyWithoutTurmaNestedInput
+    Chamada?: ChamadaUncheckedUpdateManyWithoutTurmaNestedInput
   }
 
   export type TurmaUncheckedUpdateManyWithoutCursoInput = {
@@ -15816,6 +16160,13 @@ export namespace Prisma {
     profPai: string
     rua: string
     uf: string
+    faltas?: number | null
+  }
+
+  export type ChamadaCreateManyTurmaInput = {
+    id?: number
+    idProfessor: number
+    data: string
   }
 
   export type AlunoUpdateWithoutTurmaInput = {
@@ -15840,6 +16191,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     faltaDisciplinar?: FaltasDisciplinaresUpdateManyWithoutAlunoNestedInput
     Matricula?: MatriculaUpdateManyWithoutAlunoNestedInput
   }
@@ -15867,6 +16219,7 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
     faltaDisciplinar?: FaltasDisciplinaresUncheckedUpdateManyWithoutAlunoNestedInput
     Matricula?: MatriculaUncheckedUpdateManyWithoutAlunoNestedInput
   }
@@ -15894,29 +16247,24 @@ export namespace Prisma {
     profPai?: StringFieldUpdateOperationsInput | string
     rua?: StringFieldUpdateOperationsInput | string
     uf?: StringFieldUpdateOperationsInput | string
+    faltas?: NullableIntFieldUpdateOperationsInput | number | null
   }
 
-  export type ChamadaCreateManyAtividadeSalaInput = {
-    id?: number
-    idTurma: number
-    presenca: string
+  export type ChamadaUpdateWithoutTurmaInput = {
+    data?: StringFieldUpdateOperationsInput | string
+    professor?: ProfessorUpdateOneRequiredWithoutChamadaNestedInput
   }
 
-  export type ChamadaUpdateWithoutAtividadeSalaInput = {
-    idTurma?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
-  }
-
-  export type ChamadaUncheckedUpdateWithoutAtividadeSalaInput = {
+  export type ChamadaUncheckedUpdateWithoutTurmaInput = {
     id?: IntFieldUpdateOperationsInput | number
-    idTurma?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    data?: StringFieldUpdateOperationsInput | string
   }
 
-  export type ChamadaUncheckedUpdateManyWithoutAtividadeSalaInput = {
+  export type ChamadaUncheckedUpdateManyWithoutTurmaInput = {
     id?: IntFieldUpdateOperationsInput | number
-    idTurma?: IntFieldUpdateOperationsInput | number
-    presenca?: StringFieldUpdateOperationsInput | string
+    idProfessor?: IntFieldUpdateOperationsInput | number
+    data?: StringFieldUpdateOperationsInput | string
   }
 
 
@@ -15940,10 +16288,6 @@ export namespace Prisma {
      * @deprecated Use TurmaCountOutputTypeDefaultArgs instead
      */
     export type TurmaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = TurmaCountOutputTypeDefaultArgs<ExtArgs>
-    /**
-     * @deprecated Use AtividadeSalaCountOutputTypeDefaultArgs instead
-     */
-    export type AtividadeSalaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AtividadeSalaCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ProfessorDefaultArgs instead
      */

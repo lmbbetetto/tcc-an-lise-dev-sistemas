@@ -3,7 +3,7 @@ import { revalidatePath } from 'next/cache';
 
 import { TeacherPayload, TeacherShow, updateProfessor } from '@/service/professor';
 import { routes } from '@/utils/routes';
-import { createTurma, Turma, TurmaPayload } from '@/service/turma';
+import { createTurma, Turma, TurmaPayload, updateTurma } from '@/service/turma';
 
 export async function createNewTurma(
     payload: TurmaPayload,
@@ -21,31 +21,18 @@ export async function createNewTurma(
     return response;
 }
 
-export async function editProfessor(
+export async function editTurma(
     id: number,
-    payload: TeacherPayload,
-): Promise<TeacherShow> {
-    const data: TeacherPayload = {
-        conclusion: payload.conclusion,
-        bairro: payload.bairro,
-        cidade: payload.cidade,
-        complemento: payload.complemento,
-        course: payload.complemento,
-        email: payload.email,
-        estado: payload.estado,
-        gender: payload.gender,
-        instituicao: payload.instituicao,
-        nascimento: payload.nascimento,
-        nivelFormacao: payload.nivelFormacao,
-        numero: payload.numero,
-        phone: payload.phone,
-        rua: payload.rua,
-        teacherName: payload.teacherName
+    payload: TurmaPayload,
+): Promise<Turma> {
+    const data: TurmaPayload = {
+        idCurso: payload.idCurso,
+        nomeTurma: payload.nomeTurma
     };
 
     console.log(JSON.stringify(data))
 
-    const response = await updateProfessor(String(id), data);
+    const response = await updateTurma(String(id), data);
 
     console.log(response)
     revalidatePath(routes.professor.search, 'page');
