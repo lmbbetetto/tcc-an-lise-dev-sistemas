@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 export async function POST(request: Request) {
     try {
         const {
-            studentName,
+            nome,
             nascimento,
             cpf,
             rg,
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         } = await request.json();
 
         const requiredFields = [
-            studentName, nascimento, phone, rendaFamilia, escola, periodo, serie,
+            nome, nascimento, phone, rendaFamilia, escola, periodo, serie,
             rua, numero, bairro, cidade, uf, idTurma
         ];
 
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
         const aluno = await prisma.aluno.create({
             data: {
-                nome: studentName,
+                nome: nome,
                 nascimento: birthDate.toISOString(),
                 cpf,
                 rg,

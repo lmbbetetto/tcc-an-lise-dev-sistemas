@@ -11,10 +11,13 @@ import { toast } from "@/components/ui/use-toast"
 import { Aluno } from "@/service/aluno"
 import { TeacherShow } from "@/service/professor"
 import { Turma } from "@/service/turma"
+import { routesProfessor } from "@/utils/routes"
 import { Check, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function Chamada() {
+    const router = useRouter();
     const [professors, setProfessors] = useState<TeacherShow[]>([]);
     const [turmas, setTurmas] = useState<Turma[]>([]);
     const [selectedClass, setSelectedClass] = useState<string | null>(null);
@@ -123,6 +126,7 @@ export default function Chamada() {
         setSelectedDate('');
         setStudents([]);
         setAttendance({});
+        router.replace(routesProfessor.chamada.search)
     };
 
 

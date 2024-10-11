@@ -11,10 +11,13 @@ import { toast } from "@/components/ui/use-toast"
 import { Aluno } from "@/service/aluno"
 import { TeacherShow } from "@/service/professor"
 import { Turma } from "@/service/turma"
+import { routes } from "@/utils/routes"
 import { Check, X } from "lucide-react"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 export default function Chamada() {
+    const router = useRouter();
     const [professors, setProfessors] = useState<TeacherShow[]>([]);
     const [turmas, setTurmas] = useState<Turma[]>([]);
     const [selectedClass, setSelectedClass] = useState<string | null>(null);
@@ -123,6 +126,7 @@ export default function Chamada() {
         setSelectedDate('');
         setStudents([]);
         setAttendance({});
+        router.replace(routes.chamada.search)
     };
 
 
@@ -133,7 +137,7 @@ export default function Chamada() {
     }, []);
 
     return (
-        <ScrollArea className="h-[34rem] w-full pr-[250px]">
+        <ScrollArea className="h-[41rem] w-full pr-[250px]">
             <main className="space-y-8 p-2 pt-0">
                 <div className="flex gap-6">
                     <div className="flex flex-col gap-3">
