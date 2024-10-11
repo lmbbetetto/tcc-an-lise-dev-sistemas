@@ -99,7 +99,7 @@ export default function Chamada() {
 
             if (!chamadaResponse.ok) {
                 const errorDetails = await chamadaResponse.text();
-                console.error("Detalhes do erro da chamada:", errorDetails); // Log dos detalhes do erro
+                console.error("Detalhes do erro da chamada:", errorDetails);
                 throw new Error(`Erro ao criar a chamada: ${errorDetails}`);
             }
 

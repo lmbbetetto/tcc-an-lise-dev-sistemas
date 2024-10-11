@@ -1,4 +1,4 @@
-
+import { Metadata } from "next";
 
 export default function LayoutUserProfile({
     children,
@@ -8,8 +8,8 @@ export default function LayoutUserProfile({
     return (
         <div>
             <div className="flex flex-col gap-2 border-b w-full pb-5">
-                <h1 className="text-2xl font-bold">Aluno</h1>
-                <p className="text-sm">Edite as informações do cadastro</p>
+                <h1 className="text-2xl font-bold">Falta disciplinar</h1>
+                <p className="text-sm">Edite as informações da falta disciplinar</p>
             </div>
 
             <div className="fixed flex flex-col gap-4 w-[300px] min-w-[300px] min-h-screen pt-4 ml-[-12px]">

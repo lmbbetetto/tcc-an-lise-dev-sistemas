@@ -68,6 +68,10 @@ export const routesProfessor = {
     user: (id: string): string => `/professor/user/${id}`,
   },
   chamada: {
-    home: "/professor/chamada"
+    home: "/professor/chamada",
+    search: "/professor/chamada/search"
+  },
+  faltas: {
+    faltas: "/professor/faltas"
   }
 }

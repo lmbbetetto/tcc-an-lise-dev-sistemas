@@ -2,10 +2,6 @@ import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui
 import { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-    title: "Falta disciplinar"
-}
-
 export default function LayoutCreateTeacher({
     children,
 }: Readonly<{

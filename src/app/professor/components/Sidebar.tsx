@@ -62,6 +62,7 @@ export default function Sidebar() {
           <section className="flex flex-col gap-2  mt-2 mb-6">
             <Link href={routesProfessor.home.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><House size={18} />Início</p></Link>
             <Link href={routesProfessor.chamada.home}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Chamada</p></Link>
+            <Link href={routesProfessor.chamada.search}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm"><Table size={18} />Listar chamadas</p></Link>
           </section>
 
           <h1 className="text-sm text-muted-foreground">Cadastros</h1>
@@ -127,7 +128,8 @@ export default function Sidebar() {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-
+          <h1 className="text-sm text-muted-foreground mb-3 mt-5">Relatórios</h1>
+          <Link href={routesProfessor.faltas.faltas}><p className="flex gap-2 items-center text-sm hover:cursor-pointer hover:bg-muted p-1 rounded-sm">Faltas</p></Link>
         </div>
       </ScrollArea>
 

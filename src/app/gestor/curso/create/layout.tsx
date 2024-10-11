@@ -2,10 +2,6 @@ import { Command, CommandGroup, CommandItem, CommandList } from "@/components/ui
 import { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-    title: "Curso"
-}
-
 export default function LayoutCreateAluno({
     children,
 }: Readonly<{

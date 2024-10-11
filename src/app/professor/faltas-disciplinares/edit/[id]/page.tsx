@@ -99,15 +99,14 @@ export default function UserPage() {
                     titulo: data.descricao
                 };
 
-                // await editProfessor(Number(id), payload);
                 toast({
                     title: "Sucesso!",
-                    description: "Professor editado com sucesso!",
+                    description: "Falta disciplinar editada com sucesso!",
                 });
             } catch (error) {
                 toast({
                     title: "Erro",
-                    description: "Ocorreu um erro ao editar o professor.",
+                    description: "Ocorreu um erro ao editar a falta disciplinar.",
                     variant: "destructive",
                 });
             }

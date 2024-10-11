@@ -90,7 +90,6 @@ export default function UserPage() {
 
     const onSubmit = async (data: Schema) => {
         if (id) {
-            console.log('teste')
             try {
                 const payload: AlunoPayload = {
                     bairro: data.bairro,
@@ -98,7 +97,7 @@ export default function UserPage() {
                     cpf: data.cpf ?? '',
                     escola: data.escola,
                     nascimento: data.nascimento,
-                    studentName: data.studentName,
+                    nome: data.studentName,
                     numero: data.numero,
                     periodo: data.periodo,
                     rendaFamilia: Number(data.rendaFamilia),
@@ -120,12 +119,12 @@ export default function UserPage() {
                 await updateAluno(id, payload);
                 toast({
                     title: "Sucesso!",
-                    description: "Professor editado com sucesso!",
+                    description: "Aluno editado com sucesso!",
                 });
             } catch (error) {
                 toast({
                     title: "Erro",
-                    description: "Ocorreu um erro ao editar o professor.",
+                    description: "Ocorreu um erro ao editar o aluno.",
                     variant: "destructive",
                 });
             }

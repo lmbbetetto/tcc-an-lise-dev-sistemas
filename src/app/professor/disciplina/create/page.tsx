@@ -83,14 +83,14 @@ export default function CreateCurso() {
 
             toast({
                 title: "Sucesso!",
-                description: "Professor criado com sucesso!",
+                description: "Disciplina criada com sucesso!",
             });
 
             reset();
         } catch (error) {
             toast({
                 title: "Erro",
-                description: "Ocorreu um erro ao criar o professor.",
+                description: "Ocorreu um erro ao criar a disciplina.",
                 variant: "destructive",
             });
         }

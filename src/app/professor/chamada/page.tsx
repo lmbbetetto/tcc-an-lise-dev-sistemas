@@ -63,19 +63,60 @@ export default function Chamada() {
     };
 
     const handleSubmit = async () => {
-        const data = {
-            classId: selectedClass,
-            professorId: selectedProfessor,
-            date: selectedDate,
-            attendance,
-        };
+        const updatePromises = Object.entries(attendance).map(async ([studentId, value]) => {
+            if (value === 'falta') {
+                const response = await fetch(`/api/aluno/faltas/${studentId}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        faltas: 1,
+                    }),
+                });
 
-        console.log("Dados a serem enviados:", data);
-
-        toast({
-            title: "Chamada realizada com sucesso!",
-            description: "Registro de presença realizado com sucesso!",
+                if (!response.ok) {
+                    throw new Error(`Erro ao atualizar faltas para o aluno ${studentId}`);
+                }
+            }
         });
+
+        try {
+            await Promise.all(updatePromises);
+
+            const chamadaResponse = await fetch('/api/chamada', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idTurma: Number(selectedClass),
+                    idProfessor: Number(selectedProfessor),
+                    data: selectedDate,
+                    presenca: attendance,
+                }),
+            });
+
+            if (!chamadaResponse.ok) {
+                const errorDetails = await chamadaResponse.text();
+                console.error("Detalhes do erro da chamada:", errorDetails);
+                throw new Error(`Erro ao criar a chamada: ${errorDetails}`);
+            }
+
+            const chamadaData = await chamadaResponse.json();
+
+            toast({
+                title: "Chamada realizada com sucesso!",
+                description: "Registro de presença realizado com sucesso!",
+            });
+        } catch (error) {
+            console.error("Erro ao realizar chamada:", error);
+            toast({
+                title: "Erro ao realizar chamada",
+                description: "Erro ao atualizar faltas para o aluno",
+                variant: "destructive",
+            });
+        }
 
         setSelectedClass(null);
         setSelectedProfessor(null);
@@ -83,6 +124,8 @@ export default function Chamada() {
         setStudents([]);
         setAttendance({});
     };
+
+
 
     useEffect(() => {
         fetchProfessors();

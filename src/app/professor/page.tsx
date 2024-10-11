@@ -13,7 +13,6 @@ export default function HomeGestor() {
                 <TeacherCountCard />
                 <CourseCountCard />
             </div>
-            <CardAddStudent />
             <CardChamada />
         </main>
     )

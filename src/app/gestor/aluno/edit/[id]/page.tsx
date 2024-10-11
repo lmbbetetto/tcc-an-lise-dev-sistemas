@@ -119,12 +119,12 @@ export default function UserPage() {
                 await updateAluno(id, payload);
                 toast({
                     title: "Sucesso!",
-                    description: "Professor editado com sucesso!",
+                    description: "Aluno editado com sucesso!",
                 });
             } catch (error) {
                 toast({
                     title: "Erro",
-                    description: "Ocorreu um erro ao editar o professor.",
+                    description: "Ocorreu um erro ao editar o aluno.",
                     variant: "destructive",
                 });
             }

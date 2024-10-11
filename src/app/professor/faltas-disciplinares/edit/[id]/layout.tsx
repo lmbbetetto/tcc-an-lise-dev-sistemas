@@ -1,8 +1,5 @@
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-    title: "Usuário"
-}
 
 export default function LayoutUserProfile({
     children,

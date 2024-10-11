@@ -84,7 +84,7 @@ export default function CreateAluno() {
                 cpf: data.cpf ?? '',
                 escola: data.escola,
                 nascimento: data.nascimento,
-                studentName: data.studentName,
+                nome: data.studentName,
                 numero: data.numero,
                 periodo: data.periodo,
                 rendaFamilia: Number(data.rendaFamilia),
